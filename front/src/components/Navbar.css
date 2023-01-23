@@ -1,0 +1,24 @@
+h1{
+    font-family: Bebas-Neue;
+    background-color: #094FAC;
+}
+
+.nav-link{
+    padding: 50%;
+    background-color: #094FAC;
+}
+
+nav.navbar.navbar-expand-lg.navbar-dark.bg-dark{
+    padding: 0;
+}
+
+/*
+Color Palette :
+
+White : #F5EDED
+Light Blue : #8HD9FF
+Blue : #5784C1
+Darker Blue : #094FAC
+Balck : #000000
+
+*/
