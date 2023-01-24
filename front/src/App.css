@@ -40,3 +40,7 @@
 .Content-container {
   flex-grow: 1;
 }
+
+.Content-container.h1 {
+  text-align: center;
+}

@@ -1,14 +1,34 @@
-h1{
-    font-family: Bebas-Neue;
-    background-color: #094FAC;
+.navbar-component .nav-top-bar{
+    font-family: 'Bebas Neue', cursive;
+    font-size: 200%;
+    background-color: #212529;
+    margin: 0;
+    text-align: center;
 }
 
-.nav-link{
-    padding: 50%;
-    background-color: #094FAC;
+.navbar-component .title{
+    color: #87D9FF;
+    text-decoration: none;
 }
 
-nav.navbar.navbar-expand-lg.navbar-dark.bg-dark{
+.navbar-component .title:hover{
+    color: #F5EDED;
+}
+
+.navbar-component  .nav-link{
+    font-size: 150%;
+    font-family: 'Bebas Neue', cursive;
+    padding: 1em;
+    padding-right: 1.5em !important;
+    padding-left: 1.5em !important;
+    color: #F5EDED !important;
+}
+
+.navbar-component  .nav-link:hover{
+    color: #87D9FF !important;
+}
+
+.navbar-component  nav.navbar.navbar-expand-lg.navbar-dark.bg-dark{
     padding: 0;
 }
 
@@ -16,7 +36,7 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-dark{
 Color Palette :
 
 White : #F5EDED
-Light Blue : #8HD9FF
+Light Blue : #87D9FF
 Blue : #5784C1
 Darker Blue : #094FAC
 Balck : #000000

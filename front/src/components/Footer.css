@@ -1,5 +1,6 @@
 footer {
-    background-color: #5684C1;
+    background-color: var(--grey);
     display: flex;
   }
+
   
