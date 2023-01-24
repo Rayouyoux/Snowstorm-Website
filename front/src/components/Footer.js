@@ -5,7 +5,9 @@ import "./Footer.css"
 import { Row, Col, Container } from "react-bootstrap";
 
 function Footer(props) {
-    return<footer><Container className="container-footer"> 
+    return<footer>
+      <img src="/img/Logo_Blue.png" alt=""/>
+      <Container className="container-footer"> 
         <Row>
           <Col>
             <h4>Catégories</h4>
@@ -26,6 +28,7 @@ function Footer(props) {
             <Link className="nav-link" to="/contact">Mes informations</Link>
           </Col>
         </Row>
+        <p className="copyright">©️ Snowstorm - 2023</p>
         </Container>
         </footer>
 }

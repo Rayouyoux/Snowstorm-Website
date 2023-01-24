@@ -4,6 +4,7 @@ import FAQ from "./pages/Faq";
 import Test from "./pages/Test";
 import NavBar from "./components/Navbar";
 import Footer from "./components/Footer";
+import Support from "./pages/Support";
 import {
   BrowserRouter as Router,
   Switch,
@@ -26,6 +27,9 @@ function App(){
           </Route>
           <Route path="/faq">
             <FAQ />
+          </Route>
+          <Route path="/support">
+            <Support />
           </Route>
         </Switch>
       </div>

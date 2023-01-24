@@ -11,12 +11,12 @@ function Home(props) {
         .catch(e => setBackendTest(e.message))
     }, [])
 
-    return <div className="homePage">
+    return <Container className="homePage">
         <h1>HOME et une harmacie</h1>
         <h2>ntm test blup blup uhebuoyv</h2>
         <h3>et didier est mort, il nous a quitt..eeeeeeeeeeeeeeeee.</h3>
         <p>{backendTest}</p>
-    </div>
+    </Container>
 }
 
 export default Home;

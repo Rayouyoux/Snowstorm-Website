@@ -1,6 +1,20 @@
 footer {
-    background-color: var(--grey);
+    background-color: var(--black);
+    color: var(--white);
     display: flex;
   }
-
+.container-footer{
+  padding-top: 10px;
+}
+footer img{
+  width: 12%;
+  height: 12%;
+  padding-left: 5%;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.copyright{
+  font-size: small;
+  padding: 1%;
+}
   

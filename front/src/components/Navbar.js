@@ -22,7 +22,7 @@ function NavBar() {
                             <Link className="nav-link" to="/">Nos produits</Link>
                             <Link className="nav-link" to="/Test">Personnaliser</Link>
                             <Link className="nav-link" to="/">Galerie</Link>
-                            <Link className="nav-link" to="/">Support/SAV</Link>
+                            <Link className="nav-link" to="/support">Support/SAV</Link>
                             <Link className="nav-link" to="/faq">FAQ</Link>
                             <Link className="nav-link" to="/contact">Contact</Link>
                         </Nav>
