@@ -116,7 +116,7 @@ app.post("/products/insert", function (req, res) {
     const dbConnect = dbo.getDb();
     const body = req.body
     
-    const obj = new objsTypes.product(undefined, body.name, body.price, body.description, body.tags)
+    const obj = new objsTypes.product(undefined, body.name, body.price, body.description, body.image, body.tags)
     console.log(obj)
 
     var err, result
@@ -125,6 +125,7 @@ app.post("/products/insert", function (req, res) {
     .insertOne(obj)
     .then(() => res.json({msg: "OK"}))
 });
+
 
 // CONNECTION
 

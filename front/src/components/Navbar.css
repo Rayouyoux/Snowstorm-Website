@@ -32,9 +32,11 @@
 }
 
 .navbar-component .nav-top-bar .user-icon, .navbar-component .nav-top-bar .cart-icon{
-    width: 15%;
+    width: 3vw;
     margin-top: 2%;
     margin-left: 20%;
+    margin-right: 0;
+    padding-right: 0;
 }
 
 .navbar-component  .nav-link{

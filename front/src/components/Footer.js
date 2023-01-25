@@ -6,13 +6,13 @@ import { Row, Col, Container } from "react-bootstrap";
 
 function Footer(props) {
     return<footer>
-      <img className="img" src="/img/Logo_Blue.png" alt="Logo Snowstorm Blue"/>
+      <img className="img" src="./img/Logo_Blue.png" alt="Logo Snowstorm Blue"/>
       <Container className="container-footer"> 
         <Row>
           <Col>
             <h4 className="title">Catégories</h4>
             <Link className="nav-link" to="/products">Nos produits</Link>
-            <Link className="nav-link" to="/Test">Personnaliser</Link>
+            <Link className="nav-link" to="/custom">Personnaliser</Link>
             <Link className="nav-link" to="/gallery">Galerie</Link>
           </Col>
           <Col>

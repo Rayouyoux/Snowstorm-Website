@@ -1,4 +1,5 @@
 import Home from "./pages/Home";
+import Product from "./pages/Product";
 import Contacts from "./pages/Contact";
 import Mentions from "./pages/Mention";
 import FAQ from "./pages/Faq";
@@ -6,12 +7,13 @@ import NavBar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Support from "./pages/Support";
 import NewsletterSignup from "./components/PopupNewsletter";
+import Listing from "./pages/Listing";
+import Admin from "./pages/Admin"
 import {
   BrowserRouter as Router,
   Switch,
   Route
 } from "react-router-dom";
-
 import "./App.css";
 
 //App.js
@@ -24,6 +26,9 @@ function App() {
         <Route exact path="/"> {/*ici on met l'URL dans le navigateur*/}
           <Home /> {/*ici on donne la page à afficher en fonction de cette URL*/}
         </Route>
+        <Route path="/listing">
+          <Listing />
+        </Route>
         <Route path="/contact">
           <Contacts />
         </Route>
@@ -35,6 +40,9 @@ function App() {
         </Route>
         <Route path="/support">
           <Support />
+        </Route>
+        <Route path="/admin">
+          <Admin />
         </Route>
       </Switch>
     </div>

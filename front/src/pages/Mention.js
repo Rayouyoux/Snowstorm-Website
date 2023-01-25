@@ -2,8 +2,8 @@ import { Container } from "react-bootstrap";
 
 function Mentions() {
     return <Container>
-        <h1>Mentions légales</h1>
-        <h2>Snowstorm</h2>
+        <h1>Snowstorm</h1>
+        <h2>Mentions légales</h2>
         <p>
             Directeur de la publication : Johnny bravo<br/>
             Contact : contact@snowstorm.gg<br/>
