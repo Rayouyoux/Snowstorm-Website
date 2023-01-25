@@ -1,0 +1,12 @@
+.home-page {
+    background: rgb(135,217,255);
+    background: linear-gradient(225deg, var(--light-blue) 0%, var(--blue) 100%); 
+    font-family: 'Open Sans', sans-serif;
+}
+
+.home-page h1{
+    font-family: 'Bebas Neue', cursive !important;
+    padding-top: 1.5em;
+    font-size: 5em;
+    color: var(--white);
+}

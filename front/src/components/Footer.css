@@ -1,20 +1,39 @@
-footer {
-    background-color: var(--black);
-    color: var(--white);
-    display: flex;
-  }
-.container-footer{
-  padding-top: 10px;
+footer{
+  background-color: var(--black);
+  color: var(--white);
+  display: flex;
+  font-family: 'Open Sans', sans-serif;
 }
-footer img{
+
+footer h4{
+  font-family: 'Bebas Neue', cursive !important;
+}
+
+footer .container-footer{
+  padding-top: 2em;
+}
+
+footer .title{
+  color: #87D9FF;
+}
+
+footer .img{
   width: 12%;
   height: 12%;
   padding-left: 5%;
   margin-top: auto;
   margin-bottom: auto;
 }
-.copyright{
+footer .logo{
+  width: 2.2em;
+  padding-right: 20%;
+}
+
+footer .socials{
+  display: flex;
+}
+
+footer .copyright{
   font-size: small;
   padding: 1%;
 }
-  

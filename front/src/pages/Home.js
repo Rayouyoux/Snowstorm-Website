@@ -1,6 +1,7 @@
 import { Row, Col, Container } from "react-bootstrap";
 import { backAccess } from "../api/db";
 import { useEffect, useState } from "react";
+import "./Home.css";
 
 function Home(props) {
     const [ backendTest, setBackendTest ] = useState('LOADING...')
@@ -11,12 +12,20 @@ function Home(props) {
         .catch(e => setBackendTest(e.message))
     }, [])
 
-    return <Container className="homePage">
-        <h1>HOME et une harmacie</h1>
-        <h2>ntm test blup blup uhebuoyv</h2>
-        <h3>et didier est mort, il nous a quitt..eeeeeeeeeeeeeeeee.</h3>
+    return <div className="home-page">
+        <Row>
+            <Col xs={{ span:2 , offset:1 }}>
+                <h1>Snowstorm</h1>
+            </Col>
+        </Row>
+
+
+
+
+
         <p>{backendTest}</p>
-    </Container>
+        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    </div>
 }
 
 export default Home;

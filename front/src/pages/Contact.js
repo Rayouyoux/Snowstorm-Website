@@ -1,9 +1,12 @@
+import { Container } from "react-bootstrap";
+
 function Contacts() {
-    return <div>
+    return <Container>
         <h1>Page de Contact</h1>
-        <h2>ntm test blup blup uhebuoyv</h2>
-        <h3>et didier est mort, il nous a quitt..eeeeeeeeeeeeeeeee.</h3>
-    </div>
+        <img src="/img/keyboard-icon.png" class="keyboard-icon" alt="Keyboard Icon"></img>
+        <h2>Produit Et Commandes</h2>
+        <p></p>
+    </Container>
 }
 
 export default Contacts;

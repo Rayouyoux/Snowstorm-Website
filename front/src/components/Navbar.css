@@ -1,18 +1,40 @@
 .navbar-component .nav-top-bar{
     font-family: 'Bebas Neue', cursive;
     font-size: 200%;
-    background-color: #212529;
+    background-color: var(--black) !important;
     margin: 0;
     text-align: center;
 }
 
-.navbar-component .title{
-    color: #87D9FF;
+.navbar-component .nav-top-bar .icons{
+    display: inline-block;
+}
+
+.navbar-component .nav-top-bar .title{
+    color: var(--white);
     text-decoration: none;
 }
 
-.navbar-component .title:hover{
-    color: #F5EDED;
+.navbar-component .nav-top-bar .title:hover{
+    color: var(--light-blue);
+}
+
+.navbar-component .nav-top-bar #dropdown-basic{
+    background-color: var(--black) !important;
+    padding: 0;
+    border: 0;
+    margin-right: 0;
+}
+
+.navbar-component .nav-top-bar .globe-icon{
+    margin-top: 2%;
+    width: 25%;
+}
+
+.navbar-component .nav-top-bar .user-icon, .navbar-component .nav-top-bar .cart-icon{
+    width: 15%;
+    margin-top: 2%;
+    margin-left: 20%;
 }
 
 .navbar-component  .nav-link{
@@ -21,24 +43,13 @@
     padding: 1em;
     padding-right: 1.5em !important;
     padding-left: 1.5em !important;
-    color: #F5EDED !important;
+    color: var(--white) !important;
 }
 
 .navbar-component  .nav-link:hover{
-    color: #87D9FF !important;
+    color: var(--light-blue) !important;
 }
 
 .navbar-component  nav.navbar.navbar-expand-lg.navbar-dark.bg-dark{
     padding: 0;
 }
-
-/*
-Color Palette :
-
-White : #F5EDED
-Light Blue : #87D9FF
-Blue : #5784C1
-Darker Blue : #094FAC
-Balck : #212529
-
-*/

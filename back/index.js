@@ -1,40 +1,80 @@
 const express = require("express");
-const db = require("./db.js");
+const dbo = require("./db.js");
+const objsTypes = require("./objs.js");
 const cors = require("cors");
+const bodyParser = require("body-parser");
 
 const app = express();
 const port = 4444;
 
 app.use(cors());
-
-/*
-
-*/
+app.use(bodyParser.json());
 
 app.get("/", function (req, res) {
     res.send("Hello World!");
 });
 
-db.connectToServer().then(() => 
-    app.listen(port, function () {
-        console.log(`App listening on port ${port}!`);
-    })
-);
+//* FETCH *//
+
+// Generic search
+const SearchCollection = async (collection, query, callback) => {
+    const dbConnect = dbo.getDb();
+
+    var err, result
+    await dbConnect
+    .collection(collection)
+    .find(query)
+    .toArray((rerr, rresult) => {
+        if (callback) callback(rerr, rresult)
+        err, result = rerr, rresult
+    });
+
+    return err, result
+}
+
+const GetOne = async (collection, _id, callback) => {
+    const dbConnect = dbo.getDb();
+
+    var err, result
+    await dbConnect
+    .collection(collection)
+    .findOne({_id})
+    .toArray((rerr, rresult) => {
+        if (callback) callback(rerr, rresult)
+        err, result = rerr, rresult
+    });
+
+    return err, result
+}
+
+// Products
 
 app.get("/products", function (req, res) {
-    const dbConnect = dbo.getDb();
-    dbConnect
-      .collection("products")
-      .find({})
-      .toArray(function (err, result) {
+    SearchCollection("products", {}, (rerr, rresult) => {
         if (err) {
-          res.status(400).send("Error fetching pokemons!");
+            res.status(400).send("Error fetching products!");
         } else {
-          res.json(result);
+            var objects = result.map(x => {
+                return new objsTypes.product(x._id, x.name, x.price, x.description, x.tags)
+            })
+            res.json(result);
+        }
+    });
+});
+app.get("/products/:id", function (req, res) {
+    GetOne("products", req.params.id, (rerr, rresult) => {
+        if (err) {
+            res.status(400).send("Error fetching products!");
+        } else {
+            var objects = result.map(x => {
+                return new objsTypes.product(x.name, x.price, x.description, x.tags)
+            })
+            res.json(result);
         }
     });
 });
 
+// Keyboards
 app.get("/keyboards", function (req, res) {
     const dbConnect = dbo.getDb();
     dbConnect
@@ -42,13 +82,17 @@ app.get("/keyboards", function (req, res) {
     .find({})
     .toArray(function (err, result) {
     if (err) {
-        res.status(400).send("Error fetching pokemons!");
+        res.status(400).send("Error fetching keyboards!");
     } else {
+        var objects = result.map(x => {
+            return new objsTypes.keybroad(x._id, x.name, x.price, x.description, x.tags)
+        })
         res.json(result);
     }
     });   
 });
 
+// Components
 app.get("/components", function (req, res) {
     const dbConnect = dbo.getDb();
     dbConnect
@@ -56,9 +100,36 @@ app.get("/components", function (req, res) {
     .find({})
     .toArray(function (err, result) {
     if (err) {
-        res.status(400).send("Error fetching pokemons!");
+        res.status(400).send("Error fetching components!");
     } else {
+        var objects = result.map(x => {
+            return new objsTypes.component(x._id, x.name, x.price, x.description, x.keyborads)
+        })
         res.json(result);
     }
     });    
 });
+
+//* ADMIN *//
+
+app.post("/products/insert", function (req, res) {
+    const dbConnect = dbo.getDb();
+    const body = req.body
+    
+    const obj = new objsTypes.product(undefined, body.name, body.price, body.description, body.tags)
+    console.log(obj)
+
+    var err, result
+    dbConnect
+    .collection("products")
+    .insertOne(obj)
+    .then(() => res.json({msg: "OK"}))
+});
+
+// CONNECTION
+
+dbo.connectToServer().then(() => 
+    app.listen(port, function () {
+        console.log(`App listening on port ${port}!`);
+    })
+);
