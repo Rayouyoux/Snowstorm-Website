@@ -1,5 +1,5 @@
 const { MongoClient, ServerApiVersion } = require("mongodb");
-const { connectionString, salt } = require("./login");
+const { connectionString } = require("./login");
 
 const client = new MongoClient(connectionString, {
     useNewUrlParser: true,
@@ -14,7 +14,7 @@ module.exports = {
         try {
             var db = await client.connect();
 
-            dbConnection = db.db("dev");
+            dbConnection = db.db("snowstorm");
 
             console.log("Successfully connected to MongoDB.");
             return dbConnection
