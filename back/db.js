@@ -1,6 +1,7 @@
 const { MongoClient, ServerApiVersion } = require("mongodb");
+const { login } = require("./login");
 
-const connectionString ="mongodb+srv://snowstorm:snowstormlol@cluster0.4atmotk.mongodb.net/?retryWrites=true&w=majority";
+const connectionString =`mongodb+srv://${login}@cluster0.4atmotk.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(connectionString, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
