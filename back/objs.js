@@ -2,6 +2,7 @@
 
 function user(_id=undefined, first_name="John", last_name="Doe", email="email@example.com") {
     this._id = _id
+    if (this._id == undefined) delete this._id
     this.first_name = first_name
     this.last_name = last_name
     this.email = email
@@ -9,6 +10,7 @@ function user(_id=undefined, first_name="John", last_name="Doe", email="email@ex
 
 function product(_id=undefined, name="", price=0, description="", images=[], tags=[]) {
     this._id = _id
+    if (this._id == undefined) delete this._id
     this.name = name
     this.price = price
     this.description = description
@@ -18,6 +20,7 @@ function product(_id=undefined, name="", price=0, description="", images=[], tag
 
 function component(_id=undefined, name="", price=0, description="", images=[], keyboards=[]) {
     this._id = _id
+    if (this._id == undefined) delete this._id
     this.name = name
     this.price = price
     this.description = description
@@ -27,6 +30,7 @@ function component(_id=undefined, name="", price=0, description="", images=[], k
 
 function keyboard(_id=undefined, name="", price=0, description="", images=[], tags=[]) {
     this._id = _id
+    if (this._id == undefined) delete this._id
     this.name = name
     this.price = price
     this.description = description

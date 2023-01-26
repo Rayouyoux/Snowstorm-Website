@@ -4,6 +4,9 @@ const objsTypes = require("./objs.js");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 
+const { salt } = require("./login");
+
+const ObjectId = express.ObjectId;
 const app = express();
 const port = 4444;
 
@@ -38,7 +41,7 @@ const GetOne = async (collection, _id, callback) => {
     var err, result
     await dbConnect
     .collection(collection)
-    .findOne({_id})
+    .findOne({_id: ObjectId(_id)})
     .toArray((rerr, rresult) => {
         if (callback) callback(rerr, rresult)
         err, result = rerr, rresult
@@ -115,15 +118,17 @@ app.get("/components", function (req, res) {
 app.post("/products/insert", function (req, res) {
     const dbConnect = dbo.getDb();
     const body = req.body
+    delete body._id;
     
-    const obj = new objsTypes.product(undefined, body.name, body.price, body.description, body.image, body.tags)
+    const obj = new objsTypes.product(undefined, body.name, body.price, body.description, body.images, body.tags)
     console.log(obj)
 
     var err, result
     dbConnect
     .collection("products")
     .insertOne(obj)
-    .then(() => res.json({msg: "OK"}))
+    .then(console.log)
+    res.json({msg: "OK"})
 });
 
 
