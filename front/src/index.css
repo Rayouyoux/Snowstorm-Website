@@ -17,3 +17,13 @@ body {
   flex-direction: column;
   min-height: 100vh;
 }
+
+@keyframes fade-in-animation{
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 100%;
+  }
+}

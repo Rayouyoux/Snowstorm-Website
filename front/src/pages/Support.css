@@ -1,3 +1,38 @@
+.support-page{
+    padding-top: 5%;
+    padding-bottom: 8%;
+    background-color: var(--blue);
+    font-family: 'Open Sans', sans-serif !important;
+    color: var(--black);
+}
+
 .support-page h1{
     text-align: center;
-};
+    font-family: 'Bebas Neue', cursive !important;
+    font-size: 5vw;
+    background: linear-gradient(45deg, var(--darker-blue) 0%, var(--black) 90%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: 1.5s fade-in-animation;
+}
+
+.support-page form{
+    animation: 2s fade-in-animation;
+}
+
+input.form-control, select.form-select, textarea.form-control{
+    background-color: var(--black);
+    color: lightgray;
+    transition: .3s;
+    border-color: var(--black);
+}
+
+input.form-control:hover, select.form-select:hover, textarea.form-control:hover{
+    background-color: var(--white);
+    color: var(--black);
+}
+
+button.btn.btn-dark.btn-lg:hover{
+    background-color: var(--white) !important;
+    color: var(--black);
+}

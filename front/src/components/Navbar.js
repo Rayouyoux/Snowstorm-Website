@@ -4,12 +4,16 @@ import { Row, Col, Container } from "react-bootstrap";
 import Dropdown from 'react-bootstrap/Dropdown';
 import Navbar from 'react-bootstrap/Navbar';
 import "./Navbar.css";
-import { useState } from "react";
+import { useEffect } from "react";
 
 
 
-function NavBar() {
-    const [ language, setLanguage ] = useState(0)
+function NavBar(props) {
+    const { language, setLanguage } = props
+
+    useEffect(() => {
+        console.log(language)
+    }, [language])
 
     return (
         <div className="navbar-component">

@@ -1,7 +1,26 @@
 .home-page {
-    background: rgb(135,217,255);
-    background: linear-gradient(225deg, var(--light-blue) 0%, var(--blue) 100%); 
     font-family: 'Open Sans', sans-serif;
+    animation: bg-color-home-page 10s infinite;
+}
+
+@keyframes bg-color-home-page{
+    0%{
+        background-color: var(--light-blue);
+    }
+
+    50%{
+        background-color: var(--blue);
+    }
+
+    100%{
+        background-color: var(--light-blue);
+    }
+}
+
+.home-page h1, .home-page h2{
+    background: linear-gradient(225deg, var(--darker-blue) 50%, var(--black) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .home-page h1{
@@ -9,6 +28,14 @@
     padding-top: 0.3em;
     font-size: 10em;
     color: var(--white);
+    animation: 1.5s fade-in-animation;
+    transition: transform .2s;
+    user-select: none;
+}
+
+.home-page h1:hover{
+    transform: scale(1.02);
+    cursor: pointer;
 }
 
 .home-page h2{
@@ -16,6 +43,23 @@
     font-size: 3em;
     color: var(--white);
     margin-bottom: 2em;
+    animation: 2.5s fade-in-animation;
+}
+
+.home-page .carousel{
+    background-color: var(--black);
+    padding: 5%;
+    animation: carousel-home-page 2s;
+    animation: fade-in-animation 2s;
+}
+
+@keyframes carousel-home-page{
+    0%{
+        background-color: var(--blue);
+    }
+    100%{
+        background-color: var(--black);
+    }
 }
 
 .home-page .home-carousel{

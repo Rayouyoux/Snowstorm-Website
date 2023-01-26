@@ -22,6 +22,16 @@
 .contact-page .content div .keyboard-icon {
     height: 50px;
 }
+
+.contact-page .content div .keyboard-icon:hover {
+    height: 50px;
+}
+
+.contact-page .content div .text {
+    height: 0px;
+    opacity: 0%;
+}
+
 .contact-page .content div .message-icon {
     height: 70px;
 }

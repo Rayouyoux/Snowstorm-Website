@@ -1,0 +1,33 @@
+{
+    "user": {
+        "_id": "ObjectId",
+        "first_name": "string",
+        "last_name": "string",
+        "email": "string"
+    },
+    "product": {
+        "_id": "ObjectId",
+        "name": "string",
+        "price": "float",
+        "description": "string",
+        "images": "string[]",
+        "tags": "string[]"
+    },
+    "component": {
+        "_id": "ObjectId",
+        "name": "string",
+        "price": "float",
+        "description": "string",
+        "images": "string[]",
+        "keyboards": "string[]"
+    },
+    "keyboard": {
+        "_id": "ObjectId",
+        "name": "string",
+        "price": "float",
+        "description": "string",
+        "images": "string[]",
+        "tags": "string[]",
+        "specs": "dictionary"
+    }
+}

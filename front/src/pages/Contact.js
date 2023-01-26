@@ -8,24 +8,29 @@ function Contacts() {
                 <div>
                     <img src="/img/keyboard-icon.png" class="keyboard-icon" alt="Keyboard Icon"></img>
                     <h2>Produit Et Commandes</h2>
-                    <p>
-                        num : +33 (0) 685457565 <br/>
-                        horraire : 9:00 - 21:00 <br/>
-                        jours : Lundi - Vendredi <br/>
-                        horraire : 9:00 - 18:00 <br/>
-                        jours : Samedi <br/>
-                    </p>
+                    <div className="text">
+                        <p>
+                            num : <br/>
+                            horraire :  <br/>
+                            jours :  <br/>
+                            horraire :  <br/>
+                            jours : <br/>
+                        </p>
+                    </div>
                 </div>
                 <div>
                     <img src="/img/message-icon.png" class="message-icon" alt="Message Icon"></img>
-                    <h2>Produit Et Commandes</h2>
-                    <p>
-                        +33 (0) 685457565 <br/>
-                        9:00 - 21:00 <br/>
-                        Lundi - Vendredi <br/>
-                        9:00 - 18:00 <br/>
-                        Samedi <br/>
-                    </p>
+                    <h2>Partenariat et Autre</h2>
+                    <div className="text">
+                        <p>
+                            email :<br/>
+                            adresse : <br/>
+                            horraire :<br/>
+                            jours : <br/>
+                            horraire : <br/>
+                            jours : <br/>
+                        </p>
+                    </div>
                 </div>
             </div>
     </div>

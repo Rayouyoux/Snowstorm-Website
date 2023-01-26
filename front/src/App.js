@@ -15,16 +15,19 @@ import {
   Route
 } from "react-router-dom";
 import "./App.css";
+import { useState } from "react";
 
 //App.js
 function App() {
+  const [ language, setLanguage ] = useState(0)
+
   return <Router>
     <NewsletterSignup />
-    <NavBar />
+    <NavBar language={language} setLanguage={setLanguage} />
     <div className="Content-container">
       <Switch>
         <Route exact path="/"> {/*ici on met l'URL dans le navigateur*/}
-          <Home /> {/*ici on donne la page à afficher en fonction de cette URL*/}
+          <Home language={language} setLanguage={setLanguage} /> {/*ici on donne la page à afficher en fonction de cette URL*/}
         </Route>
         <Route path="/listing">
           <Listing />
