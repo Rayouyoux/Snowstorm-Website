@@ -3,6 +3,7 @@ const dbo = require("./db.js");
 const objsTypes = require("./objs.js");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const session = require('express-session');
 
 const { salt } = require("./login");
 
@@ -113,6 +114,10 @@ app.get("/components", function (req, res) {
     });    
 });
 
+//* USERS *//
+
+
+
 //* ADMIN *//
 
 app.post("/products/insert", function (req, res) {
@@ -123,12 +128,14 @@ app.post("/products/insert", function (req, res) {
     const obj = new objsTypes.product(undefined, body.name, body.price, body.description, body.images, body.tags)
     console.log(obj)
 
-    var err, result
     dbConnect
     .collection("products")
     .insertOne(obj)
-    .then(console.log)
-    res.json({msg: "OK"})
+    .then(result => {
+        if (result.acknowledged)
+            res.json({msg: "OK", insertedId: result.insertedId.toString()})
+    })
+    
 });
 
 
