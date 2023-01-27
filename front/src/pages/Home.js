@@ -1,18 +1,18 @@
 import { Row, Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { backAccess } from "../api/db";
 import React, { useState, useEffect } from 'react';
 import Carousel from "react-bootstrap/Carousel";
 import "./css/Home.css";
-import bg1 from "./bg-img/blur-bg-1.png"
+import blurBg1 from "./bg-img/blurBg1.png";
+import triBg1 from "./bg-img/triBg1.png";
+import triBg2 from "./bg-img/triBg2.png";
+import diagBlob1 from "./bg-img/diagBlob1.png"
 
 
 function Home(props) {
     const { language, setLanguage } = props
     const [ backendTest, setBackendTest ] = useState('LOADING...')
-    const bg1style = {
-        backgroundImage: `url(${bg1})`,
-        backgroundSize: "cover"
-    }
 
     useEffect(() => {
         backAccess.get('/')
@@ -22,13 +22,14 @@ function Home(props) {
 
     return <div className="home-page">
         <Row>
+            <img src="/img/wave1.png"/>
             <div className="titles">
                 <Col xs={{ span:10 , offset:2 }}>
                     <h1>Snowstorm{language}</h1>
                     <h2>Les Meilleurs claviers du marché</h2>
                 </Col>
             </div>
-            <img src="/img/wave1.png"/>
+            <img src="/img/wave2.png"/>
             <div className="carousel">
                 <Col xs={{ span:8 , offset:2 }}>
                     <Carousel className="home-carousel">
@@ -86,9 +87,20 @@ function Home(props) {
                 </Col>
             </div>
         </Row>
-          
-        <p>{backendTest}</p>
-        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        <div className="links">
+            <h3>Découvrez nos produits</h3>
+            <Row>
+                <Col xs={12} md={4}>
+                    <Link className="buttonLink" style={{backgroundImage: `url(${diagBlob1})`}}>Magasin</Link>
+                </Col>
+                <Col xs={12} md={4}>
+                    <Link className="buttonLink" style={{backgroundImage: `url(${diagBlob1})`}}>Personnaliser</Link>
+                </Col>
+                <Col xs={12} md={4}>
+                    <Link className="buttonLink" style={{backgroundImage: `url(${diagBlob1})`}}>Galerie</Link>
+                </Col>
+            </Row>
+        </div>
     </div>
 }
 

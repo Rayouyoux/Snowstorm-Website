@@ -6,7 +6,7 @@ import { Row, Col, Container } from "react-bootstrap";
 
 function Footer(props) {
     return<footer>
-      <img className="img" src="./img/Logo_Blue.png" alt="Logo Snowstorm Blue"/>
+      <img className="img" src="./img/Logo_LightBlue.png" alt="Logo Snowstorm Blue"/>
       <Container className="container-footer"> 
         <Row>
           <Col>

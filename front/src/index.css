@@ -20,7 +20,7 @@ body {
 
 @keyframes fade-in-animation{
   from {
-    opacity: 0;
+    opacity: 1%;
   }
 
   to {

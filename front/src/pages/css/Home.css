@@ -1,35 +1,16 @@
 .home-page {
     font-family: 'Open Sans', sans-serif;
-    background-size: cover;
-    background-repeat: no-repeat;
-    /*animation: bg-color-home-page 10s infinite;*/
+    background-color: var(--black);
 }
-/*
-@keyframes bg-color-home-page {
-    0% {
-        background-color: var(--light-blue);
-    }
 
-    50% {
-        background-color: var(--blue);
-    }
-
-    100% {
-        background-color: var(--light-blue);
-    }
-}
-*/
 .titles{
-    background: linear-gradient(180deg, var(--black) 0%, var(--light-blue) 10%);
+    background-color: var(--light-blue);
 }
 
 .home-page h1,
 .home-page h2 {
     font-family: 'Bebas Neue', cursive !important;
-    background: linear-gradient(225deg, var(--darker-blue) 50%, var(--black) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--white);
 }
 
 .home-page h1 {
@@ -45,11 +26,53 @@
 }
 
 .home-page .carousel {
-    background-color: var(--black);
-    padding: 5%;
+    margin-top: 4%;
+    margin-bottom: 3%;
 }
 
 .home-page .home-carousel{
     animation: fade-in-animation 2s;
 }
 
+.home-page .links{
+    font-family: 'Bebas Neue', cursive !important;
+    text-align: center;
+    padding-bottom: 7%;
+    margin: 0;
+    animation: fade-in-animation 2s;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-bottom: solid 5px;
+    border-image: repeating-linear-gradient(225deg, var(--darker-blue) 0%, var(--light-blue) 100%) 10;
+}
+
+.home-page .links h3{
+    background: linear-gradient(225deg, var(--white) 0%, var(--light-blue) 100%); 
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 5%;
+    font-size: 3.5vw;
+}
+
+.home-page .links .buttonLink{
+    background-size: 120%;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding-left: 25%;
+    padding-right: 25%;
+    padding-top: 7%;
+    padding-bottom: 7%;
+    border: 1px var(--black) solid;
+    border-top-left-radius: 200px;
+    border-bottom-right-radius: 200px;
+    color: var(--black);
+    font-size: 3vw;
+    text-decoration: none;
+    transition: .5s;
+    margin: 0;
+}
+
+.home-page .links .buttonLink:hover{
+    background-size: 100%;
+    font-size: 3.3vw;
+}
