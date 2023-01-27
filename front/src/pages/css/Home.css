@@ -1,0 +1,55 @@
+.home-page {
+    font-family: 'Open Sans', sans-serif;
+    background-size: cover;
+    background-repeat: no-repeat;
+    /*animation: bg-color-home-page 10s infinite;*/
+}
+/*
+@keyframes bg-color-home-page {
+    0% {
+        background-color: var(--light-blue);
+    }
+
+    50% {
+        background-color: var(--blue);
+    }
+
+    100% {
+        background-color: var(--light-blue);
+    }
+}
+*/
+.titles{
+    background: linear-gradient(180deg, var(--black) 0%, var(--light-blue) 10%);
+}
+
+.home-page h1,
+.home-page h2 {
+    font-family: 'Bebas Neue', cursive !important;
+    background: linear-gradient(225deg, var(--darker-blue) 50%, var(--black) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.home-page h1 {
+    padding-top: 1vw;
+    font-size: 8vw;
+    animation: 1.5s fade-in-animation;
+}
+
+.home-page h2 {
+    font-size: 2.5vw;
+    padding-bottom: 1vw;
+    animation: 2.5s fade-in-animation;
+}
+
+.home-page .carousel {
+    background-color: var(--black);
+    padding: 5%;
+}
+
+.home-page .home-carousel{
+    animation: fade-in-animation 2s;
+}
+

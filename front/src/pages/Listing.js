@@ -1,16 +1,33 @@
-import "./Listing.css";
+import "./css/Listing.css";
 import { Row, Col } from "react-bootstrap";
 import { Link } from  "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
+import{ getKeyboards } from'../api/db';
+import React,{useEffect,useState} from "react";
+
 
 function Listing(props) {
+    const { language, setLanguage } = props
+    const [ keyboards, setKeyboards ] = useState([]);
+
+    function refreshPage() {
+      window.location.reload(false);
+    }
+    useEffect(() => {
+        const keyboardsFetched = getKeyboards();
+        keyboardsFetched
+            .then(result => setKeyboards(result))
+            .catch(error=>console.error("Erreur avec notre API :",error.message));
+    },[]);
+    
+    console.log(keyboards)
     return <div className="listing-page">
         <div className="top-of-page">
             <Row>
                 <Col xs={{ span:5, offset:2 }}>
-                    <h1>OUR PRODUCTS</h1>
+                    <h1>OUR PRODUCTS{language}</h1>
                 </Col>
             </Row>
             <Row>
@@ -33,19 +50,30 @@ function Listing(props) {
             <Container>
                 <div id="keyboards">
                     <h3>Keyboards</h3>
-                    <Card style={{ width: '18rem' }} className="card-margin">
-                        <Card.Img variant="top" src="./img/clavier-custom-1.jpg" />
-                        <Card.Body>
-                            <Card.Title>Card Title</Card.Title>
-                            <Card.Text>
-                            Some quick example text to build on the card title and make up the
-                            bulk of the card's content.
+                    <Row>
+                    {
+                        keyboards.map((keyboard,key) =>{
+                        return <Col md={4}>
+                            <div key={key}>
+                            <Card style={{ width: '18rem' }} className="card-margin">
+                            <div class="size-img-card-div">
+                                <Card.Img className="size-img-card" variant="top" src={keyboard.images} alt="test" />
+                            </div>
+                            <Card.Body>
+                            <Card.Title>{keyboard.name}</Card.Title>
+                            <Card.Text>{keyboard.description}
                             </Card.Text>
-                            <Button variant="primary">Go somewhere</Button>
-                        </Card.Body>
-                    </Card>
-                    </div> 
-                    <div id="components">
+                            <button className="button-card-product">Add to favorite</button>
+                            <button className="button-card-product"><img src="./img/cart_icon.png" alt=""/></button>
+                            </Card.Body>
+                        </Card></div>
+                        </Col>
+                        })
+                        
+                    }
+                    </Row>
+                </div> 
+                <div id="components">
                     <h3>Components</h3>
                     <Card style={{ width: '18rem' }} className="card-margin">
                         <Card.Img variant="top" src="./img/clavier-custom-1.jpg" />
@@ -58,8 +86,8 @@ function Listing(props) {
                             <Button variant="primary">Go somewhere</Button>
                         </Card.Body>
                     </Card>
-                    </div> 
-                    <div id="accessories">
+                </div> 
+                <div id="accessories">
                     <h3>Accessories</h3>
                     <Card style={{ width: '18rem' }} className="card-margin">
                         <Card.Img variant="top" src="./img/clavier-custom-1.jpg" />
@@ -72,7 +100,7 @@ function Listing(props) {
                             <Button variant="primary">Go somewhere</Button>
                         </Card.Body>
                     </Card>
-                    </div> 
+                </div> 
             </Container>
         </div>
     </div>

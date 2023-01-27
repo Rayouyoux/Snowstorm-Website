@@ -1,5 +1,4 @@
-import { Container } from "react-bootstrap";
-import "./Contact.css";
+import "./css/Contact.css";
 
 function Contacts() {
     return <div className="contact-page">
@@ -22,7 +21,7 @@ function Contacts() {
                     <img src="/img/message-icon.png" class="message-icon" alt="Message Icon"></img>
                     <h2>Partenariat et Autre</h2>
                     <div className="text">
-                        <p>
+                        <p> 
                             email :<br/>
                             adresse : <br/>
                             horraire :<br/>

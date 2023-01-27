@@ -26,26 +26,26 @@ function App() {
     <NavBar language={language} setLanguage={setLanguage} />
     <div className="Content-container">
       <Switch>
-        <Route exact path="/"> {/*ici on met l'URL dans le navigateur*/}
-          <Home language={language} setLanguage={setLanguage} /> {/*ici on donne la page à afficher en fonction de cette URL*/}
+        <Route exact path="/">
+          <Home language={language} setLanguage={setLanguage} />
         </Route>
         <Route path="/listing">
-          <Listing />
+          <Listing language={language} setLanguage={setLanguage} />
         </Route>
         <Route path="/contact">
-          <Contacts />
+          <Contacts language={language} setLanguage={setLanguage} />
         </Route>
         <Route path="/mention">
-          <Mentions />
+          <Mentions language={language} setLanguage={setLanguage} />
         </Route>
         <Route path="/faq">
-          <FAQ />
+          <FAQ language={language} setLanguage={setLanguage} />
         </Route>
         <Route path="/support">
-          <Support />
+          <Support language={language} setLanguage={setLanguage} />
         </Route>
         <Route path="/admin">
-          <Admin />
+          <Admin language={language} setLanguage={setLanguage} />
         </Route>
       </Switch>
     </div>

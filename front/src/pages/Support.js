@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import countries from '../components/Countries';
-import "./Support.css"
+import "./css/Support.css"
 
 /*Mettre en place un formulaire de contact 
 (nom, pays, adresse, email, téléphone, sujet, description du pb)

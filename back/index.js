@@ -4,7 +4,9 @@ const objsTypes = require("./objs.js");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const { ObjectId } = require("mongodb");
+const crypto = require('crypto')
 
 const { salt } = require("./login");
 
@@ -12,9 +14,34 @@ const app = express();
 const port = 4444;
 
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(session({
+	secret: salt,
+	resave: true,
+	saveUninitialized: true,
+    store: MongoStore.create({
+        client: dbo.client,
+        dbName: "snowstorm",
+        collectionName: "sessions"
+    })
+}));
 
-app.get("/", function (req, res) {
+const sessionUpdater = (req, res, next) => {
+    // Session updater
+    if (req.session.user && req.session.user._id) {
+        GetOne("users", req.session.user._id, result => {
+            if (result) {
+                req.session.user = new objsTypes.user(result._id, result.email, undefined, result.first_name, result.last_name)
+            } else {
+                delete req.session.user
+            }
+            next()
+        })
+    } else next();
+};
+
+app.get("/", (req, res) => {
     res.send("Hello World!");
 });
 
@@ -53,7 +80,7 @@ const GetOne = async (collection, _id, callback) => {
 
 // Products
 
-app.get("/products", function (req, res) {
+app.get("/products", (req, res) => {
     SearchCollection("products", {}, (err, result) => {
         if (err) {
             res.status(400).send("Error fetching products!");
@@ -65,14 +92,14 @@ app.get("/products", function (req, res) {
         }
     });
 });
-app.get("/products/:id", function (req, res) {
+app.get("/products/:id", (req, res) => {
     GetOne("products", req.params.id, x => {
         res.json(new objsTypes.product(x.name, x.price, x.description, x.images, x.tags));
     });
 });
 
 // Keyboards
-app.get("/keyboards", function (req, res) {
+app.get("/keyboards", (req, res) => {
     SearchCollection("keyboards", {}, (err, result) => {
         if (err) {
             res.status(400).send("Error fetching keyboards!");
@@ -84,14 +111,14 @@ app.get("/keyboards", function (req, res) {
         }
     });
 });
-app.get("/keyboards/:id", function (req, res) {
+app.get("/keyboards/:id", (req, res) => {
     GetOne("keyboards", req.params.id, x => {
         res.json(new objsTypes.keyboard(x._id, x.name, x.price, x.description, x.images, x.tags));
     });
 });
 
 // Components
-app.get("/components", function (req, res) {
+app.get("/components", (req, res) => {
     SearchCollection("components", {}, (err, result) => {
         if (err) {
             res.status(400).send("Error fetching components!");
@@ -103,7 +130,7 @@ app.get("/components", function (req, res) {
         }
     });
 });
-app.get("/components/by-keyboard/:id", function (req, res) {
+app.get("/components/by-keyboard/:id", (req, res) => {
     const _id = req.params.id
 
     SearchCollection("components", {keyboards: {$all: [_id]}}, (err, result) => {
@@ -118,7 +145,7 @@ app.get("/components/by-keyboard/:id", function (req, res) {
         }
     });
 });
-app.get("/components/:id", function (req, res) {
+app.get("/components/:id", (req, res) => {
     GetOne("components", req.params.id, x => {
         res.json(new objsTypes.component(x._id, x.name, x.price, x.description, x.images, x.keyboards));
     });
@@ -126,12 +153,48 @@ app.get("/components/:id", function (req, res) {
 
 //* USERS *//
 
+const hashPassword = password => crypto.createHash('sha256').update(salt+password).digest("hex")
+app.post("/register", sessionUpdater, (req, res) => {
+    const dbConnect = dbo.getDb();
+    const body = req.body
+    
+    const obj = new objsTypes.user(undefined, body.email, password=hashPassword(body.password), body.first_name, body.last_name)
 
+    dbConnect
+    .collection("users")
+    .insertOne(obj)
+    .then(result => {
+        if (result.acknowledged)
+        {
+            req.session.user = new objsTypes.user(result.insertedId, body.email, undefined, body.first_name, body.last_name)
+            res.json({msg: "OK", userInfo: req.session.user})
+        }
+    })
+})
+app.post("/login", sessionUpdater, (req, res) => {
+    const dbConnect = dbo.getDb();
+    const body = req.body
+
+    dbConnect
+    .collection("users")
+    .findOne({email: body.email.toString(), password: hashPassword(body.password)})
+    .then((result) => {
+        if (result) {
+            req.session.user = new objsTypes.user(result._id, result.email, undefined, result.first_name, result.last_name)
+            res.json({msg: "OK", userInfo: req.session.user})
+        } else {
+            res.status(400).json({msg: "Email or password incorrect!"})
+        }
+    })
+})
+app.get("/getUserInfo", sessionUpdater, (req, res) => {
+    res.json(req.session.user)
+})
 
 //* ADMIN *//
 
 // Products
-app.post("/products/insert", function (req, res) {
+app.post("/products/insert", sessionUpdater, (req, res) => {
     const dbConnect = dbo.getDb();
     const body = req.body
     delete body._id;
@@ -148,7 +211,7 @@ app.post("/products/insert", function (req, res) {
 });
 
 // Keyboards
-app.post("/keyboards/insert", function (req, res) {
+app.post("/keyboards/insert", sessionUpdater, (req, res) => {
     const dbConnect = dbo.getDb();
     const body = req.body
     delete body._id;
@@ -165,7 +228,7 @@ app.post("/keyboards/insert", function (req, res) {
 });
 
 // Components
-app.post("/components/insert", function (req, res) {
+app.post("/components/insert", sessionUpdater, (req, res) => {
     const dbConnect = dbo.getDb();
     const body = req.body
     delete body._id;
@@ -182,7 +245,7 @@ app.post("/components/insert", function (req, res) {
 });
 
 // Sales
-app.post("/sales/insert", function (req, res) {
+app.post("/sales/insert", (req, res) => {
     const dbConnect = dbo.getDb();
     const body = req.body
     delete body._id;

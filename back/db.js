@@ -10,6 +10,7 @@ const client = new MongoClient(connectionString, {
 var dbConnection;
 
 module.exports = {
+    client,
     connectToServer: async (callback) => {
         try {
             var db = await client.connect();

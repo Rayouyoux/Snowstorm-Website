@@ -1,0 +1,42 @@
+.contact-page {
+    display: block;
+    text-align: center;
+    background-color: var(--blue);
+}
+
+.contact-page .title {
+    text-align: center;
+    font-family: 'Bebas Neue', cursive !important;
+    font-size: 5vw;
+    background: linear-gradient(45deg, var(--darker-blue) 0%, var(--black) 90%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.contact-page .content {
+    display: inline-block;
+}
+
+.contact-page .content div img {
+    padding-bottom: 10px;
+}
+
+.contact-page .content div .keyboard-icon {
+    height: 50px;
+}
+
+.contact-page .content div .message-icon {
+    height: 70px;
+}
+
+.contact-page .content div h2 {
+    font-size: 1.5em;
+    background: linear-gradient(45deg, var(--darker-blue) 0%, var(--black) 90%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.contact-page .content div .text {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}

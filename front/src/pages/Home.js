@@ -2,12 +2,17 @@ import { Row, Col } from "react-bootstrap";
 import { backAccess } from "../api/db";
 import React, { useState, useEffect } from 'react';
 import Carousel from "react-bootstrap/Carousel";
-import "./Home.css";
+import "./css/Home.css";
+import bg1 from "./bg-img/blur-bg-1.png"
 
 
 function Home(props) {
     const { language, setLanguage } = props
     const [ backendTest, setBackendTest ] = useState('LOADING...')
+    const bg1style = {
+        backgroundImage: `url(${bg1})`,
+        backgroundSize: "cover"
+    }
 
     useEffect(() => {
         backAccess.get('/')
@@ -17,18 +22,20 @@ function Home(props) {
 
     return <div className="home-page">
         <Row>
-            <Col xs={{ span:10 , offset:2 }}>
-                <h1>Snowstorm{language}</h1>
-                <h2>Les Meilleurs claviers du marché</h2>
-            </Col>
-            
+            <div className="titles">
+                <Col xs={{ span:10 , offset:2 }}>
+                    <h1>Snowstorm{language}</h1>
+                    <h2>Les Meilleurs claviers du marché</h2>
+                </Col>
+            </div>
+            <img src="/img/wave1.png"/>
             <div className="carousel">
                 <Col xs={{ span:8 , offset:2 }}>
                     <Carousel className="home-carousel">
                         <Carousel.Item>
                             <img
                             className="d-block w-100"
-                            src="./img/clavier-custom-1.jpg"
+                            src="/img/clavier-custom-1.jpg"
                             alt="First slide"
                             />
                             <Carousel.Caption>
@@ -39,7 +46,7 @@ function Home(props) {
                         <Carousel.Item>
                             <img
                             className="d-block w-100"
-                            src="./img/clavier-custom-2.jpg"
+                            src="/img/clavier-custom-2.jpg"
                             alt="Second slide"
                             />
 
@@ -51,7 +58,7 @@ function Home(props) {
                         <Carousel.Item>
                             <img
                             className="d-block w-100"
-                            src="./img/clavier-custom-3.jpg"
+                            src="/img/clavier-custom-3.jpg"
                             alt="Third slide"
                             />
 
@@ -65,10 +72,9 @@ function Home(props) {
                         <Carousel.Item>
                             <img
                             className="d-block w-100"
-                            src="./img/clavier-custom-4.jpg"
+                            src="/img/clavier-custom-4.jpg"
                             alt="Third slide"
                             />
-
                             <Carousel.Caption>
                             <h3>Third slide label</h3>
                             <p>

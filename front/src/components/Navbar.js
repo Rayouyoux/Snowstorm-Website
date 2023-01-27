@@ -3,6 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import { Row, Col, Container } from "react-bootstrap";
 import Dropdown from 'react-bootstrap/Dropdown';
 import Navbar from 'react-bootstrap/Navbar';
+import LoginOverlay from './LoginOverlay';
 import "./Navbar.css";
 import { useEffect } from "react";
 
@@ -35,7 +36,8 @@ function NavBar(props) {
                     </Col>
                     <Col xs={{ span: 2, offset: 2}} className="icons">
                         <Link><img src="/img/cart_icon.png" class="cart-icon" alt="Cart Icon"/></Link>
-                        <Link><img src="/img/user_icon.png" class="user-icon" alt="User Icon"/></Link>
+                        {/*<Link><img src="/img/user_icon.png" class="user-icon" alt="User Icon"/></Link>*/}
+                        <LoginOverlay className="user-icon"/>
                     </Col> 
                 </Row>
             </div>  
