@@ -86,7 +86,7 @@ app.get("/products", (req, res) => {
             res.status(400).send("Error fetching products!");
         } else {
             var objects = result.map(x => {
-                return new objsTypes.product(x._id, x.name, x.price, x.description, x.images, x.tags)
+                return new objsTypes.product(x._id, x.name, x.price, x.description, x.images, x.tags, x.reviews, x.quantity)
             })
             res.json(result);
         }
@@ -94,7 +94,7 @@ app.get("/products", (req, res) => {
 });
 app.get("/products/:id", (req, res) => {
     GetOne("products", req.params.id, x => {
-        res.json(new objsTypes.product(x.name, x.price, x.description, x.images, x.tags));
+        res.json(new objsTypes.product(x.name, x.price, x.description, x.images, x.tags, x.reviews, x.quantity));
     });
 });
 
@@ -105,7 +105,7 @@ app.get("/keyboards", (req, res) => {
             res.status(400).send("Error fetching keyboards!");
         } else {
             var objects = result.map(x => {
-                return new objsTypes.keyboard(x._id, x.name, x.price, x.description, x.images, x.tags)
+                return new objsTypes.keyboard(x._id, x.name, x.price, x.description, x.images, x.tags, x.specs, x.reviews, x.quantity)
             })
             res.json(result);
         }
@@ -113,7 +113,7 @@ app.get("/keyboards", (req, res) => {
 });
 app.get("/keyboards/:id", (req, res) => {
     GetOne("keyboards", req.params.id, x => {
-        res.json(new objsTypes.keyboard(x._id, x.name, x.price, x.description, x.images, x.tags));
+        res.json(new objsTypes.keyboard(x._id, x.name, x.price, x.description, x.images, x.tags, x.specs, x.reviews, x.quantity));
     });
 });
 
@@ -124,7 +124,7 @@ app.get("/components", (req, res) => {
             res.status(400).send("Error fetching components!");
         } else {
             var objects = result.map(x => {
-                return new objsTypes.component(x._id, x.name, x.price, x.description, x.images, x.keyboards)
+                return new objsTypes.component(x._id, x.name, x.price, x.description, x.images, x.keyboards, x.reviews, x.quantity)
             })
             res.json(result);
         }
@@ -139,7 +139,7 @@ app.get("/components/by-keyboard/:id", (req, res) => {
             res.status(400).send("Error fetching components!");
         } else {
             var objects = result.map(x => {
-                return new objsTypes.component(x._id, x.name, x.price, x.description, x.images, x.keyboards)
+                return new objsTypes.component(x._id, x.name, x.price, x.description, x.images, x.keyboards, x.reviews, x.quantity)
             })
             res.json(result);
         }
@@ -147,7 +147,7 @@ app.get("/components/by-keyboard/:id", (req, res) => {
 });
 app.get("/components/:id", (req, res) => {
     GetOne("components", req.params.id, x => {
-        res.json(new objsTypes.component(x._id, x.name, x.price, x.description, x.images, x.keyboards));
+        res.json(new objsTypes.component(x._id, x.name, x.price, x.description, x.images, x.keyboards, x.reviews, x.quantity));
     });
 });
 
@@ -199,7 +199,7 @@ app.post("/products/insert", sessionUpdater, (req, res) => {
     const body = req.body
     delete body._id;
     
-    const obj = new objsTypes.product(undefined, body.name, body.price, body.description, body.images, body.tags)
+    const obj = new objsTypes.product(undefined, body.name, body.price, body.description, body.images, body.tags, body.reviews, body.quantity)
 
     dbConnect
     .collection("products")
@@ -216,7 +216,7 @@ app.post("/keyboards/insert", sessionUpdater, (req, res) => {
     const body = req.body
     delete body._id;
     
-    const obj = new objsTypes.keyboard(body._id, body.name, body.price, body.description, body.images, body.tags)
+    const obj = new objsTypes.keyboard(body._id, body.name, body.price, body.description, body.images, body.tags, body.specs, body.reviews, body.quantity)
 
     dbConnect
     .collection("keyboards")
@@ -233,7 +233,7 @@ app.post("/components/insert", sessionUpdater, (req, res) => {
     const body = req.body
     delete body._id;
     
-    const obj = new objsTypes.component(body._id, body.name, body.price, body.description, body.images, body.keyboards)
+    const obj = new objsTypes.component(body._id, body.name, body.price, body.description, body.images, body.keyboards, body.reviews, body.quantity)
 
     dbConnect
     .collection("components")

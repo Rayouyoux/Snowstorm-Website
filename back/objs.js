@@ -4,21 +4,28 @@ const structs = {
         "first_name": String,
         "last_name": String,
         "email": String,
-        "permission_level": Number
+        "permission_level": Number,
+        "newsletter": Number,
+        "custom_save_id": Array,
+        "favorite_id": Array
     },
     "product": {
         "name": String,
         "price": Number,
         "description": String,
         "images": Array,
-        "tags": Array
+        "tags": Array,
+        "reviews": String,
+        "quantity": Number
     },
     "component": {
         "name": String,
         "price": Number,
         "description": String,
         "images": Array,
-        "keyboards": Array
+        "keyboards": Array,
+        "reviews": String,
+        "quantity": Number
     },
     "keyboard": {
         "name": String,
@@ -26,7 +33,9 @@ const structs = {
         "description": String,
         "images": Array,
         "tags": Array,
-        "specs": Object
+        "specs": Object,
+        "reviews": String,
+        "quantity": Number
     },
     "sale": {
         "time": Number,
@@ -49,7 +58,7 @@ function check(obj, struct) {
     return [isValid, msg]
 }
 
-function user(_id=undefined, email="", password=undefined, first_name="", last_name="", permission_level=0) {
+function user(_id=undefined, email="", password=undefined, first_name="", last_name="", permission_level=0, newsletter=0, custom_save_id=[], favorite_id=[]) {
     this._id = _id
     if (this._id == undefined) delete this._id
     else this._id = this._id.toString()
@@ -58,12 +67,15 @@ function user(_id=undefined, email="", password=undefined, first_name="", last_n
     this.first_name = first_name
     this.last_name = last_name
     this.permission_level = permission_level
+    this.newsletter = newsletter
+    this.custom_save_id = custom_save_id
+    this.favorite_id = favorite_id
     const [isValid, msg] = check(this, structs.user)
     if (!isValid)
         throw new Error(msg);
 }
 
-function product(_id=undefined, name="Hello world!", price=0, description="Lorem Ipsum.", images=[], tags=[]) {
+function product(_id=undefined, name="Hello world!", price=0, description="Lorem Ipsum.", images=[], tags=[], reviews="that", quantity=0) {
     this._id = _id
     if (this._id == undefined) delete this._id
     else this._id = this._id.toString()
@@ -72,12 +84,14 @@ function product(_id=undefined, name="Hello world!", price=0, description="Lorem
     this.description = description
     this.images = images
     this.tags = tags
+    this.reviews = reviews
+    this.quantity = quantity
     const [isValid, msg] = check(this, structs.product)
     if (!isValid)
         throw new Error(msg);
 }
 
-function component(_id=undefined, name="", price=0, description="", images=[], keyboards=[]) {
+function component(_id=undefined, name="", price=0, description="", images=[], keyboards=[], reviews="that", quantity=0) {
     this._id = _id
     if (this._id == undefined) delete this._id
     else this._id = this._id.toString()
@@ -86,12 +100,14 @@ function component(_id=undefined, name="", price=0, description="", images=[], k
     this.description = description
     this.images = images
     this.keyboards = keyboards
+    this.reviews = reviews
+    this.quantity = quantity
     const [isValid, msg] = check(this, structs.component)
     if (!isValid)
         throw new Error(msg);
 }
 
-function keyboard(_id=undefined, name="", price=0, description="", images=[], tags=[], specs={}) {
+function keyboard(_id=undefined, name="", price=0, description="", images=[], tags=[], specs={}, reviews="that", quantity=0) {
     this._id = _id
     if (this._id == undefined) delete this._id
     else this._id = this._id.toString()
@@ -101,6 +117,8 @@ function keyboard(_id=undefined, name="", price=0, description="", images=[], ta
     this.images = images
     this.tags = tags
     this.specs = specs
+    this.reviews = reviews
+    this.quantity = quantity
     const [isValid, msg] = check(this, structs.keyboard)
     if (!isValid)
         throw new Error(msg);
