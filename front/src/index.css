@@ -13,6 +13,10 @@ body {
   font-family: 'Open Sans', sans-serif;
 }
 
+body::selection{
+  background-color: var(--light-blue);
+}
+
 #root {
   display:flex;
   flex-direction: column;
@@ -27,4 +31,8 @@ body {
   to {
     opacity: 100%;
   }
+}
+
+img{
+  user-select: none;
 }

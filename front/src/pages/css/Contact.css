@@ -4,13 +4,18 @@
     background-color: var(--blue);
 }
 
-.contact-page .title {
-    text-align: center;
+.contact-page .title,
+.contact-page .content div h2{
     font-family: 'Bebas Neue', cursive !important;
-    font-size: 5vw;
     background: linear-gradient(45deg, var(--darker-blue) 0%, var(--black) 90%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+}
+
+.contact-page .title {
+    font-size: 6em;
+    padding-top: 1vw;
+    text-align: center;
 }
 
 .contact-page .content {
@@ -30,10 +35,7 @@
 }
 
 .contact-page .content div h2 {
-    font-size: 1.5em;
-    background: linear-gradient(45deg, var(--darker-blue) 0%, var(--black) 90%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-size: 3em;
 }
 
 .contact-page .content div .text {

@@ -8,7 +8,20 @@ import "./css/Gallery.css";
 import blurBg1 from "./bg-img/blurBg1.png";
 import blurBg2 from "./bg-img/blurBg2.png";
 
-function Gallery() {
+function Gallery(props) {
+    const galleryText = {
+        "francais" : {
+            "h1" : "La Galerie",
+            "h2" : "Par des utilisateurs, pour des utilisateurs.",
+            "h31" : "Les Plus Aimés"
+        },
+        "english" : {
+            "h1" : "The Gallery",
+            "h2" : "By users, for users.",
+            "h31" : "Most Liked"
+        }
+    };
+    const { language, setLanguage } = props
     const [ userKeyboards, setUserKeyboards ] = useState([]);
     const [ favourites, setFavourites ] = useState([]);
     const toggleFavourite = id => {
@@ -28,19 +41,19 @@ function Gallery() {
     },[]);
 
     return <div className="gallery-page">
-        <img src="/img/wave2.png" alt="Wave"/>
+        <img src="/img/wave2.png" alt="Wave" draggable="false"/>
         <div className="titles">
             <Row>
                 <Col xs={{ span:6, offset:2}}>
-                    <h1 style={{backgroundImage: `url(${blurBg1})`}}>The Gallery</h1>
-                    <h2 style={{backgroundImage: `url(${blurBg1})`}}>Keyboards designed by users, for users.</h2>
+                    <h1 style={{backgroundImage: `url(${blurBg1})`}}>{language == 0 ? galleryText.english.h1 : galleryText.francais.h1}</h1>
+                    <h2 style={{backgroundImage: `url(${blurBg1})`}}>{language == 0 ? galleryText.english.h2 : galleryText.francais.h2}</h2>
                 </Col>
             </Row>
         </div>
-        <img src="/img/wave1.png" alt="Wave"/>
+        <img src="/img/wave1.png" alt="Wave" draggable="false"/>
 
         <div id="most-liked">
-                    <h3>Most Liked</h3>
+                    <h3>{language == 0 ? galleryText.english.h3 : galleryText.francais.h3}</h3>
                     <Row>
                     {
                         userKeyboards.map((userKeyboards,key) =>{

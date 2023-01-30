@@ -1,12 +1,26 @@
 import "./css/Contact.css";
 
-function Contacts() {
+function Contacts(props) {
+    const contactText = {
+        "francais" : {
+            "h1" : "Page de Contact",
+            "h21" : "Informations Produits & Commandes & Questions",
+            "h22" : "Informations de Contact Professionel"
+        },
+        "english" : {
+            "h1" : "Contact Page",
+            "h21" : "Products, Orders, Questions",
+            "h22" : "Buisness Contact Information"
+        }
+    };
+    const { language, setLanguage } = props
+
     return <div className="contact-page">
-            <h1 className="title">Page de Contact</h1>
+            <h1 className="title">{language == 0 ? contactText.english.h1 : contactText.francais.h1}</h1>
             <div className="content">
                 <div>
                     <img src="/img/keyboard-icon.png" class="keyboard-icon" alt="Keyboard Icon"></img>
-                    <h2>Produit Et Commandes</h2>
+                    <h2>{language == 0 ? contactText.english.h21 : contactText.francais.h21}</h2>
                     <div className="text">
                         <p>
                             num : <br/>
@@ -19,9 +33,9 @@ function Contacts() {
                 </div>
                 <div>
                     <img src="/img/message-icon.png" class="message-icon" alt="Message Icon"></img>
-                    <h2>Partenariat et Autre</h2>
+                    <h2>{language == 0 ? contactText.english.h22 : contactText.francais.h22}</h2>
                     <div className="text">
-                        <p> 
+                        <p>
                             email :<br/>
                             adresse : <br/>
                             horraire :<br/>

@@ -10,7 +10,29 @@ import { useEffect } from "react";
 
 
 function NavBar(props) {
+    const navText = {
+        "francais" : {
+            "l1" : "Nos Produits",
+            "l2" : "Personnaliser",
+            "l3" : "Galerie",
+            "l4" : "Support / SAV",
+            "l5" : "FAQ",
+            "l6" : "Contact"
+        },
+        "english" : {
+            "l1" : "Shop",
+            "l2" : "Customize",
+            "l3" : "Gallery",
+            "l4" : "Support/ASS",
+            "l5" : "FAQ",
+            "l6" : "Contact"
+        }
+    };
     const { language, setLanguage } = props
+
+    function refreshPage() {
+        window.location.reload(false);
+    }
 
     useEffect(() => {
         console.log(language)
@@ -26,8 +48,12 @@ function NavBar(props) {
                                 <img src="/img/globe_icon.png" className="globe-icon" alt="Globe Icon"/>
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                <Dropdown.Item onClick={() => setLanguage(0)}>FR</Dropdown.Item>
-                                <Dropdown.Item onClick={() => setLanguage(1)}>EN</Dropdown.Item>
+                                <Dropdown.Item onClick={() =>{
+                                    setLanguage(0)
+                                    }}>EN</Dropdown.Item>
+                                <Dropdown.Item onClick={() =>{
+                                    setLanguage(1)
+                                    }}>FR</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
                     </Col>
@@ -36,22 +62,21 @@ function NavBar(props) {
                     </Col>
                     <Col xs={{ span: 2, offset: 2}} className="icons">
                         <Link><img src="/img/cart_icon.png" className="cart-icon" alt="Cart Icon"/></Link>
-                        {/*<Link><img src="/img/user_icon.png" className="user-icon" alt="User Icon"/></Link>*/}
                         <LoginOverlay className="user-icon"/>
-                    </Col> 
+                    </Col>
                 </Row>
-            </div>  
+            </div>
             <Navbar bg="dark" expand="lg" variant="dark">
                 <Container>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
-                            <Link className="nav-link" to="/listing">Nos produits</Link>
-                            <Link className="nav-link" to="/custom">Personnaliser</Link>
-                            <Link className="nav-link" to="/gallery">Galerie</Link>
-                            <Link className="nav-link" to="/support">Support/SAV</Link>
-                            <Link className="nav-link" to="/faq">FAQ</Link>
-                            <Link className="nav-link" to="/contact">Contact</Link>
+                            <Link className="nav-link" to="/listing">{language == 0 ? navText.english.l1 : navText.francais.l1}</Link>
+                            <Link className="nav-link" to="/custom">{language == 0 ? navText.english.l2 : navText.francais.l2}</Link>
+                            <Link className="nav-link" to="/gallery">{language == 0 ? navText.english.l3 : navText.francais.l3}</Link>
+                            <Link className="nav-link" to="/support">{language == 0 ? navText.english.l4 : navText.francais.l4}</Link>
+                            <Link className="nav-link" to="/faq">{language == 0 ? navText.english.l5 : navText.francais.l5}</Link>
+                            <Link className="nav-link" to="/contact">{language == 0 ? navText.english.l6 : navText.francais.l6}</Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
