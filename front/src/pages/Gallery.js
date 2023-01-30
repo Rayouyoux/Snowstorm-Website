@@ -17,7 +17,6 @@ function Gallery() {
             mod.pop(mod.indexOf(id))
         else
             mod.push(id)
-        
         setFavourites(mod)
     }
 
@@ -27,8 +26,6 @@ function Gallery() {
             .then(result => setUserKeyboards(result))
             .catch(error=>console.error("Erreur avec notre API :",error.message));
     },[]);
-
-    
 
     return <div className="gallery-page">
         <img src="/img/wave2.png" alt="Wave"/>
@@ -50,7 +47,6 @@ function Gallery() {
 
                         return <Col md={4}>
                             <div key={key}>
-                            
                                 <Card style={{ width: '18rem' }} className="card-margin">
                                     <Link to="/product">
                                     <div class="size-img-card-div">
@@ -64,15 +60,12 @@ function Gallery() {
                                         </Card.Body>
                                     </Link>
                                 </Card>
-                            
                         </div>
                         </Col>
                         })
-                        
                     }
                     </Row>
-                </div> 
-
+                </div>
     </div>
 }
 
