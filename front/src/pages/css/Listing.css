@@ -97,10 +97,21 @@
     width: 100%;
     object-fit: contain;
 }
-.button-card-product{
-    background-color: var(--white);
+.card-link{
+    color: var(--white);
 }
-.listing-page .bot-of-page{
+.card-link:hover{
+    color: var(--darker-blue);
+}
+.button-card-product{
+    background-color: var(--blue)!important;
+    width: 40%;
+    margin: 10px;
+}
+.button-card-product img{
+    width: 35%; 
+}
+.listing-page .products-part{
     border-bottom: solid 5px;
     border-image: repeating-linear-gradient(225deg, var(--darker-blue) 0%, var(--light-blue) 100%) 10;
 }

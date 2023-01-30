@@ -11,6 +11,8 @@ import React,{useEffect,useState} from "react";
 function Listing(props) {
     const { language, setLanguage } = props
     const [ keyboards, setKeyboards ] = useState([]);
+    const [ favourites, setFavourites ] = useState([]);
+    const [searchInput, setSearchInput] = useState("");
 
     function refreshPage() {
       window.location.reload(false);
@@ -21,8 +23,24 @@ function Listing(props) {
             .then(result => setKeyboards(result))
             .catch(error=>console.error("Erreur avec notre API :",error.message));
     },[]);
-    
-    console.log(keyboards)
+
+    const toggleFavourite = id => {
+        var mod = favourites.slice()
+        if (mod.indexOf(id) > -1)
+            mod.pop(mod.indexOf(id))
+        else
+            mod.push(id)
+        
+        setFavourites(mod)
+    }
+    const handleChange = (e) => {
+        e.preventDefault();
+        setSearchInput(e.target.value);
+      };
+    if (searchInput.length > 0) {
+        keyboards.filter((keyboard) => {
+        return keyboard.name.match(searchInput);
+        })};
     return <div className="listing-page">
         <div className="top-of-page">
             <Row>
@@ -46,27 +64,36 @@ function Listing(props) {
             </Row>
         </div>
         
-        <div className="bot-of-page">
+        <div className="products-part">
             <Container>
+            <input type="search" placeholder="Search here" onChange={handleChange} value={searchInput} />
                 <div id="keyboards">
                     <h3>Keyboards</h3>
                     <Row>
                     {
                         keyboards.map((keyboard,key) =>{
+
                         return <Col md={4}>
                             <div key={key}>
-                            <Card style={{ width: '18rem' }} className="card-margin">
-                            <div class="size-img-card-div">
-                                <Card.Img className="size-img-card" variant="top" src={keyboard.images} alt="test" />
-                            </div>
-                            <Card.Body>
-                            <Card.Title>{keyboard.name}</Card.Title>
-                            <Card.Text>{keyboard.description}
-                            </Card.Text>
-                            <button className="button-card-product">Add to favorite</button>
-                            <button className="button-card-product"><img src="./img/cart_icon.png" alt=""/></button>
-                            </Card.Body>
-                        </Card></div>
+                            
+                                <Card style={{ width: '18rem' }} className="card-margin">
+                                
+                                <div class="size-img-card-div">
+                                    <Card.Img className="size-img-card" variant="top" src={keyboard.images} alt="test" />
+                                </div>
+                                <Card.Body>
+                                <Link to="/product">
+                                <Card.Title className="card-link">{keyboard.name}</Card.Title>
+                                </Link>
+                                <Card.Text className="">{keyboard.description}
+                                </Card.Text>
+                                
+                                <Button className="button-card-product" onClick={() => toggleFavourite(keyboard._id)} ><img id="image" src={favourites.indexOf(keyboard._id) > -1 ? './img/filled-heart-icon.png' : "./img/heart-icon.png"} alt="" /></Button>
+                                <Button className="button-card-product"><img src="./img/cart_icon.png" alt=""/></Button>
+                                </Card.Body>
+                                </Card>
+                            
+                        </div>
                         </Col>
                         })
                         
@@ -106,4 +133,4 @@ function Listing(props) {
     </div>
 }
 
-export default Listing
+export default Listing;

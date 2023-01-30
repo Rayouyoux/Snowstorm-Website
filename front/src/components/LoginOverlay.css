@@ -1,0 +1,21 @@
+.modal{
+    --bs-border-color: var(--blue);
+}
+
+.modal-header{
+    background-color: var(--black);
+    color:var(--white);
+}
+
+.modal-content{
+    background-color: var(--white) !important;
+}
+
+.modal-footer{
+    background-color: var(--black) !important;
+    display:inline-block !important;
+}
+
+.modal-footer .right-column{
+    text-align: right;
+}

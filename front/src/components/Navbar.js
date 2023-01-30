@@ -18,12 +18,12 @@ function NavBar(props) {
 
     return (
         <div className="navbar-component">
-            <div class="nav-top-bar">
+            <div className="nav-top-bar">
                 <Row>
                     <Col xs={1} className="icons">
                         <Dropdown>
                             <Dropdown.Toggle id="dropdown-basic">
-                                <img src="/img/globe_icon.png" class="globe-icon" alt="Globe Icon"/>
+                                <img src="/img/globe_icon.png" className="globe-icon" alt="Globe Icon"/>
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
                                 <Dropdown.Item onClick={() => setLanguage(0)}>FR</Dropdown.Item>
@@ -35,8 +35,8 @@ function NavBar(props) {
                         <Link className="title" to="/">Snowstorm</Link>
                     </Col>
                     <Col xs={{ span: 2, offset: 2}} className="icons">
-                        <Link><img src="/img/cart_icon.png" class="cart-icon" alt="Cart Icon"/></Link>
-                        {/*<Link><img src="/img/user_icon.png" class="user-icon" alt="User Icon"/></Link>*/}
+                        <Link><img src="/img/cart_icon.png" className="cart-icon" alt="Cart Icon"/></Link>
+                        {/*<Link><img src="/img/user_icon.png" className="user-icon" alt="User Icon"/></Link>*/}
                         <LoginOverlay className="user-icon"/>
                     </Col> 
                 </Row>

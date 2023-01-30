@@ -1,5 +1,4 @@
 .home-page {
-    font-family: 'Open Sans', sans-serif;
     background-color: var(--black);
 }
 
@@ -10,7 +9,8 @@
 .home-page h1,
 .home-page h2 {
     font-family: 'Bebas Neue', cursive !important;
-    color: var(--white);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .home-page h1 {

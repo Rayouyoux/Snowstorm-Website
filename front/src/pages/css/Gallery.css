@@ -1,0 +1,22 @@
+.gallery-page .titles{
+    background-color: var(--black);
+}
+
+.gallery-page h1,
+.gallery-page h2{
+    font-family: 'Bebas Neue', cursive !important;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.gallery-page h1{
+    font-size: 6vw;
+}
+
+.gallery-page h2{
+    font-weight: bold;
+    padding-top: 3vw;
+    font-size: 3vw;
+    padding-bottom: 1vw;
+}
+
