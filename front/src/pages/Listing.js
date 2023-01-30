@@ -30,7 +30,7 @@ function Listing(props) {
             mod.pop(mod.indexOf(id))
         else
             mod.push(id)
-        
+
         setFavourites(mod)
     }
     const handleChange = (e) => {
@@ -45,7 +45,7 @@ function Listing(props) {
         <div className="top-of-page">
             <Row>
                 <Col xs={{ span:5, offset:2 }}>
-                    <h1>OUR PRODUCTS{language}</h1>
+                    <h1>OUR PRODUCTS</h1>
                 </Col>
             </Row>
             <Row>
@@ -63,10 +63,10 @@ function Listing(props) {
                 </Col>
             </Row>
         </div>
-        
+
         <div className="products-part">
             <Container>
-            <input type="search" placeholder="Search here" onChange={handleChange} value={searchInput} />
+            <input type="search" placeholder="Find a Product" onChange={handleChange} value={searchInput} />
                 <div id="keyboards">
                     <h3>Keyboards</h3>
                     <Row>
@@ -75,31 +75,27 @@ function Listing(props) {
 
                         return <Col md={4}>
                             <div key={key}>
-                            
                                 <Card style={{ width: '18rem' }} className="card-margin">
-                                
-                                <div class="size-img-card-div">
-                                    <Card.Img className="size-img-card" variant="top" src={keyboard.images} alt="test" />
-                                </div>
-                                <Card.Body>
-                                <Link to="/product">
-                                <Card.Title className="card-link">{keyboard.name}</Card.Title>
-                                </Link>
-                                <Card.Text className="">{keyboard.description}
-                                </Card.Text>
-                                
-                                <Button className="button-card-product" onClick={() => toggleFavourite(keyboard._id)} ><img id="image" src={favourites.indexOf(keyboard._id) > -1 ? './img/filled-heart-icon.png' : "./img/heart-icon.png"} alt="" /></Button>
-                                <Button className="button-card-product"><img src="./img/cart_icon.png" alt=""/></Button>
-                                </Card.Body>
+                                    <div class="size-img-card-div">
+                                        <Card.Img className="size-img-card" variant="top" src={keyboard.images} alt="test" />
+                                    </div>
+                                    <Card.Body>
+                                        <Link to="/product">
+                                            <Card.Title className="card-link">{keyboard.name}</Card.Title>
+                                        </Link>
+                                        <Card.Text className="">
+                                            {keyboard.description}
+                                        </Card.Text>
+                                        <Button className="button-card-product" onClick={() => toggleFavourite(keyboard._id)} ><img id="image" src={favourites.indexOf(keyboard._id) > -1 ? './img/filled-heart-icon.png' : "./img/heart-icon.png"} alt="" /></Button>
+                                        <Button className="button-card-product"><img src="./img/cart_icon.png" alt=""/></Button>
+                                    </Card.Body>
                                 </Card>
-                            
                         </div>
                         </Col>
                         })
-                        
                     }
                     </Row>
-                </div> 
+                </div>
                 <div id="components">
                     <h3>Components</h3>
                     <Card style={{ width: '18rem' }} className="card-margin">

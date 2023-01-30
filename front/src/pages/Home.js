@@ -4,12 +4,14 @@ import { backAccess } from "../api/backend";
 import React, { useState, useEffect } from 'react';
 import Carousel from "react-bootstrap/Carousel";
 import "./css/Home.css";
+import{ getKeyboards } from'../api/db';
 import diagBlob1 from "./bg-img/diagBlob1.png";
 import triBg1 from "./bg-img/triBg1.png";
 
 
 function Home(props) {
     const { language, setLanguage } = props
+    const [ keyboards, setKeyboards ] = useState([]);
     const [ backendTest, setBackendTest ] = useState('LOADING...')
 
     useEffect(() => {
@@ -17,6 +19,13 @@ function Home(props) {
         .then(res => setBackendTest(res.data))
         .catch(e => setBackendTest(e.message))
     }, [])
+
+    useEffect(() => {
+        const keyboardsFetched = getKeyboards();
+        keyboardsFetched
+            .then(result => setKeyboards(result))
+            .catch(error=>console.error("Erreur avec notre API :",error.message));
+    },[]);
 
     return <div className="home-page">
         <Row>
