@@ -20,3 +20,42 @@
     padding-bottom: 1vw;
 }
 
+.gallery-page .card-margin{
+    margin-bottom: 5% ;
+    border: solid 3px;
+    border-image: repeating-linear-gradient(225deg, var(--darker-blue) 0%, var(--light-blue) 100%) 10;
+    background-color: var(--black);
+    color: var(--white);
+}
+.gallery-page .size-img-card-div {
+    width: 282px;
+    height: 180px;
+}
+
+.gallery-page .size-img-card{
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+
+.gallery-page .card-link{
+    color: var(--white);
+}
+
+.gallery-page .card-link:hover{
+    color: var(--darker-blue);
+}
+
+.gallery-page .button-card-product{
+    background-color: var(--blue)!important;
+    width: 40%;
+    margin: 10px;
+}
+.gallery-page .button-card-product img{
+    width: 35%;
+}
+
+.gallery-page .products-part{
+    border-bottom: solid 5px;
+    border-image: repeating-linear-gradient(225deg, var(--darker-blue) 0%, var(--light-blue) 100%) 10;
+}

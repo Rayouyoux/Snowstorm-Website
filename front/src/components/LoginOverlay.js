@@ -4,16 +4,37 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { useForm } from "react-hook-form";
-import {login, register} from '../api/backend';
+import { login, register as signup } from '../api/backend';
 import "./LoginOverlay.css"
 
-function LoginOverlay() {
+function LoginOverlay({user, setUser}) {
     const [show, setShow] = useState(false);
     const [whichForm, setWhichForm] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const { register, handleSubmit } = useForm();
-    const [data, setData] = useState("");
+    const onSubmit = (data) => {
+        if (whichForm) {
+            signup(data.email, data.password, data.first_name, data.last_name).then(data => {
+                if (data.msg == "OK") {
+                    setUser(data.userInfo)
+                    handleClose()
+                }
+                else
+                    console.log(data.msg) // TODO: Handle errors (Show them somewhere idk.)
+            })
+        } else {
+            //console.log(data.loginEmail,data.loginPassword);
+            login(data.loginEmail, data.loginPassword).then(data => {
+                if (data.msg == "OK") {
+                    setUser(data.userInfo)
+                    handleClose()
+                }
+                else
+                    console.log(data.msg) // TODO: Handle errors (Show them somewhere idk.)
+            })
+        }
+    };
 
     return (
         <>
@@ -26,36 +47,33 @@ function LoginOverlay() {
                     </Modal.Title>
                 </Modal.Header>
 
-                <Modal.Body>
-                        <Form>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Adresse Email</Form.Label>
-                                <Form.Control {...register("email", { required: true })} type="email" placeholder="nom@exemple.com" autoFocus/>
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="formBasicPassword">
-                                <Form.Label>Mot de Passe</Form.Label>
-                                <Form.Control {...register("password", { required: true })} type="password" placeholder="Mot de Passe" />
-                            </Form.Group>
-                        </Form>
-                </Modal.Body>
-
-                <Modal.Footer className="modal-footer">
+                <Form onSubmit={handleSubmit(onSubmit)}>
+                    <Modal.Body>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Adresse Email</Form.Label>
+                            <Form.Control {...register("loginEmail", { required: true })} type="email" placeholder="nom@exemple.com" autoFocus />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                            <Form.Label>Mot de Passe</Form.Label>
+                            <Form.Control {...register("loginPassword", { required: true })} type="password" placeholder="Mot de Passe" />
+                        </Form.Group>
                         <Row>
                             <Col xs={6}>
-                                <Button variant="dark" onClick={() => setWhichForm(true)}>
+                                <Button variant="secondary" onClick={() => setWhichForm(true)}>
                                     S'inscrire
                                 </Button>
                             </Col>
                             <Col xs={6} className="right-column">
-                                <Button variant="secondary" onClick={handleSubmit}>
+                                <Button variant="dark" type="submit">
                                     Se Connecter
                                 </Button>
                             </Col>
                         </Row>
-                </Modal.Footer>
-            </Modal>:null}
-            
-            
+                    </Modal.Body>
+                </Form>
+            </Modal> : null}
+
+
             {whichForm ? <Modal show={show} onHide={handleClose} className="full-modal">
                 <Modal.Header closeButton>
                     <Modal.Title>
@@ -63,49 +81,46 @@ function LoginOverlay() {
                     </Modal.Title>
                 </Modal.Header>
 
-                <Modal.Body>
-                        <Form>
-                            <Row>
-                                <Col xs={12} md={6}>
-                                    <Form.Group className="mb-3">
-                                        <Form.Label>Nom</Form.Label>
-                                        <Form.Control {...register("last_name", { required: true })} placeholder="Nom" autoFocus />
-                                    </Form.Group>
-                                </Col>
-                                <Col xs={12} md={6}>
-                                    <Form.Group className="mb-3">
-                                        <Form.Label>Prénom</Form.Label>
-                                        <Form.Control {...register("first_name", { required: true })} placeholder="Prénom" />
-                                    </Form.Group>
-                                </Col>
-                            </Row>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Adresse Email</Form.Label>
-                                <Form.Control {...register("email", { required: true })} type="email" placeholder="nom@exemple.com"/>
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="formBasicPassword">
-                                <Form.Label>Mot de Passe</Form.Label>
-                                <Form.Control {...register("password", { required: true })} type="password" placeholder="Mot de Passe" />
-                            </Form.Group>
-                            {/*FORGOTTEN PASSWORD ?*/}
-                        </Form>
-                </Modal.Body>
-
-                <Modal.Footer className="modal-footer">
+                <Form onSubmit={handleSubmit(onSubmit)}>
+                    <Modal.Body>
+                        <Row>
+                            <Col xs={12} md={6}>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Nom</Form.Label>
+                                    <Form.Control {...register("last_name", { required: true })} placeholder="Nom" autoFocus />
+                                </Form.Group>
+                            </Col>
+                            <Col xs={12} md={6}>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Prénom</Form.Label>
+                                    <Form.Control {...register("first_name", { required: true })} placeholder="Prénom" />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Adresse Email</Form.Label>
+                            <Form.Control {...register("email", { required: true })} type="email" placeholder="nom@exemple.com" />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                            <Form.Label>Mot de Passe</Form.Label>
+                            <Form.Control {...register("password", { required: true })} type="password" placeholder="Mot de Passe" />
+                        </Form.Group>
+                        {/*FORGOTTEN PASSWORD ?*/}
                         <Row>
                             <Col xs={6}>
-                                <Button variant="dark" onClick={() => setWhichForm(false)}>
+                                <Button variant="secondary" onClick={() => setWhichForm(false)}>
                                     Se connecter
                                 </Button>
                             </Col>
                             <Col xs={6} className="right-column">
-                                <Button variant="secondary" onClick={handleSubmit}>
+                                <Button variant="dark" type="submit">
                                     S'inscrire
                                 </Button>
                             </Col>
                         </Row>
-                </Modal.Footer>
-            </Modal>:null}
+                    </Modal.Body>
+                </Form>
+            </Modal> : null}
         </>
     );
 }

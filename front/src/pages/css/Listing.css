@@ -88,29 +88,36 @@
     background-color: var(--black);
     color: var(--white);
 }
-.size-img-card-div {
+
+.listing-page .size-img-card-div {
     width: 282px;
     height: 180px;
 }
-.size-img-card{
+
+.listing-page .size-img-card{
     height: 100%;
     width: 100%;
     object-fit: contain;
 }
-.card-link{
+
+.listing-page .card-link{
     color: var(--white);
 }
-.card-link:hover{
+
+.listing-page .card-link:hover{
     color: var(--darker-blue);
 }
-.button-card-product{
+
+.listing-page .button-card-product{
     background-color: var(--blue)!important;
     width: 40%;
     margin: 10px;
 }
-.button-card-product img{
+
+.listing-page .button-card-product img{
     width: 35%;
 }
+
 .listing-page .products-part{
     border-bottom: solid 5px;
     border-image: repeating-linear-gradient(225deg, var(--darker-blue) 0%, var(--light-blue) 100%) 10;

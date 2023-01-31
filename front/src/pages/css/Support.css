@@ -1,6 +1,4 @@
-.support-page{
-    padding-top: 5%;
-    padding-bottom: 8%;
+.Content-container{
     background-color: var(--blue);
     font-family: 'Open Sans', sans-serif !important;
     color: var(--black);

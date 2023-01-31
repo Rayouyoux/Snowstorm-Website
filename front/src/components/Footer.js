@@ -11,8 +11,8 @@ function Footer(props) {
         <Row>
           <Col>
             <h4 className="title">Catégories</h4>
-            <Link className="nav-link" to="/products">Nos produits</Link>
-            <Link className="nav-link" to="/custom">Personnaliser</Link>
+            <Link className="nav-link" to="/listing">Nos produits</Link>
+            <Link className="nav-link" to="/customize">Personnaliser</Link>
             <Link className="nav-link" to="/gallery">Galerie</Link>
           </Col>
           <Col>

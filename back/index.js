@@ -17,7 +17,7 @@ const port = 4444;
 
 app.use(cors({
     credentials: true,
-    origin: ["http://10.1.144.34:3000", "http://localhost"]
+    origin: ["http://10.1.144.34:3000", "http://localhost:3000"]
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -54,7 +54,6 @@ const adminRestricted = (req, res, next) => {
 };
 
 app.get("/", (req, res) => {
-    console.log(req.query)
     res.send("Hello World!");
 });
 
@@ -63,11 +62,14 @@ app.get("/", (req, res) => {
 // Generic search
 const SearchCollection = async (collection, query, callback) => {
     const dbConnect = dbo.getDb();
+    const sort = query.sort || {}
+    delete query.sort
 
     var err, result
     await dbConnect
     .collection(collection)
     .find(query)
+    .sort(sort)
     .toArray((rerr, rresult) => {
         if (callback) callback(rerr, rresult)
         err, result = rerr, rresult
@@ -108,30 +110,45 @@ const GetLast = async (collection, callback) => {
     return result
 }
 
+const GetMost = async (collection, callback) => {
+    const dbConnect = dbo.getDb();
+
+    var result
+    await dbConnect
+    .collection(collection)
+    .find()
+    .sort({$natural:-1})
+    .then((rresult) => {
+        if (callback) callback(rresult)
+        result = rresult
+    });
+
+    return result
+}
+
 // Products
 
 app.get("/products", (req, res) => {
-
-    
     SearchCollection("products", {}, (err, result) => {
         if (err) {
             res.status(400).send("Error fetching products!");
         } else {
             var objects = result.map(x => {
-                return new objsTypes.product(x._id, x.name, x.price, x.description, x.images, x.tags, x.quantity)
+                return new objsTypes.product(x._id, x.name, x.price, x.type, x.description, x.images, x.tags, x.quantity)
             })
+            console.log(objects)
             res.json(result);
         }
     });
 });
 app.get("/products/:id", (req, res) => {
     GetOne("products", req.params.id, x => {
-        res.json(new objsTypes.product(x.name, x.price, x.description, x.images, x.tags, x.quantity));
+        res.json(new objsTypes.product(x._id, x.name, x.price, x.type, x.description, x.images, x.tags, x.quantity));
     });
 });
 app.get("/products/last", (req, res) => {
     GetLast("products", x => {
-        res.json(new objsTypes.product(x.name, x.price, x.description, x.images, x.tags, x.quantity));
+        res.json(new objsTypes.product(x._id, x.name, x.price, x.type, x.description, x.images, x.tags, x.quantity));
     });
 });
 
@@ -161,7 +178,17 @@ app.get("/keyboards/last", (req, res) => {
 
 // User Keyboards
 app.get("/user_keyboards", (req, res) => {
-    SearchCollection("user_keyboards", {}, (err, result) => {
+    var sort = {}
+    switch(req.query.sort) {
+        case "mostliked":
+            sort = {"ranking":-1}
+            break;
+        default:
+            sort = {}
+            break;
+    }
+
+    SearchCollection("user_keyboards", {sort}, (err, result) => {
         if (err) {
             res.status(400).send("Error fetching keyboards!");
         } else {
@@ -286,7 +313,7 @@ app.post("/products/insert", [sessionUpdater, adminRestricted], (req, res) => {
     const body = req.body
     delete body._id;
     
-    const obj = new objsTypes.product(undefined, body.name, body.price, body.description, body.images, body.tags, body.quantity)
+    const obj = new objsTypes.product(undefined, body.name, body.price, body.type, body.description, body.images, body.tags, body.quantity)
 
     dbConnect
     .collection("products")

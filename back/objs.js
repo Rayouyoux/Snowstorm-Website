@@ -12,6 +12,7 @@ const structs = {
     "product": {
         "name": String,
         "price": Number,
+        "type": String,
         "description": String,
         "images": Array,
         "tags": Array,
@@ -90,12 +91,13 @@ function user(_id=undefined, email="", password=undefined, first_name="", last_n
         throw new Error(msg);
 }
 
-function product(_id=undefined, name="Hello world!", price=0, description="Lorem Ipsum.", images=[], tags=[], quantity=0) {
+function product(_id=undefined, name="Hello world!", price=0, type="keyboard", description="Lorem Ipsum.", images=[], tags=[], quantity=0) {
     this._id = _id
     if (this._id == undefined) delete this._id
     else this._id = this._id.toString()
     this.name = name
     this.price = price
+    this.type = type
     this.description = description
     this.images = images
     this.tags = tags

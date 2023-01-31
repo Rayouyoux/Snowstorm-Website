@@ -11,11 +11,6 @@
     background-color: var(--white) !important;
 }
 
-.modal-footer{
-    background-color: var(--black) !important;
-    display:inline-block !important;
-}
-
-.modal-footer .right-column{
+.modal-content .right-column{
     text-align: right;
 }

@@ -1,1 +1,31 @@
-{"contact":{"numero":"0607060706","horraire":"zeub8","jours":"zeub9","email":"zeub4","adresse":"00"},"faq":{"Hello":"World"}}
+{
+    "contact": {
+        "numero": ["0607060706", "0607060706"],
+        "horraire": ["9:00 - 18:00", "9:00 - 18:00"],
+        "jours": ["Monday - Saturday", "Lundi - Samedi"],
+        "email": ["contact@snowstorm.gg", "contact@snowstorm.gg"],
+        "adresse": ["14 Rue des Pommiers, Lyon 69007, France", "14 Rue des Pommiers, Lyon 69007, France"]
+    },
+    "faq": [
+        {
+            "question": [
+                "Hello",
+                "Bonjour"
+            ],
+            "answer": [
+                "World!",
+                "Monde!"
+            ]
+        },
+        {
+            "question": [
+                "English",
+                "Français"
+            ],
+            "answer": [
+                "🏴",
+                "🏳"
+            ]
+        }
+    ]
+}

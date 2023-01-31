@@ -9,7 +9,7 @@ import { useEffect } from "react";
 
 
 
-function NavBar(props) {
+function NavBar({ language, setLanguage, user, setUser } ) {
     const navText = {
         "francais" : {
             "l1" : "Nos Produits",
@@ -23,12 +23,11 @@ function NavBar(props) {
             "l1" : "Shop",
             "l2" : "Customize",
             "l3" : "Gallery",
-            "l4" : "Support/ASS",
+            "l4" : "Support/A.S.S.",
             "l5" : "FAQ",
             "l6" : "Contact"
         }
     };
-    const { language, setLanguage } = props
 
     function refreshPage() {
         window.location.reload(false);
@@ -62,7 +61,7 @@ function NavBar(props) {
                     </Col>
                     <Col xs={{ span: 2, offset: 2}} className="icons">
                         <Link><img src="/img/cart_icon.png" className="cart-icon" alt="Cart Icon"/></Link>
-                        <LoginOverlay className="user-icon"/>
+                        {user ? <Link to="/user"><img src="/img/user_icon.png" className="user-icon" alt="User Icon" /></Link> :<LoginOverlay className="user-icon" user={user} setUser={setUser} />}
                     </Col>
                 </Row>
             </div>
@@ -72,7 +71,7 @@ function NavBar(props) {
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
                             <Link className="nav-link" to="/listing">{language == 0 ? navText.english.l1 : navText.francais.l1}</Link>
-                            <Link className="nav-link" to="/custom">{language == 0 ? navText.english.l2 : navText.francais.l2}</Link>
+                            <Link className="nav-link" to="/customize">{language == 0 ? navText.english.l2 : navText.francais.l2}</Link>
                             <Link className="nav-link" to="/gallery">{language == 0 ? navText.english.l3 : navText.francais.l3}</Link>
                             <Link className="nav-link" to="/support">{language == 0 ? navText.english.l4 : navText.francais.l4}</Link>
                             <Link className="nav-link" to="/faq">{language == 0 ? navText.english.l5 : navText.francais.l5}</Link>

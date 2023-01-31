@@ -74,13 +74,13 @@ function Home(props) {
             <h3>{language == 0 ? homeText.english.h3 : homeText.francais.h3}</h3>
             <Row>
                 <Col xs={4}>
-                    <Link className="buttonLink" style={{backgroundImage: `url(${diagBlob1})`}}>{language == 0 ? homeText.english.b1 : homeText.francais.b1}</Link>
+                    <Link to="/listing" className="buttonLink" style={{backgroundImage: `url(${diagBlob1})`}}>{language == 0 ? homeText.english.b1 : homeText.francais.b1}</Link>
                 </Col>
                 <Col xs={4}>
-                    <Link className="buttonLink" style={{backgroundImage: `url(${diagBlob1})`}}>{language == 0 ? homeText.english.b2 : homeText.francais.b2}</Link>
+                    <Link to="/customize" className="buttonLink" style={{backgroundImage: `url(${diagBlob1})`}}>{language == 0 ? homeText.english.b2 : homeText.francais.b2}</Link>
                 </Col>
                 <Col xs={4}>
-                    <Link className="buttonLink" style={{backgroundImage: `url(${diagBlob1})`}}>{language == 0 ? homeText.english.b2 : homeText.francais.b2}</Link>
+                    <Link to="/gallery" className="buttonLink" style={{backgroundImage: `url(${diagBlob1})`}}>{language == 0 ? homeText.english.b3 : homeText.francais.b3}</Link>
                 </Col>
             </Row>
         </div>

@@ -36,6 +36,7 @@ export const getLastComponents = async () => {
 // Products //
 export const getProducts = async () => {
     const response = await backAccess('/products')
+    console.log(response)
     return response.data
 }
 export const getProductsById = async () => {
@@ -48,7 +49,9 @@ export const getLastProducts = async () => {
 }
 
 // User Keyboard //
-export const getUserKeyboards = async () => {
-    const response = await backAccess('/user_keyboards')
+export const getUserKeyboards = async (sort) => {
+    const response = await backAccess('/user_keyboards', {
+        params: {sort}
+    })
     return response.data
-}
+} // getUserKeyboards("mostliked")

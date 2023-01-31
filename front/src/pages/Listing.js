@@ -4,8 +4,9 @@ import { Link } from  "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
-import{ getKeyboards } from'../api/db';
+import{ getProducts } from'../api/db';
 import React,{useEffect,useState} from "react";
+import Search from "../components/search";
 
 
 function Listing(props) {
@@ -24,18 +25,18 @@ function Listing(props) {
         }
     };
     const { language, setLanguage } = props
-    const [ keyboards, setKeyboards ] = useState([]);
+    const [ products, setProducts ] = useState([]);
     const [ favourites, setFavourites ] = useState([]);
-    const [searchInput, setSearchInput] = useState("");
+    const [ search, setSearch]  = useState('');
 
     function refreshPage() {
       window.location.reload(false);
     }
 
     useEffect(() => {
-        const keyboardsFetched = getKeyboards();
-        keyboardsFetched
-            .then(result => setKeyboards(result))
+        const productsFetched = getProducts();
+        productsFetched
+            .then(result => setProducts(result))
             .catch(error=>console.error("Erreur avec notre API :",error.message));
     },[]);
 
@@ -48,15 +49,6 @@ function Listing(props) {
 
         setFavourites(mod)
     }
-
-    const handleChange = (e) => {
-        e.preventDefault();
-        setSearchInput(e.target.value);
-      };
-    if (searchInput.length > 0) {
-        keyboards.filter((keyboard) => {
-        return keyboard.name.match(searchInput);
-        })};
 
     return <div className="listing-page">
         <div className="top-of-page">
@@ -71,86 +63,121 @@ function Listing(props) {
                     <a href="#keyboards" smooth><img className="section-image" src="https://assets.hardwarezone.com/img/2022/06/board-paul-esch-laurent-8ssNFn4VPLg-unsplash.jpg"/></a>
                 </Col>
                 <Col xs={12} md={4}>
-                    <h2>{language == 0 ? listingText.english.h22 : listingText.francais.h22}</h2>
-                    <a href="#components"><img className="section-image" src="https://assets.hardwarezone.com/img/2022/06/board-paul-esch-laurent-8ssNFn4VPLg-unsplash.jpg"/></a>
-                </Col>
-                <Col xs={12} md={4}>
                     <h2>{language == 0 ? listingText.english.h23 : listingText.francais.h23}</h2>
                     <a href="#accessories"><img className="section-image" src="https://assets.hardwarezone.com/img/2022/06/board-paul-esch-laurent-8ssNFn4VPLg-unsplash.jpg"/></a>
+                </Col>
+                <Col xs={12} md={4}>
+                    <h2>{language == 0 ? listingText.english.h22 : listingText.francais.h22}</h2>
+                    <a href="#components"><img className="section-image" src="https://assets.hardwarezone.com/img/2022/06/board-paul-esch-laurent-8ssNFn4VPLg-unsplash.jpg"/></a>
                 </Col>
             </Row>
         </div>
 
         <div className="products-part">
             <Container>
-            <input type="search" placeholder="Find a Product" onChange={handleChange} value={searchInput} />
+            <Search setSearch = {setSearch} />
                 <div id="keyboards">
                     <h3>{language == 0 ? listingText.english.h21 : listingText.francais.h21}</h3>
                     <Row>
-                    {
-                        keyboards.map((keyboards) =>{
-                            return <h1>{keyboards.name}</h1>
-                        })
-                    }
-                    {
-                        keyboards.map((keyboard,key) =>{
-
-                        return <Col md={4}>
-                            <h1>{keyboard.name}</h1>
-                            <div key={key}>
-                                <Card style={{ width: '18rem' }} className="card-margin">
-                                    <div class="size-img-card-div">
-                                        <Card.Img className="size-img-card" variant="top" src={keyboard.images} alt="test" />
+                        { 
+                        products.filter((product) => {
+                            if (product.type == "keyboard")
+                                return search.toLowerCase() === '' ? product : product.name.toLowerCase().includes(search);}).map((product,key) => ( 
+                                    <Col md={4}>
+                                    <div key={key}>
+                                        <Card style={{ width: '18rem' }} className="card-margin">
+                                            <div class="size-img-card-div">
+                                                <Card.Img className="size-img-card" variant="top" src={product.images} alt="test" />
+                                            </div>
+                                            <Card.Body>
+                                                <Link to="/product">
+                                                    <Card.Title className="card-link">{product.name}</Card.Title>
+                                                </Link>
+                                                <Card.Text className="">
+                                                    {product.description}
+                                                </Card.Text>
+                                                <Button className="button-card-product" onClick={() => toggleFavourite(product._id)} >
+                                                    <img id="image" src={favourites.indexOf(product._id) > -1 ? './img/filled-heart-icon.png' : "./img/heart-icon.png"} alt="favorite-icon" />
+                                                </Button>
+                                                <Button className="button-card-product">
+                                                    <img src="./img/cart_icon.png" alt="cart icon"/>
+                                                </Button>
+                                            </Card.Body>
+                                        </Card>
                                     </div>
-                                    <Card.Body>
-                                        <Link to="/product">
-                                            <Card.Title className="card-link">{keyboard.name}</Card.Title>
-                                        </Link>
-                                        <Card.Text className="">
-                                            {keyboard.description}
-                                        </Card.Text>
-                                        <Button className="button-card-product" onClick={() => toggleFavourite(keyboard._id)} >
-                                            <img id="image" src={favourites.indexOf(keyboard._id) > -1 ? './img/filled-heart-icon.png' : "./img/heart-icon.png"} alt="favorite-icon" />
-                                        </Button>
-                                        <Button className="button-card-product">
-                                            <img src="./img/cart_icon.png" alt="cart icon"/>
-                                        </Button>
-                                    </Card.Body>
-                                </Card>
-                            </div>
-                        </Col>
-                        })
-                    }
+                                </Col>
+                        ))
+                        }
                     </Row>
-                </div>
-                <div id="components">
-                    <h3>{language == 0 ? listingText.english.h22 : listingText.francais.h22}</h3>
-                    <Card style={{ width: '18rem' }} className="card-margin">
-                        <Card.Img variant="top" src="./img/clavier-custom-1.jpg" />
-                        <Card.Body>
-                            <Card.Title>Card Title</Card.Title>
-                            <Card.Text>
-                            Some quick example text to build on the card title and make up the
-                            bulk of the card's content.
-                            </Card.Text>
-                            <Button variant="primary">Go somewhere</Button>
-                        </Card.Body>
-                    </Card>
                 </div>
                 <div id="accessories">
                     <h3>{language == 0 ? listingText.english.h23 : listingText.francais.h23}</h3>
-                    <Card style={{ width: '18rem' }} className="card-margin">
-                        <Card.Img variant="top" src="./img/clavier-custom-1.jpg" />
-                        <Card.Body>
-                            <Card.Title>Card Title</Card.Title>
-                            <Card.Text>
-                            Some quick example text to build on the card title and make up the
-                            bulk of the card's content.
-                            </Card.Text>
-                            <Button variant="primary">Go somewhere</Button>
-                        </Card.Body>
-                    </Card>
+                    <Row>
+                    { 
+                        products.filter((product) => {
+                            if (product.type == "accessory")
+                                return search.toLowerCase() === '' ? product : product.name.toLowerCase().includes(search);}).map((product,key) => ( 
+                                    <Col md={4}>
+                                    <div key={key}>
+                                        <Card style={{ width: '18rem' }} className="card-margin">
+                                            <div class="size-img-card-div">
+                                                <Card.Img className="size-img-card" variant="top" src={product.images} alt="test" />
+                                            </div>
+                                            <Card.Body>
+                                                <Link to="/product">
+                                                    <Card.Title className="card-link">{product.name}</Card.Title>
+                                                </Link>
+                                                <Card.Text className="">
+                                                    {product.description}
+                                                </Card.Text>
+                                                <Button className="button-card-product" onClick={() => toggleFavourite(product._id)} >
+                                                    <img id="image" src={favourites.indexOf(product._id) > -1 ? './img/filled-heart-icon.png' : "./img/heart-icon.png"} alt="favorite-icon" />
+                                                </Button>
+                                                <Button className="button-card-product">
+                                                    <img src="./img/cart_icon.png" alt="cart icon"/>
+                                                </Button>
+                                            </Card.Body>
+                                        </Card>
+                                    </div>
+                                </Col>
+                        ))
+                        }
+                    </Row>
                 </div> 
+                <div id="components">
+                    <h3>{language == 0 ? listingText.english.h22 : listingText.francais.h22}</h3>
+                    <Row>
+                    { 
+                        products.filter((product) => {
+                            if (product.type == "component")
+                                return search.toLowerCase() === '' ? product : product.name.toLowerCase().includes(search);}).map((product,key) => ( 
+                                    <Col md={4}>
+                                    <div key={key}>
+                                        <Card style={{ width: '18rem' }} className="card-margin">
+                                            <div class="size-img-card-div">
+                                                <Card.Img className="size-img-card" variant="top" src={product.images} alt="test" />
+                                            </div>
+                                            <Card.Body>
+                                                <Link to="/product">
+                                                    <Card.Title className="card-link">{product.name}</Card.Title>
+                                                </Link>
+                                                <Card.Text className="">
+                                                    {product.description}
+                                                </Card.Text>
+                                                <Button className="button-card-product" onClick={() => toggleFavourite(product._id)} >
+                                                    <img id="image" src={favourites.indexOf(product._id) > -1 ? './img/filled-heart-icon.png' : "./img/heart-icon.png"} alt="favorite-icon" />
+                                                </Button>
+                                                <Button className="button-card-product">
+                                                    <img src="./img/cart_icon.png" alt="cart icon"/>
+                                                </Button>
+                                            </Card.Body>
+                                        </Card>
+                                    </div>
+                                </Col>
+                        ))
+                        }
+                    </Row>
+                </div>
             </Container>
         </div>
     </div>

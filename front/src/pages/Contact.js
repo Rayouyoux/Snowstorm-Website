@@ -1,6 +1,6 @@
 import "./css/Contact.css";
 
-function Contacts(props) {
+function Contacts({ language, setLanguage, info }) {
     const contactText = {
         "francais" : {
             "h1" : "Page de Contact",
@@ -13,8 +13,8 @@ function Contacts(props) {
             "h22" : "Buisness Contact Information"
         }
     };
-    const { language, setLanguage } = props
 
+    (info.contact || []).map((obj) => {
     return <div className="contact-page">
             <h1 className="title">{language == 0 ? contactText.english.h1 : contactText.francais.h1}</h1>
             <div className="content">
@@ -23,7 +23,7 @@ function Contacts(props) {
                     <h2>{language == 0 ? contactText.english.h21 : contactText.francais.h21}</h2>
                     <div className="text">
                         <p>
-                            num : <br/>
+                            {obj.numero[language]}<br/>
                             horraire :  <br/>
                             jours :  <br/>
                             horraire :  <br/>
@@ -47,6 +47,7 @@ function Contacts(props) {
                 </div>
             </div>
     </div>
+    })
 }
 
 export default Contacts;

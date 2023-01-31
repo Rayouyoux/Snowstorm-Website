@@ -10,6 +10,8 @@ import NewsletterSignup from "./components/PopupNewsletter";
 import Listing from "./pages/Listing";
 import Admin from "./pages/Admin";
 import Gallery from "./pages/Gallery";
+import Customize from "./pages/Customize";
+import User from "./pages/User";
 import {
   BrowserRouter as Router,
   Switch,
@@ -27,14 +29,14 @@ window.lol = lol
 
 //ProtectedRoute
 
-function ProtectedRoute({children, user, ...rest}) {
+function ProtectedRoute({children, user, permission_level, ...rest}) {
   return (
 
     // this route takes other routes assigned to it from the App.js and return the same route if condition is met
     <Route {...rest} render={(props) => {
 
       // returns route if there is a valid token set in the cookie
-      if (user) {
+      if (user && user.permission_level > permission_level) {
         return children;
       } else {
         // returns the user to the landing page if there is no valid token set
@@ -71,7 +73,7 @@ function App() {
   }, [])
 
   return <Router>
-    <NewsletterSignup />
+    <NewsletterSignup/>
     <NavBar language={language} setLanguage={setLanguage} user={user} setUser={setUser} />
     <div className="Content-container">
       <Switch>
@@ -93,11 +95,17 @@ function App() {
         <Route path="/faq">
           <FAQ language={language} setLanguage={setLanguage} info={info} />
         </Route>
+        <Route path="/customize">
+          <Customize language={language} setLanguage={setLanguage}/>
+        </Route>
         <Route path="/support">
           <Support language={language} setLanguage={setLanguage} />
         </Route>
+        <Route path="/user" user={user}>
+          <User language={language} setLanguage={setLanguage} user={user} />
+        </Route>
         <ProtectedRoute path="/admin" user={user}>
-          <Admin language={language} setLanguage={setLanguage} />
+          <Admin language={language} setLanguage={setLanguage} user={user} />
         </ProtectedRoute>
       </Switch>
     </div>
