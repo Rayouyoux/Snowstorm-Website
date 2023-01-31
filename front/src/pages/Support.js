@@ -39,7 +39,7 @@ function Support(props) {
             "f8" : "Message",
             "p1" : "example@email.com",
             "p2" : "+123 456 789",
-            "p3" : "Chosse Your Country",
+            "p3" : "Choose Your Country",
             "b1" : "Submit"
         }
     };

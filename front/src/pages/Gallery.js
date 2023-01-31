@@ -13,17 +13,19 @@ function Gallery(props) {
         "francais" : {
             "h1" : "La Galerie",
             "h2" : "Par des utilisateurs, pour des utilisateurs.",
-            "h31" : "Les Plus Aimés"
+            "h31" : "Les Plus Aimés",
+            "h32" : "Les Plus Récents"
         },
         "english" : {
             "h1" : "The Gallery",
             "h2" : "By users, for users.",
-            "h31" : "Most Liked"
+            "h31" : "Most Liked",
+            "h32" : "Les Plus Récents"
         }
     };
     const { language, setLanguage } = props
+    const [ byLikes, setByLikes ] = useState([]);
     const [ userKeyboards, setUserKeyboards ] = useState([]);
-    const [ userKeyboardss, setUserKeyboardss ] = useState([]);
     const [ favourites, setFavourites ] = useState([]);
     const toggleFavourite = id => {
         var mod = favourites.slice()
@@ -35,14 +37,11 @@ function Gallery(props) {
     };
     
     useEffect(() => {
+        const userKeyboardsFetched = getUserKeyboards();
         const userKeyboardsByMostLikedFetched = getUserKeyboards("mostliked");
         userKeyboardsByMostLikedFetched
-            .then(result => setUserKeyboardss(result))
+            .then(result => setByLikes(result))
             .catch(error=>console.error("Erreur avec notre API :",error.message));
-    },[]);
-
-    useEffect(() => {
-        const userKeyboardsFetched = getUserKeyboards();
         userKeyboardsFetched
             .then(result => setUserKeyboards(result))
             .catch(error=>console.error("Erreur avec notre API :",error.message));
@@ -62,13 +61,6 @@ function Gallery(props) {
 
         <div id="most-liked">
             <h3>{language == 0 ? galleryText.english.h31 : galleryText.francais.h31}</h3>
-            
-            
-            
-            
-            
-            
-            
             <Row>
                 {
                     byLikes.map((byLikes,key) =>{
@@ -76,14 +68,19 @@ function Gallery(props) {
                         <div key={key}>
                             <Card style={{ width: '18rem' }} className="card-margin">
                                 <Link to="/product">
-                                <div class="size-img-card-div">
-                                    <Card.Img className="size-img-card" variant="top" src={byLikes.images} alt="test"/>
-                                </div>
+                                    <div class="size-img-card-div">
+                                        <Card.Img className="size-img-card" variant="top" src={byLikes.images} alt="test"/>
+                                    </div>
                                     <Card.Body className="card-style">
-                                    <Card.Title>{byLikes.name}</Card.Title>
-                                    <Card.Text>{byLikes.ranking}</Card.Text>
+                                        <Card.Title>{byLikes.name}</Card.Title>
+                                        <Card.Text>{byLikes.ranking}</Card.Text>
                                         <Button className="button-card-product" onClick={() => toggleFavourite(byLikes._id)} ><img id="image" src={favourites.indexOf(byLikes._id) > -1 ? './img/filled-heart-icon.png' : "./img/heart-icon.png"} alt="" /></Button>
                                         <Button className="button-card-product"><img src="./img/cart_icon.png" alt=""/></Button>
+                                        <div className="socials">
+                                            <a href="https://www.facebook.com/wasdkeyboards" target="_blank" ><img className="logo" src="/img/logo-facebook.png" alt="logo facebook"/></a>
+                                            <a href="https://twitter.com/wasdkeyboards" target="_blank"><img className="logo" src="/img/logo-twitter.png" alt="logo twitter"/></a>
+                                            <a href="https://www.instagram.com/wasdkeyboards" target="_blank"><img className="logo" src="/img/logo-instagram.png" alt="logo instagram"/></a>
+                                        </div>
                                     </Card.Body>
                                 </Link>
                             </Card>
@@ -92,6 +89,7 @@ function Gallery(props) {
                     })
                 };
             </Row>
+            <h3></h3>
         </div>
     </div>
 }

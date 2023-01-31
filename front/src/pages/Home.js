@@ -29,7 +29,7 @@ function Home(props) {
     const { language, setLanguage } = props;
     const [ keyboards, setKeyboards ] = useState([]);
     const [ backendTest, setBackendTest ] = useState('LOADING...');
-
+    
     useEffect(() => {
         backAccess.get('/')
         .then(res => setBackendTest(res.data))
