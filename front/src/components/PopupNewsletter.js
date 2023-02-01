@@ -5,9 +5,10 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Row } from 'react-bootstrap';
 import { Col } from 'react-bootstrap';
+import { newsletterOn }  from '../api/backend.js';
 import "./css/PopupNewsletter.css";
 
-function NewsletterSignup() {
+function NewsletterSignup({ user, setUser,  language, setLanguage}) {
     const [showA, setShowA] = useState(true);
     const toggleShowA = () => setShowA(!showA);
 
@@ -15,21 +16,19 @@ function NewsletterSignup() {
         <ToastContainer className="p-3" position='bottom-end' containerPosition='position-fixed'>
             <Toast bg="secondary" show={showA} onClose={toggleShowA}>
                 <Toast.Header>
-                    <strong className="me-auto">Abonnez-vous à notre Newsletter !</strong>
+                    <strong className="me-auto">{["Subscribe to our newsletter !", "Abonnez-vous à notre Newsletter !"][language]}</strong>
                 </Toast.Header>
                 <Toast.Body className='promptFrame'>
                     <Form>
                         <Row>
                             <Col xs={12} md={8}>
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                            <Form.Control type="email" placeholder="Votre Email" />
-                        </Form.Group>
-                        </Col>
-                        <Col xs={12} md={4}>
-                        <Button variant="dark" type="submit">
-                            S'abonner
-                        </Button>
-                        </Col>
+                                <p><strong>{["Receive emails about news and discounts today !", "Restez informés sur les nouvelles et promotions !"][language]}</strong></p>
+                            </Col>
+                            <Col xs={12} md={4}>
+                                <Button variant="dark" type="submit" onClick={() => newsletterOn(user.email)}>
+                                    {["Subscribe", "S'abonner"][language]}
+                                </Button>
+                            </Col>
                         </Row>
                     </Form>
                 </Toast.Body>

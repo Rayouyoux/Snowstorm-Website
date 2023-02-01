@@ -17,7 +17,7 @@ const port = 4444;
 
 app.use(cors({
     credentials: true,
-    origin: ["http://10.1.144.34:3000", "http://localhost:3000"]
+    origin: ["http://10.1.144.34:3000", "http://localhost:3000","http://10.1.171.14:3000"]
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -303,23 +303,6 @@ app.get("/sales/most-sales", (req, res, next) => {
     });
 });
 
-/*
-    dbC.collection("sales").limit(5).aggregate([{
-    $group: {
-        _id: "$sold_id",
-        count: {
-        $sum: 1
-        }
-    }
-    }]).toArray(console.log);
-
-    > out = [ 
-        { _id: '63d14307611b313fb6ffdf38', count: 1 },
-        { _id: '63d2aaf332f2eea202e2cc00', count: 1 },
-        { _id: '63d2abd932f2eea202e2cc02', count: 2 }
-    ]
-*/
-
 //* USERS *//
 
 const hashPassword = password => crypto.createHash('sha256').update(salt + password).digest("hex")
@@ -365,6 +348,36 @@ app.post("/logout", sessionUpdater, (req, res, next) => {
 app.get("/getUserInfo", sessionUpdater, (req, res, next) => {
     res.json(req.session.user)
 })
+app.post("/update", sessionUpdater, (req, res, next) => {
+    const dbConnect = dbo.getDb();
+    const body = req.body
+
+    dbConnect.collection("users").update(
+        {email: body.email.toString()},
+        {password: hashPassword(body.password)}
+        )
+}).catch(next);
+
+//* NEWSLETTER *//
+app.post("/newsletterOn", sessionUpdater, (req, res, next) => {
+    const dbConnect = dbo.getDb();
+    const body = req.body
+
+    dbConnect.collection("users").update(
+        {email: body.email.toString()},
+        {newsletter: 1}
+        )
+}).catch(next);
+
+app.post("/newsletterOff", sessionUpdater, (req, res, next) => {
+    const dbConnect = dbo.getDb();
+    const body = req.body
+
+    dbConnect.collection("users").update(
+        {email: body.email.toString()},
+        {newsletter: 0}
+        )
+}).catch(next);
 
 //* ADMIN *//
 

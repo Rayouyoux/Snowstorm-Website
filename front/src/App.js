@@ -73,6 +73,11 @@ function App() {
         .catch(error=>console.error("Erreur avec notre API :",error.message));
 },[]);
 */
+
+  useEffect(() => {
+    if (user && user.permission_level > 200) setInfo(info)
+  }, [info])
+
   useEffect(() => {
     getUserInfo().then(newUser => {
       setUser(newUser)
@@ -84,7 +89,7 @@ function App() {
   }, [])
 
   return <><Router>
-    {user?<NewsletterSignup/>:null}
+  {user?<NewsletterSignup language={language} setLanguage={setLanguage}  user={user} setUser={setUser}/>:null}
     <NavBar language={language} setLanguage={setLanguage} user={user} setUser={setUser} />
     <div className="Content-container">
       <Switch>

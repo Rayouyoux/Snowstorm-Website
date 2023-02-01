@@ -5,15 +5,16 @@ import { getUserKeyboards } from '../api/db';
 import React, { useEffect, useState } from "react";
 import "./css/User.css"
 
+
 function User({ user, setUser }) {
-    const [myCustoms, setMyCustoms] = useState([]);
+
+    const [customKeyboards, setCustomKeyboards] = useState([]);
 
     useEffect(() => {
-
-        const customKeyboards = getUserKeyboards(user._id);
-        customKeyboards
-            .then(result => setMyCustoms(result))
-            .catch(error => console.error("Erreur avec notre API :", error.message));
+        const myCustoms = getUserKeyboards(null,user._id);
+        myCustoms
+            .then(result => setCustomKeyboards(result))
+            .catch(error => console.error("Erreur avec l'API :", error.message));
     }, []);
 
 
@@ -38,7 +39,13 @@ function User({ user, setUser }) {
             <h3>Saved</h3>
             <h3>Favorites</h3>
             <h3>Custom</h3>
-            {}
+            <div>
+                {/*all the values in customKeyboard: .name .price .description .images(array) .tags(array) .ranking .components(array)*/
+                    customKeyboards.map((customKeyboard, key) => {
+                        return <div key={key} className="custom-keyboard-box">{customKeyboard.name} {customKeyboard.price}</div>;
+                    })
+                }
+            </div>
             {/*Account settngs*/}
             <h2>Account Settings</h2>
             <h3>Password Change</h3>

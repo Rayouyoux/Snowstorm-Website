@@ -27,6 +27,25 @@ export const getUserInfo = async () => {
     return (await backAccess("/getUserInfo")).data
 }
 
+export const update = async (email, password) => {
+    return (await backAccess("/update", {
+        email, password
+    })).data
+}
+
+/*NEWSLETTER UPDATERS*/
+export const newsletterOn = async (email) => {
+    return (await backAccess("/newsletterOn", {
+        email
+    })).data
+}
+
+export const newsletterOff = async (email) => {
+    return (await backAccess("/newsletterOff", {
+        email
+    })).data
+}
+
 export const getInfo = async () => {
     return (await backAccess("/info")).data
 }

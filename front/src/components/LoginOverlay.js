@@ -107,7 +107,6 @@ function LoginOverlay({user, setUser}) {
                             <Form.Label>Mot de Passe</Form.Label>
                             <Form.Control {...register("password", { required: true })} type="password" placeholder="Mot de Passe" />
                         </Form.Group>
-                        {/*FORGOTTEN PASSWORD ?*/}
                         <Row>
                             <Col xs={6}>
                                 <Button variant="secondary" onClick={() => setWhichForm(false)}>
