@@ -12,6 +12,7 @@ import Admin from "./pages/Admin";
 import Gallery from "./pages/Gallery";
 import Customize from "./pages/Customize";
 import User from "./pages/User";
+import{ getProducts } from'./api/db';
 import {
   BrowserRouter as Router,
   Switch,
@@ -59,8 +60,16 @@ function ProtectedRoute({children, user, permission_level, ...rest}) {
 //App.js
 function App() {
   const [ language, setLanguage ] = useState(0)
+  const [ products, setProducts ] = useState([]);
   const [ user, setUser ] = useState({})
   const [ info, setInfo ] = useState({})
+
+  useEffect(() => {
+    const productsFetched = getProducts();
+    productsFetched
+        .then(result => setProducts(result))
+        .catch(error=>console.error("Erreur avec notre API :",error.message));
+},[]);
 
   useEffect(() => {
     getUserInfo().then(newUser => {
@@ -104,6 +113,13 @@ function App() {
         <Route path="/user" user={user}>
           <User language={language} setLanguage={setLanguage} user={user} />
         </Route>
+        {
+          products.map((product) =>
+            <Route path={"/" + product.name}>
+              <Product language={language} setLanguage={setLanguage} product={product}/>
+            </Route>
+          )
+        }
         <ProtectedRoute path="/admin" user={user}>
           <Admin language={language} setLanguage={setLanguage} user={user} />
         </ProtectedRoute>

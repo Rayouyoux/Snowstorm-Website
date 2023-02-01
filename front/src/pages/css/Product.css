@@ -1,0 +1,25 @@
+.product-page .carousel {
+    margin-top: 4%;
+    margin-bottom: 3%;
+}
+
+.product-page .product-carousel{
+    animation: fade-in-animation 2s;
+}
+
+.product-page .logo{
+    width: 4.2em;
+    margin: 3%;
+}
+
+.product-page .technical-sheet div.col-2.offset-1,
+.product-page .technical-sheet div.col-7{
+    padding: 0;
+    margin-bottom: 1%;
+}
+
+.product-page .technical-sheet p{
+    border: var(--black) solid 5px;
+    margin: 0;
+    padding: 20px;
+}

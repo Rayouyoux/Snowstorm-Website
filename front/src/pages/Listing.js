@@ -124,7 +124,7 @@ function Listing(props) {
                                                     Compare
                                                 </Button>
                                                 <Button className="button-card-product">
-                                                    View More
+                                                    <Link to={"/"+product.name}>View More</Link>
                                                 </Button>
                                             </Card.Body>
                                         </Card>
@@ -164,7 +164,7 @@ function Listing(props) {
                                                     Compare
                                                 </Button>
                                                 <Button className="button-card-product">
-                                                    View More
+                                                    <Link to={"/"+product.name}>View More</Link>
                                                 </Button>
                                             </Card.Body>
                                         </Card>
@@ -204,7 +204,7 @@ function Listing(props) {
                                                     Compare
                                                 </Button>
                                                 <Button className="button-card-product">
-                                                    View More
+                                                    <Link to={"/"+product.name}>View More</Link>
                                                 </Button>
                                             </Card.Body>
                                         </Card>
