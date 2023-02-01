@@ -56,7 +56,7 @@ function NavBar({ language, setLanguage, user, setUser } ) {
                         <Link className="title" to="/">Snowstorm</Link>
                     </Col>
                     <Col xs={{ span: 2, offset: 2}} className="icons">
-                        <Link><img src="/img/cart_icon.png" className="cart-icon" alt="Cart Icon"/></Link>
+                        <Link to="/cart"><img src="/img/cart_icon.png" className="cart-icon" alt="Cart Icon"/></Link>
                         {user ? <Link to="/user"><img src="/img/user_icon.png" className="user-icon" alt="User Icon" /></Link> :<LoginOverlay className="user-icon" user={user} setUser={setUser} />}
                     </Col>
                 </Row>

@@ -2,7 +2,7 @@
     background-color: var(--black);
 }
 
-.titles{
+.home-page .titles {
     background-color: var(--light-blue);
 }
 
@@ -29,50 +29,29 @@
     margin-top: 4%;
     margin-bottom: 3%;
 }
+.home-page .carousel > .carousel-inner {
+    aspect-ratio: 16/9;
+}
+.home-page .carousel-item, .home-page .carousel-item > img {
+    height: 100%;
+}
+.home-page .carousel-item > img{
+    object-fit: contain;
+}
 
-.home-page .home-carousel{
+.home-page .home-carousel {
     animation: fade-in-animation 2s;
 }
 
-.home-page .links{
-    font-family: 'Bebas Neue', cursive !important;
-    text-align: center;
-    padding-bottom: 7%;
-    margin: 0;
-    animation: fade-in-animation 2s;
-    background-repeat: no-repeat;
-    background-size: cover;
+.home-page .links {
     border-bottom: solid 5px;
     border-image: repeating-linear-gradient(225deg, var(--darker-blue) 0%, var(--light-blue) 100%) 10;
 }
 
-.home-page .links h3{
-    background: linear-gradient(225deg, var(--white) 0%, var(--light-blue) 100%); 
+.home-page .links h3 {
+    background: linear-gradient(225deg, var(--white) 0%, var(--light-blue) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 5%;
     font-size: 3.5vw;
-}
-
-.home-page .links .buttonLink{
-    background-size: 120%;
-    background-repeat: no-repeat;
-    background-position: center;
-    padding-left: 25%;
-    padding-right: 25%;
-    padding-top: 7%;
-    padding-bottom: 7%;
-    border: 1px var(--black) solid;
-    border-top-left-radius: 200px;
-    border-bottom-right-radius: 200px;
-    color: var(--black);
-    font-size: 3vw;
-    text-decoration: none;
-    transition: .5s;
-    margin: 0;
-}
-
-.home-page .links .buttonLink:hover{
-    background-size: 100%;
-    font-size: 3.3vw;
 }

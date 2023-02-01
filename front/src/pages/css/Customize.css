@@ -1,0 +1,53 @@
+.customize-page {
+    background-color: var(--black);
+    border-top: solid 5px;
+    border-bottom: solid 5px;
+    border-image: repeating-linear-gradient(225deg, var(--darker-blue) 0%, var(--light-blue) 100%) 10;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.customize-page .first-slide h1 {
+    color: var(--light-blue);
+    text-align: center;
+    font-weight: bold;
+    padding-bottom: 2em;
+}
+.customize-page .second-slide h1 {
+    color: var(--light-blue);
+    text-align: center;
+    font-weight: bold;
+    padding-bottom: 2em;
+}
+
+.customize-page .card-margin{
+    margin-bottom: 5em ;
+    border: solid 3px;
+    border-image: repeating-linear-gradient(225deg, var(--darker-blue) 0%, var(--light-blue) 100%) 10;
+    background-color: var(--black);
+    color: var(--white);
+}
+
+.customize-page .size-img-card-div {
+    width: 282px;
+    height: 180px;
+}
+
+.customize-page .size-img-card{
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+
+.customize-page .card-link{
+    color: var(--white);
+}
+
+.customize-page .card-link:hover{
+    color: var(--darker-blue);
+}
+
+.customize-page .button-card-product{
+    background-color: var(--blue)!important;
+    width: 40%;
+    margin: 10px;
+}

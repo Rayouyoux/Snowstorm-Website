@@ -9,20 +9,10 @@ import blurBg1 from "./bg-img/blurBg1.png";
 import blurBg2 from "./bg-img/blurBg2.png";
 
 function Gallery(props) {
-    const galleryText = {
-        "francais" : {
-            "h1" : "La Galerie",
-            "h2" : "Par des utilisateurs, pour des utilisateurs.",
-            "h31" : "Les Plus Aimés",
-            "h32" : "Les Plus Récents"
-        },
-        "english" : {
-            "h1" : "The Gallery",
-            "h2" : "By users, for users.",
-            "h31" : "Most Liked",
-            "h32" : "Les Plus Récents"
-        }
-    };
+    
+    
+    
+    
     const { language, setLanguage } = props
     const [ byLikes, setByLikes ] = useState([]);
     const [ userKeyboards, setUserKeyboards ] = useState([]);
@@ -52,15 +42,15 @@ function Gallery(props) {
         <div className="titles">
             <Row>
                 <Col xs={{ span:6, offset:2}}>
-                    <h1 style={{backgroundImage: `url(${blurBg1})`}}>{language == 0 ? galleryText.english.h1 : galleryText.francais.h1}</h1>
-                    <h2 style={{backgroundImage: `url(${blurBg1})`}}>{language == 0 ? galleryText.english.h2 : galleryText.francais.h2}</h2>
+                    <h1 style={{backgroundImage: `url(${blurBg1})`}}>{["The Gallery","La Galerie"][language]}</h1>
+                    <h2 style={{backgroundImage: `url(${blurBg1})`}}>{["By users, for users.","Par des utilisateurs, pour des utilisateurs."][language]}</h2>
                 </Col>
             </Row>
         </div>
         <img src="/img/wave1.png" alt="Wave" draggable="false"/>
 
         <div id="most-liked">
-            <h3>{language == 0 ? galleryText.english.h31 : galleryText.francais.h31}</h3>
+            <h3>{["Discover the customized Keyboards of the other users","Découvrez les claviers customize des autres utilisateurs"][language]}</h3>
             <Row>
                 {
                     byLikes.map((byLikes,key) =>{
@@ -73,7 +63,7 @@ function Gallery(props) {
                                     </div>
                                     <Card.Body className="card-style">
                                         <Card.Title>{byLikes.name}</Card.Title>
-                                        <Card.Text>{byLikes.ranking}</Card.Text>
+                                        <Card.Text>{["Like Number : ","Nombre de Like : "][language]}{byLikes.ranking}</Card.Text>
                                         <Button className="button-card-product" onClick={() => toggleFavourite(byLikes._id)} ><img id="image" src={favourites.indexOf(byLikes._id) > -1 ? './img/filled-heart-icon.png' : "./img/heart-icon.png"} alt="" /></Button>
                                         <Button className="button-card-product"><img src="./img/cart_icon.png" alt=""/></Button>
                                         <div className="socials">

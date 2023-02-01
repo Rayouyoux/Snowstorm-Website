@@ -1,9 +1,3 @@
-.Content-container {
-    display: block;
-    text-align: center;
-    background-color: var(--blue);
-}
-
 .faq-page .title {
     text-align: center;
     font-family: 'Bebas Neue', cursive !important;

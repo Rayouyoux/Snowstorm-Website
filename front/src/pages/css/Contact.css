@@ -1,9 +1,3 @@
-.Content-container {
-    display: block;
-    text-align: center;
-    background-color: var(--blue);
-}
-
 .contact-page .title,
 .contact-page .content div h2{
     font-family: 'Bebas Neue', cursive !important;
@@ -41,4 +35,5 @@
 .contact-page .content div .text {
     padding-top: 30px;
     padding-bottom: 30px;
+    font-size: 1vw;
 }

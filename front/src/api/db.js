@@ -6,8 +6,8 @@ export const getKeyboards = async () => {
     const response = await backAccess('/keyboards')
     return response.data
 }
-export const getKeyboardsById = async () => {
-    const response = await backAccess('/keyboards/:id')
+export const getKeyboardsById = async (id) => {
+    const response = await backAccess(`/keyboards/${id}`)
     return response.data
 }
 export const getLastKeyboards = async () => {
@@ -20,12 +20,12 @@ export const getComponents = async () => {
     const response = await backAccess('/components')
     return response.data
 }
-export const getComponentsByKeyboards= async () => {
-    const response = await backAccess('/components/By-keyboard/:id')
+export const getComponentsByKeyboards = async (id) => {
+    const response = await backAccess(`/components/by-keyboard/${id}`)
     return response.data
 }
-export const getComponentsById = async () => {
-    const response = await backAccess('/components/:id')
+export const getComponentsById = async (id) => {
+    const response = await backAccess(`/components/${id}`)
     return response.data
 }
 export const getLastComponents = async () => {
@@ -39,8 +39,8 @@ export const getProducts = async () => {
     console.log(response)
     return response.data
 }
-export const getProductsById = async () => {
-    const response = await backAccess('/products/:id')
+export const getProductsById = async (id) => {
+    const response = await backAccess(`/products/${id}`)
     return response.data
 }
 export const getLastProducts = async () => {
@@ -49,9 +49,14 @@ export const getLastProducts = async () => {
 }
 
 // User Keyboard //
-export const getUserKeyboards = async (sort) => {
+export const getUserKeyboards = async (sort, user_id) => {
     const response = await backAccess('/user_keyboards', {
-        params: {sort}
+        params: { sort, user_id }
     })
     return response.data
-} // getUserKeyboards("mostliked")
+} // getUserKeyboards(sort="mostliked")
+// Sales //
+export const getMostSales = async () => {
+    const response = await backAccess('/sales/most-sales')
+    return response.data
+}

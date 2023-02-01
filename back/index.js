@@ -22,9 +22,9 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
-	secret: salt,
-	resave: true,
-	saveUninitialized: true,
+    secret: salt,
+    resave: true,
+    saveUninitialized: true,
     store: MongoStore.create({
         client: dbo.client,
         dbName: "snowstorm",
@@ -53,7 +53,7 @@ const adminRestricted = (req, res, next) => {
     } else res.status(403).json({ msg: 'You cannot access this resource.' });
 };
 
-app.get("/", (req, res) => {
+app.get("/", (req, res, next) => {
     res.send("Hello World!");
 });
 
@@ -67,13 +67,13 @@ const SearchCollection = async (collection, query, callback) => {
 
     var err, result
     await dbConnect
-    .collection(collection)
-    .find(query)
-    .sort(sort)
-    .toArray((rerr, rresult) => {
-        if (callback) callback(rerr, rresult)
-        err, result = rerr, rresult
-    });
+        .collection(collection)
+        .find(query)
+        .sort(sort)
+        .toArray((rerr, rresult) => {
+            if (callback) callback(rerr, rresult)
+            err, result = rerr, rresult
+        });
 
     return err, result
 }
@@ -83,12 +83,12 @@ const GetOne = async (collection, _id, callback) => {
 
     var result
     await dbConnect
-    .collection(collection)
-    .findOne({_id: ObjectId(_id)})
-    .then((rresult) => {
-        if (callback) callback(rresult)
-        result = rresult
-    });
+        .collection(collection)
+        .findOne({ _id: ObjectId(_id) })
+        .then((rresult) => {
+            if (callback) callback(rresult)
+            result = rresult
+        });
 
     return result
 }
@@ -98,37 +98,21 @@ const GetLast = async (collection, callback) => {
 
     var result
     await dbConnect
-    .collection(collection)
-    .find()
-    .limite(1)
-    .sort({$natural:-1})
-    .then((rresult) => {
-        if (callback) callback(rresult)
-        result = rresult
-    });
-
-    return result
-}
-
-const GetMost = async (collection, callback) => {
-    const dbConnect = dbo.getDb();
-
-    var result
-    await dbConnect
-    .collection(collection)
-    .find()
-    .sort({$natural:-1})
-    .then((rresult) => {
-        if (callback) callback(rresult)
-        result = rresult
-    });
+        .collection(collection)
+        .find()
+        .limit(1)
+        .sort({ $natural: -1 })
+        .then((rresult) => {
+            if (callback) callback(rresult)
+            result = rresult
+        });
 
     return result
 }
 
 // Products
 
-app.get("/products", (req, res) => {
+app.get("/products", (req, res, next) => {
     SearchCollection("products", {}, (err, result) => {
         if (err) {
             res.status(400).send("Error fetching products!");
@@ -139,21 +123,21 @@ app.get("/products", (req, res) => {
             console.log(objects)
             res.json(result);
         }
-    });
+    }).catch(next);
 });
-app.get("/products/:id", (req, res) => {
+app.get("/products/:id", (req, res, next) => {
     GetOne("products", req.params.id, x => {
         res.json(new objsTypes.product(x._id, x.name, x.price, x.type, x.description, x.images, x.tags, x.quantity));
-    });
+    }).catch(next);
 });
-app.get("/products/last", (req, res) => {
+app.get("/products/last", (req, res, next) => {
     GetLast("products", x => {
         res.json(new objsTypes.product(x._id, x.name, x.price, x.type, x.description, x.images, x.tags, x.quantity));
-    });
+    }).catch(next);
 });
 
 // Keyboards
-app.get("/keyboards", (req, res) => {
+app.get("/keyboards", (req, res, next) => {
     SearchCollection("keyboards", {}, (err, result) => {
         if (err) {
             res.status(400).send("Error fetching keyboards!");
@@ -163,32 +147,32 @@ app.get("/keyboards", (req, res) => {
             })
             res.json(result);
         }
-    });
+    }).catch(next);
 });
-app.get("/keyboards/:id", (req, res) => {
+app.get("/keyboards/:id", (req, res, next) => {
     GetOne("keyboards", req.params.id, x => {
         res.json(new objsTypes.keyboard(x._id, x.name, x.price, x.description, x.images, x.tags, x.specs, x.quantity));
-    });
+    }).catch(next);
 });
-app.get("/keyboards/last", (req, res) => {
+app.get("/keyboards/last", (req, res, next) => {
     GetLast("keyboards", x => {
         res.json(new objsTypes.keyboard(x._id, x.name, x.price, x.description, x.images, x.tags, x.specs, x.quantity));
-    });
+    }).catch(next);
 });
 
 // User Keyboards
-app.get("/user_keyboards", (req, res) => {
+app.get("/user_keyboards", (req, res, next) => {
     var sort = {}
-    switch(req.query.sort) {
+    switch (req.query.sort) {
         case "mostliked":
-            sort = {"ranking":-1}
+            sort = { "ranking": -1 }
             break;
         default:
             sort = {}
             break;
     }
 
-    SearchCollection("user_keyboards", {sort}, (err, result) => {
+    SearchCollection("user_keyboards", { sort, user_id: req.query.user_id }, (err, result) => {
         if (err) {
             res.status(400).send("Error fetching keyboards!");
         } else {
@@ -197,11 +181,11 @@ app.get("/user_keyboards", (req, res) => {
             })
             res.json(result);
         }
-    });
+    }).catch(next);
 });
 
 // Components
-app.get("/components", (req, res) => {
+app.get("/components", (req, res, next) => {
     SearchCollection("components", {}, (err, result) => {
         if (err) {
             res.status(400).send("Error fetching components!");
@@ -211,12 +195,12 @@ app.get("/components", (req, res) => {
             })
             res.json(result);
         }
-    });
+    }).catch(next);
 });
-app.get("/components/by-keyboard/:id", (req, res) => {
+app.get("/components/by-keyboard/:id", (req, res, next) => {
     const _id = req.params.id
 
-    SearchCollection("components", {keyboards: {$all: [_id]}}, (err, result) => {
+    SearchCollection("components", { keyboards: { $all: [_id] } }, (err, result) => {
         if (err) {
             console.log(err)
             res.status(400).send("Error fetching components!");
@@ -228,24 +212,24 @@ app.get("/components/by-keyboard/:id", (req, res) => {
         }
     });
 });
-app.get("/components/:id", (req, res) => {
+app.get("/components/:id", (req, res, next) => {
     GetOne("components", req.params.id, x => {
         res.json(new objsTypes.component(x._id, x.name, x.price, x.description, x.images, x.keyboards, x.quantity));
-    });
+    }).catch(next);
 });
-app.get("/components/last", (req, res) => {
+app.get("/components/last", (req, res, next) => {
     GetLast("components", x => {
         res.json(new objsTypes.component(x._id, x.name, x.price, x.description, x.images, x.keyboards, x.quantity));
-    });
+    }).catch(next);
 });
 
 // Reviews
 
-app.get("/reviews/:type/:id", (req, res) => {
+app.get("/reviews/:type/:id", (req, res, next) => {
     const product_id = req.params.id
     const type = req.params.type
 
-    SearchCollection("reviews", {"type": type, "product_id": product_id}, (err, result) => {
+    SearchCollection("reviews", { "type": type, "product_id": product_id }, (err, result) => {
         if (err) {
             console.log(err)
             res.status(400).send("Error fetching components!");
@@ -255,128 +239,205 @@ app.get("/reviews/:type/:id", (req, res) => {
             })
             res.json(result);
         }
+    }).catch(next);
+});
+
+// Sales
+
+app.get("/sales/most-sales", (req, res, next) => {
+    const dbConnect = dbo.getDb();
+
+    dbConnect.collection("sales").aggregate([
+        {
+        $group: {
+          _id: {
+            sold_id: "$sold_id",
+            type: "$type"
+          },
+          count: {
+            $sum: 1
+          }
+          }
+        },
+        {
+          $addFields: {
+            convertedId: { $toObjectId: "$_id.sold_id" },
+          }
+        },
+        {
+          $lookup: {
+              from: "products",
+              let: {sold_id: "$convertedId", type: "$type"},
+              pipeline: [
+                { $match: { $expr : { $eq: [ '$_id', "$$sold_id" ] } } }
+              ],
+              as: "product_info"
+          },
+        },
+        {
+          $lookup: {
+              from: "keyboards",
+              let: {sold_id: "$convertedId", type: "$type"},
+              pipeline: [
+                { $match: { $expr : { $eq: [ '$_id', "$$sold_id" ] } } }
+              ],
+              as: "keyboard_info"
+          },
+        }
+      ]).sort({ "count": -1 }).limit(4).toArray((err, result) => {
+        if (err) {
+            console.log(err)
+            res.status(400).send("Error fetching components!");
+        } else {
+            const ret = result.map(obj => {
+                let x = obj.product_info[0] || obj.keyboard_info[0]
+                return {
+                    type: obj._id.type,
+                    count: obj.count,
+                    info:  obj.product_info[0] ? new objsTypes.product(x._id.o, x.name, x.price, x.type, x.description, x.images, x.tags, x.quantity) : new objsTypes.keyboard(x._id, x.name, x.price, x.description, x.images, x.tags, x.specs, x.quantity)
+                }
+            })
+
+            res.json(ret);
+        }
     });
 });
 
+/*
+    dbC.collection("sales").limit(5).aggregate([{
+    $group: {
+        _id: "$sold_id",
+        count: {
+        $sum: 1
+        }
+    }
+    }]).toArray(console.log);
+
+    > out = [ 
+        { _id: '63d14307611b313fb6ffdf38', count: 1 },
+        { _id: '63d2aaf332f2eea202e2cc00', count: 1 },
+        { _id: '63d2abd932f2eea202e2cc02', count: 2 }
+    ]
+*/
+
 //* USERS *//
 
-const hashPassword = password => crypto.createHash('sha256').update(salt+password).digest("hex")
-app.post("/register", sessionUpdater, (req, res) => {
-    const dbConnect = dbo.getDb();
-    const body = req.body
-    
-    const obj = new objsTypes.user(undefined, body.email, password=hashPassword(body.password), body.first_name, body.last_name)
-
-    dbConnect
-    .collection("users")
-    .insertOne(obj)
-    .then(result => {
-        if (result.acknowledged)
-        {
-            req.session.user = new objsTypes.user(result.insertedId, body.email, undefined, body.first_name, body.last_name)
-            res.json({msg: "OK", userInfo: req.session.user})
-        }
-    })
-})
-app.post("/login", sessionUpdater, (req, res) => {
+const hashPassword = password => crypto.createHash('sha256').update(salt + password).digest("hex")
+app.post("/register", sessionUpdater, (req, res, next) => {
     const dbConnect = dbo.getDb();
     const body = req.body
 
+    const obj = new objsTypes.user(undefined, body.email, password = hashPassword(body.password), body.first_name, body.last_name)
+
     dbConnect
-    .collection("users")
-    .findOne({email: body.email.toString(), password: hashPassword(body.password)})
-    .then((result) => {
-        if (result) {
-            req.session.user = new objsTypes.user(result._id, result.email, undefined, result.first_name, result.last_name, result.permission_level)
-            res.json({msg: "OK", userInfo: req.session.user})
-        } else {
-            res.status(400).json({msg: "Email or password incorrect!"})
-        }
-    })
+        .collection("users")
+        .insertOne(obj)
+        .then(result => {
+            if (result.acknowledged) {
+                req.session.user = new objsTypes.user(result.insertedId, body.email, undefined, body.first_name, body.last_name)
+                res.json({ msg: "OK", userInfo: req.session.user })
+            }
+        }).catch(next);
 })
-app.post("/logout", sessionUpdater, (req, res) => {
+app.post("/login", sessionUpdater, (req, res, next) => {
+    const dbConnect = dbo.getDb();
+    const body = req.body
+
+    dbConnect
+        .collection("users")
+        .findOne({ email: body.email.toString(), password: hashPassword(body.password) })
+        .then((result) => {
+            if (result) {
+                req.session.user = new objsTypes.user(result._id, result.email, undefined, result.first_name, result.last_name, result.permission_level)
+                res.json({ msg: "OK", userInfo: req.session.user })
+            } else {
+                res.status(400).json({ msg: "Email or password incorrect!" })
+            }
+        }).catch(next);
+})
+app.post("/logout", sessionUpdater, (req, res, next) => {
     const dbConnect = dbo.getDb();
     const body = req.body
 
     delete req.session.user
-    res.json({msg: "OK"})
+    res.json({ msg: "OK" })
 })
-app.get("/getUserInfo", sessionUpdater, (req, res) => {
+app.get("/getUserInfo", sessionUpdater, (req, res, next) => {
     res.json(req.session.user)
 })
 
 //* ADMIN *//
 
 // Products
-app.post("/products/insert", [sessionUpdater, adminRestricted], (req, res) => {
+app.post("/products/insert", [sessionUpdater, adminRestricted], (req, res, next) => {
     const dbConnect = dbo.getDb();
     const body = req.body
     delete body._id;
-    
+
     const obj = new objsTypes.product(undefined, body.name, body.price, body.type, body.description, body.images, body.tags, body.quantity)
 
     dbConnect
-    .collection("products")
-    .insertOne(obj)
-    .then(result => {
-        if (result.acknowledged)
-            res.json({msg: "OK", insertedId: result.insertedId.toString()})
-    })
+        .collection("products")
+        .insertOne(obj)
+        .then(result => {
+            if (result.acknowledged)
+                res.json({ msg: "OK", insertedId: result.insertedId.toString() })
+        }).catch(next);
 });
 
 // Keyboards
-app.post("/keyboards/insert", [sessionUpdater, adminRestricted], (req, res) => {
+app.post("/keyboards/insert", [sessionUpdater, adminRestricted], (req, res, next) => {
     const dbConnect = dbo.getDb();
     const body = req.body
     delete body._id;
-    
+
     const obj = new objsTypes.keyboard(body._id, body.name, body.price, body.description, body.images, body.tags, body.specs, body.quantity)
 
     dbConnect
-    .collection("keyboards")
-    .insertOne(obj)
-    .then(result => {
-        if (result.acknowledged)
-            res.json({msg: "OK", insertedId: result.insertedId.toString()})
-    })
+        .collection("keyboards")
+        .insertOne(obj)
+        .then(result => {
+            if (result.acknowledged)
+                res.json({ msg: "OK", insertedId: result.insertedId.toString() })
+        }).catch(next);
 });
 
 // User Keyboards
-app.post("/user_keyboards/insert", [sessionUpdater, adminRestricted], (req, res) => {
+app.post("/user_keyboards/insert", [sessionUpdater, adminRestricted], (req, res, next) => {
     const dbConnect = dbo.getDb();
     const body = req.body
     delete body._id;
-    
+
     const obj = new objsTypes.user_keyboard(body._id, body.name, body.price, body.description, body.images, body.tags, body.user_id, body.ranking, body.component)
 
     dbConnect
-    .collection("user_keyboards")
-    .insertOne(obj)
-    .then(result => {
-        if (result.acknowledged)
-            res.json({msg: "OK", insertedId: result.insertedId.toString()})
-    })
+        .collection("user_keyboards")
+        .insertOne(obj)
+        .then(result => {
+            if (result.acknowledged)
+                res.json({ msg: "OK", insertedId: result.insertedId.toString() })
+        }).catch(next);
 });
 
 // Components
-app.post("/components/insert", [sessionUpdater, adminRestricted], (req, res) => {
+app.post("/components/insert", [sessionUpdater, adminRestricted], (req, res, next) => {
     const dbConnect = dbo.getDb();
     const body = req.body
     delete body._id;
-    
+
     const obj = new objsTypes.component(body._id, body.name, body.price, body.description, body.images, body.keyboards, body.quantity)
 
     dbConnect
-    .collection("components")
-    .insertOne(obj)
-    .then(result => {
-        if (result.acknowledged)
-            res.json({msg: "OK", insertedId: result.insertedId.toString()})
-    })
+        .collection("components")
+        .insertOne(obj)
+        .then(result => {
+            if (result.acknowledged)
+                res.json({ msg: "OK", insertedId: result.insertedId.toString() })
+        }).catch(next);
 });
 
 /* Sales
-app.post("/sales/insert", (req, res) => {
+app.post("/sales/insert", (req, res, next) => {
     const dbConnect = dbo.getDb();
     const body = req.body
     delete body._id;
@@ -395,26 +456,26 @@ app.post("/sales/insert", (req, res) => {
 
 //* STATIC CONTENT *//
 
-app.get("/info", (req, res) => {
-    res.json(JSON.parse(fs.readFileSync('./info.json', {encoding: "utf-8"})))
+app.get("/info", (req, res, next) => {
+    res.json(JSON.parse(fs.readFileSync('./info.json', { encoding: "utf-8" })))
 });
 
-app.post("/info", [sessionUpdater, adminRestricted], (req, res) => {
-    fs.writeFile('./info.json', JSON.stringify(req.body), {encoding: "utf-8"}, err => {
+app.post("/info", [sessionUpdater, adminRestricted], (req, res, next) => {
+    fs.writeFile('./info.json', JSON.stringify(req.body), { encoding: "utf-8" }, err => {
         if (err)
-            res.status(400).json({msg: "ERROR", error: err})
+            res.status(400).json({ msg: "ERROR", error: err })
         else
-            res.json({msg: "OK"})
+            res.json({ msg: "OK" })
     })
 });
 
 //* CONNECTION & STARTUP *//
 
 app.use((err, req, res, next) => {
-    res.status(500).json({msg: `Error: ${err.message}`})
+    res.status(500).json({ msg: `Error: ${err.message}` })
 })
 
-dbo.connectToServer().then(() => 
+dbo.connectToServer().then(() =>
     app.listen(port, function () {
         console.log(`App listening on port ${port}!`);
     })

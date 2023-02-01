@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { login, register as signup } from '../api/backend';
 import "./css/LoginOverlay.css"
@@ -56,6 +57,7 @@ function LoginOverlay({user, setUser}) {
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label>Mot de Passe</Form.Label>
                             <Form.Control {...register("loginPassword", { required: true })} type="password" placeholder="Mot de Passe" />
+                            <Link className="mdp" to="/help" onClick={handleClose}>Mot de passe oublié</Link> 
                         </Form.Group>
                         <Row>
                             <Col xs={6}>

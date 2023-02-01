@@ -1,15 +1,39 @@
 import Carousel from "react-bootstrap/Carousel";
 import { Row, Col, Button } from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./css/Product.css";
+import { useParams } from "react-router-dom";
+import { getProductsById } from "../api/db";
 
-function Product(props) {
-    const { language, setLanguage, product } = props
+function Product({ language, setLanguage }) {
     const [ favourites, setFavourites ] = useState([]);
+    const [ product, setProduct ] = useState({
+        "_id":"63d14307611b313fb6ffdf38",
+        "name":"Loading...",
+        "price":0,
+        "type":"keyboard",
+        "description":"Loading...",
+        "images":["https://cdn.shopify.com/s/files/1/0533/4515/7292/files/Clavier_mecanique_custom_1600x.jpg?v=1642699727"],
+        "tags":["les tags c'est un array"],
+        "quantity":0
+    })
+    const [ outOfStock, setOutOfStock ] = useState(true)
 
-    const outOfStock = (product.stock <= 0);
-    console.log(outOfStock);
+    var params = useParams();
+    var id = params.id
+    useEffect(() => {
+        getProductsById(id).then(data => {
+            console.log(data)
+            setProduct(data)
+            setOutOfStock(data.stock <= 0)
+        })
+    }, [])
+
+    /*useLoaderData().then(prd => {
+        setProduct(prd)
+    })*/
+    // export 'useLoaderData' (imported as 'useLoaderData') was not found in 'react-router-dom' (possible exports: BrowserRouter, HashRouter, Link, MemoryRouter, NavLink, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter)
 
     const toggleFavourite = id => {
         var mod = favourites.slice()
@@ -57,7 +81,7 @@ function Product(props) {
             <div className="socials">
                 <h2>Share this product on social Media !</h2>
                 <a href="https://www.facebook.com/wasdkeyboards" target="_blank" ><img className="logo" src="/img/logo-facebook.png" alt="logo facebook"/></a>
-                <a href="https://twitter.com/wasdkeyboards" target="_blank"><img className="logo" src="/img/logo-twitter.png" alt="logo twitter"/></a>
+                <a href="https://ctt.ac/Cfarc" target="_blank"><img className="logo" src="/img/logo-twitter.png" alt="logo twitter"/></a>
                 <a href="https://www.instagram.com/wasdkeyboards" target="_blank"><img className="logo" src="/img/logo-instagram.png" alt="logo instagram"/></a>
             </div>
             <div className="reviews">

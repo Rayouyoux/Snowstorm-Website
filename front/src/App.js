@@ -12,14 +12,14 @@ import Admin from "./pages/Admin";
 import Gallery from "./pages/Gallery";
 import Customize from "./pages/Customize";
 import User from "./pages/User";
-import{ getProducts } from'./api/db';
+import Help from "./pages/Help";
+import{ getProductsById } from'./api/db';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect
 } from "react-router-dom";
-import "./App.css";
 import { useState, useEffect } from "react";
 
 import { getUserInfo, getInfo } from "./api/backend.js"
@@ -37,9 +37,11 @@ function ProtectedRoute({children, user, permission_level, ...rest}) {
     <Route {...rest} render={(props) => {
 
       // returns route if there is a valid token set in the cookie
-      if (user && user.permission_level > permission_level) {
+      if (user && user.waiting)
+        return <h1>Loading...</h1>
+      else if (user && user.permission_level > Number(permission_level))
         return children;
-      } else {
+      else {
         // returns the user to the landing page if there is no valid token set
         return (
           <Redirect
@@ -61,16 +63,16 @@ function ProtectedRoute({children, user, permission_level, ...rest}) {
 function App() {
   const [ language, setLanguage ] = useState(0)
   const [ products, setProducts ] = useState([]);
-  const [ user, setUser ] = useState({})
+  const [ user, setUser ] = useState({waiting: true})
   const [ info, setInfo ] = useState({})
-
+/*
   useEffect(() => {
     const productsFetched = getProducts();
     productsFetched
         .then(result => setProducts(result))
         .catch(error=>console.error("Erreur avec notre API :",error.message));
 },[]);
-
+*/
   useEffect(() => {
     getUserInfo().then(newUser => {
       setUser(newUser)
@@ -81,8 +83,8 @@ function App() {
     })
   }, [])
 
-  return <Router>
-    <NewsletterSignup/>
+  return <><Router>
+    {user?<NewsletterSignup/>:null}
     <NavBar language={language} setLanguage={setLanguage} user={user} setUser={setUser} />
     <div className="Content-container">
       <Switch>
@@ -102,7 +104,7 @@ function App() {
           <Mentions language={language} setLanguage={setLanguage} />
         </Route>
         <Route path="/faq">
-          <FAQ language={language} setLanguage={setLanguage} info={info} />
+          <FAQ language={language} setLanguage={setLanguage} info={info} className="faq-container"/>
         </Route>
         <Route path="/customize">
           <Customize language={language} setLanguage={setLanguage}/>
@@ -110,23 +112,30 @@ function App() {
         <Route path="/support">
           <Support language={language} setLanguage={setLanguage} />
         </Route>
-        <Route path="/user" user={user}>
-          <User language={language} setLanguage={setLanguage} user={user} />
+        <ProtectedRoute path="/user" user={user} permission_level="0">
+          <User language={language} setLanguage={setLanguage} user={user} setUser={setUser} />
+        </ProtectedRoute>
+        <Route path="/help">
+          <Help/>
         </Route>
-        {
+        {/*
           products.map((product) =>
-            <Route path={"/" + product.name}>
+            <Route path={"/" + product._id}>
               <Product language={language} setLanguage={setLanguage} product={product}/>
             </Route>
           )
-        }
-        <ProtectedRoute path="/admin" user={user}>
+        */}
+        <Route path="/product/:id">
+          <Product language={language} setLanguage={setLanguage}/>
+        </Route>
+        
+        <ProtectedRoute path="/admin" user={user} permission_level="200">
           <Admin language={language} setLanguage={setLanguage} user={user} />
         </ProtectedRoute>
       </Switch>
     </div>
     <Footer />
-  </Router>
+  </Router></>
 }
 
 export default App;

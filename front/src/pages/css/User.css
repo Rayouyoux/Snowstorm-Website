@@ -1,5 +1,5 @@
-.Content-container {
-    display: block;
-    text-align: center;
-    background-color: var(--blue);
+.user-page h1,
+.user-page h2,
+.user-page h3 {
+    font-family: 'Bebas Neue', cursive !important;
 }

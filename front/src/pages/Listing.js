@@ -78,11 +78,11 @@ function Listing(props) {
             <Row>
                 <Col xs={12} md={4}>
                     <h2>{language == 0 ? listingText.english.h21 : listingText.francais.h21}</h2>
-                    <a href="#keyboards" smooth><img className="section-image" src="https://assets.hardwarezone.com/img/2022/06/board-paul-esch-laurent-8ssNFn4VPLg-unsplash.jpg"/></a>
+                    <a href="#keyboards" smooth><img draggable="false" className="section-image" src="https://assets.hardwarezone.com/img/2022/06/board-paul-esch-laurent-8ssNFn4VPLg-unsplash.jpg"/></a>
                 </Col>
                 <Col xs={12} md={4}>
                     <h2>{language == 0 ? listingText.english.h23 : listingText.francais.h23}</h2>
-                    <a href="#accessories"><img className="section-image" src="https://assets.hardwarezone.com/img/2022/06/board-paul-esch-laurent-8ssNFn4VPLg-unsplash.jpg"/></a>
+                    <a href="#accessories"><img draggable="false" className="section-image" src="https://assets.hardwarezone.com/img/2022/06/board-paul-esch-laurent-8ssNFn4VPLg-unsplash.jpg"/></a>
                 </Col>
                 <Col xs={12} md={4}>
                     <h2>{language == 0 ? listingText.english.h22 : listingText.francais.h22}</h2>
@@ -105,26 +105,26 @@ function Listing(props) {
                                     <div key={key}>
                                         <Card style={{ width: '18rem' }} className="card-margin">
                                             <div className="size-img-card-div">
-                                                <Card.Img className="size-img-card" variant="top" src={product.images} alt="test" />
+                                                <Card.Img draggable="false"  className="size-img-card" variant="top" src={product.images} alt="test" />
                                             </div>
                                             <Card.Body>
-                                                <Link to="/product">
+                                                <Link to={"/product/"+product._id}>
                                                     <Card.Title className="card-link">{product.name}</Card.Title>
                                                 </Link>
                                                 <Card.Text>
                                                     {product.description}
                                                 </Card.Text>
                                                 <Button className="button-card-product" onClick={() => toggleFavourite(product._id)} >
-                                                    <img id="image" src={favourites.indexOf(product._id) > -1 ? './img/filled-heart-icon.png' : "./img/heart-icon.png"} alt="favorite-icon" />
+                                                    <img draggable="false"  id="image" src={favourites.indexOf(product._id) > -1 ? './img/filled-heart-icon.png' : "./img/heart-icon.png"} alt="favorite-icon" />
                                                 </Button>
                                                 <Button className="button-card-product">
-                                                    <img src="./img/cart_icon.png" alt="cart icon"/>
+                                                    <img draggable="false"  src="./img/cart_icon.png" alt="cart icon"/>
                                                 </Button>
                                                 <Button className="button-card-product">
                                                     Compare
                                                 </Button>
                                                 <Button className="button-card-product">
-                                                    <Link to={"/"+product.name}>View More</Link>
+                                                    <Link to={"/"+product._id}>View More</Link>
                                                 </Button>
                                             </Card.Body>
                                         </Card>
@@ -145,26 +145,26 @@ function Listing(props) {
                                     <div key={key}>
                                         <Card style={{ width: '18rem' }} className="card-margin">
                                             <div className="size-img-card-div">
-                                                <Card.Img className="size-img-card" variant="top" src={product.images} alt="test" />
+                                                <Card.Img className="size-img-card" variant="top" draggable="false"  src={product.images} alt="test" />
                                             </div>
                                             <Card.Body>
-                                                <Link to="/product">
+                                                <Link to={"/product/"+product._id}>
                                                     <Card.Title className="card-link">{product.name}</Card.Title>
                                                 </Link>
                                                 <Card.Text className="">
                                                     {product.description}
                                                 </Card.Text>
                                                 <Button className="button-card-product" onClick={() => toggleFavourite(product._id)} >
-                                                    <img id="image" src={favourites.indexOf(product._id) > -1 ? './img/filled-heart-icon.png' : "./img/heart-icon.png"} alt="favorite-icon" />
+                                                    <img id="image" src={favourites.indexOf(product._id) > -1 ? './img/filled-heart-icon.png' : "./img/heart-icon.png"} alt="favorite-icon" draggable="false"  />
                                                 </Button>
                                                 <Button className="button-card-product">
-                                                    <img src="./img/cart_icon.png" alt="cart icon"/>
+                                                    <img src="./img/cart_icon.png" alt="cart icon" draggable="false" />
                                                 </Button>
                                                 <Button className="button-card-product">
                                                     Compare
                                                 </Button>
                                                 <Button className="button-card-product">
-                                                    <Link to={"/"+product.name}>View More</Link>
+                                                    <Link to={"/"+product._id}>View More</Link>
                                                 </Button>
                                             </Card.Body>
                                         </Card>
@@ -185,26 +185,26 @@ function Listing(props) {
                                     <div key={key}>
                                         <Card style={{ width: '18rem' }} className="card-margin">
                                             <div className="size-img-card-div">
-                                                <Card.Img className="size-img-card" variant="top" src={product.images} alt="test" />
+                                                <Card.Img className="size-img-card" variant="top" src={product.images} alt="test" draggable="false" />
                                             </div>
                                             <Card.Body>
-                                                <Link to="/product">
+                                                <Link to={"/product/"+product._id}>
                                                     <Card.Title className="card-link">{product.name}</Card.Title>
                                                 </Link>
                                                 <Card.Text className="">
                                                     {product.description}
                                                 </Card.Text>
                                                 <Button className="button-card-product" onClick={() => toggleFavourite(product._id)} >
-                                                    <img id="image" src={favourites.indexOf(product._id) > -1 ? './img/filled-heart-icon.png' : "./img/heart-icon.png"} alt="favorite-icon" />
+                                                    <img id="image" src={favourites.indexOf(product._id) > -1 ? './img/filled-heart-icon.png' : "./img/heart-icon.png"} alt="favorite-icon" draggable="false" />
                                                 </Button>
                                                 <Button className="button-card-product">
-                                                    <img src="./img/cart_icon.png" alt="cart icon"/>
+                                                    <img src="./img/cart_icon.png" alt="cart icon" draggable="false" />
                                                 </Button>
                                                 <Button className="button-card-product">
                                                     Compare
                                                 </Button>
                                                 <Button className="button-card-product">
-                                                    <Link to={"/"+product.name}>View More</Link>
+                                                    <Link to={"/"+product._id}>View More</Link>
                                                 </Button>
                                             </Card.Body>
                                         </Card>
