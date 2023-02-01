@@ -60,22 +60,8 @@
     border-image: repeating-linear-gradient(225deg, var(--darker-blue) 0%, var(--light-blue) 100%) 10;
 }
 
-
-
-/*
-footer .img{
-    width: 12%;
-    height: 12%;
-    padding-left: 5%;
-    margin-top: auto;
-    margin-bottom: auto;
-  }
-  footer .logo{
+.gallery-page .logo{
     width: 2.2em;
-    padding-right: 20%;
-  }
-  
-  footer .socials{
-    display: flex;
-  }
-*/
+    margin-left: 3%;
+    margin-right: 3%;
+}

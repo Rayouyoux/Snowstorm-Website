@@ -1,8 +1,7 @@
 import { Button, Col, Form, Row} from "react-bootstrap";
-import "./search.css"
+import "./css/search.css"
 
 function Search(props) {
-
 
     return (
         <>
@@ -16,5 +15,5 @@ function Search(props) {
         </>
       );
   }
-  
+
   export default Search;

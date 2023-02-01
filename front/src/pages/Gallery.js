@@ -35,7 +35,7 @@ function Gallery(props) {
             mod.push(id)
         setFavourites(mod)
     };
-    
+
     useEffect(() => {
         const userKeyboardsFetched = getUserKeyboards();
         const userKeyboardsByMostLikedFetched = getUserKeyboards("mostliked");
@@ -89,7 +89,6 @@ function Gallery(props) {
                     })
                 };
             </Row>
-            <h3></h3>
         </div>
     </div>
 }

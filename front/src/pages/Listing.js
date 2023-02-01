@@ -27,6 +27,7 @@ function Listing(props) {
     const { language, setLanguage } = props
     const [ products, setProducts ] = useState([]);
     const [ favourites, setFavourites ] = useState([]);
+    const [ compare, setCompare ] = useState([]);
     const [ search, setSearch]  = useState('');
 
     function refreshPage() {
@@ -49,6 +50,23 @@ function Listing(props) {
 
         setFavourites(mod)
     }
+
+    /*
+    console.log(compare);
+    const compareTool = product => {
+        console.log(compare);
+        console.log((compare == []));
+        console.log((compare.type != product.type));
+        if ((compare == []) || (compare.type != product.type)) {
+            compare.push(product);
+        } else {
+            compare = setCompare([]);
+            compare.push(product);
+        }
+        console.log(compare);
+    }
+    */
+   /*onClick={() => compareTool(product)}*/
 
     return <div className="listing-page">
         <div className="top-of-page">
@@ -79,21 +97,21 @@ function Listing(props) {
                 <div id="keyboards">
                     <h3>{language == 0 ? listingText.english.h21 : listingText.francais.h21}</h3>
                     <Row>
-                        { 
+                        {
                         products.filter((product) => {
                             if (product.type == "keyboard")
-                                return search.toLowerCase() === '' ? product : product.name.toLowerCase().includes(search);}).map((product,key) => ( 
-                                    <Col md={4}>
+                                return search.toLowerCase() === '' ? product : product.name.toLowerCase().includes(search);}).map((product,key) => (
+                                <Col md={4}>
                                     <div key={key}>
                                         <Card style={{ width: '18rem' }} className="card-margin">
-                                            <div class="size-img-card-div">
+                                            <div className="size-img-card-div">
                                                 <Card.Img className="size-img-card" variant="top" src={product.images} alt="test" />
                                             </div>
                                             <Card.Body>
                                                 <Link to="/product">
                                                     <Card.Title className="card-link">{product.name}</Card.Title>
                                                 </Link>
-                                                <Card.Text className="">
+                                                <Card.Text>
                                                     {product.description}
                                                 </Card.Text>
                                                 <Button className="button-card-product" onClick={() => toggleFavourite(product._id)} >
@@ -101,6 +119,12 @@ function Listing(props) {
                                                 </Button>
                                                 <Button className="button-card-product">
                                                     <img src="./img/cart_icon.png" alt="cart icon"/>
+                                                </Button>
+                                                <Button className="button-card-product">
+                                                    Compare
+                                                </Button>
+                                                <Button className="button-card-product">
+                                                    View More
                                                 </Button>
                                             </Card.Body>
                                         </Card>
@@ -113,14 +137,14 @@ function Listing(props) {
                 <div id="accessories">
                     <h3>{language == 0 ? listingText.english.h23 : listingText.francais.h23}</h3>
                     <Row>
-                    { 
+                    {
                         products.filter((product) => {
                             if (product.type == "accessory")
-                                return search.toLowerCase() === '' ? product : product.name.toLowerCase().includes(search);}).map((product,key) => ( 
+                                return search.toLowerCase() === '' ? product : product.name.toLowerCase().includes(search);}).map((product,key) => (
                                     <Col md={4}>
                                     <div key={key}>
                                         <Card style={{ width: '18rem' }} className="card-margin">
-                                            <div class="size-img-card-div">
+                                            <div className="size-img-card-div">
                                                 <Card.Img className="size-img-card" variant="top" src={product.images} alt="test" />
                                             </div>
                                             <Card.Body>
@@ -135,6 +159,12 @@ function Listing(props) {
                                                 </Button>
                                                 <Button className="button-card-product">
                                                     <img src="./img/cart_icon.png" alt="cart icon"/>
+                                                </Button>
+                                                <Button className="button-card-product">
+                                                    Compare
+                                                </Button>
+                                                <Button className="button-card-product">
+                                                    View More
                                                 </Button>
                                             </Card.Body>
                                         </Card>
@@ -143,18 +173,18 @@ function Listing(props) {
                         ))
                         }
                     </Row>
-                </div> 
+                </div>
                 <div id="components">
                     <h3>{language == 0 ? listingText.english.h22 : listingText.francais.h22}</h3>
                     <Row>
-                    { 
+                    {
                         products.filter((product) => {
                             if (product.type == "component")
-                                return search.toLowerCase() === '' ? product : product.name.toLowerCase().includes(search);}).map((product,key) => ( 
+                                return search.toLowerCase() === '' ? product : product.name.toLowerCase().includes(search);}).map((product,key) => (
                                     <Col md={4}>
                                     <div key={key}>
                                         <Card style={{ width: '18rem' }} className="card-margin">
-                                            <div class="size-img-card-div">
+                                            <div className="size-img-card-div">
                                                 <Card.Img className="size-img-card" variant="top" src={product.images} alt="test" />
                                             </div>
                                             <Card.Body>
@@ -169,6 +199,12 @@ function Listing(props) {
                                                 </Button>
                                                 <Button className="button-card-product">
                                                     <img src="./img/cart_icon.png" alt="cart icon"/>
+                                                </Button>
+                                                <Button className="button-card-product">
+                                                    Compare
+                                                </Button>
+                                                <Button className="button-card-product">
+                                                    View More
                                                 </Button>
                                             </Card.Body>
                                         </Card>
@@ -180,6 +216,7 @@ function Listing(props) {
                 </div>
             </Container>
         </div>
+        <p style={{color : 'white'}}>{compare}</p>
     </div>
 }
 

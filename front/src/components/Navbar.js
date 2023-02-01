@@ -4,7 +4,7 @@ import { Row, Col, Container } from "react-bootstrap";
 import Dropdown from 'react-bootstrap/Dropdown';
 import Navbar from 'react-bootstrap/Navbar';
 import LoginOverlay from './LoginOverlay';
-import "./Navbar.css";
+import "./css/Navbar.css";
 import { useEffect } from "react";
 
 
@@ -32,10 +32,6 @@ function NavBar({ language, setLanguage, user, setUser } ) {
     function refreshPage() {
         window.location.reload(false);
     }
-
-    useEffect(() => {
-        console.log(language)
-    }, [language])
 
     return (
         <div className="navbar-component">

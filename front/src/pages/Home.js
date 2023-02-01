@@ -28,18 +28,16 @@ function Home(props) {
     };
     const { language, setLanguage } = props;
     const [ keyboards, setKeyboards ] = useState([]);
-    const [ backendTest, setBackendTest ] = useState('LOADING...');
-    
-    useEffect(() => {
-        backAccess.get('/')
-        .then(res => setBackendTest(res.data))
-        .catch(e => setBackendTest(e.message))
-    }, [])
+    const [ bySales, setBySales] = useState([]);
 
     useEffect(() => {
         const keyboardsFetched = getKeyboards();
+        const keyboardsByMostSalesFetched = getKeyboards("mostsales");
         keyboardsFetched
             .then(result => setKeyboards(result))
+            .catch(error=>console.error("Erreur avec notre API :",error.message));
+        keyboardsByMostSalesFetched
+            .then(result => setBySales(result))
             .catch(error=>console.error("Erreur avec notre API :",error.message));
     },[]);
 
@@ -56,16 +54,16 @@ function Home(props) {
             <div className="carousel">
                 <Col xs={{ span:8 , offset:2 }}>
                     <Carousel className="home-carousel">
-                        <Carousel.Item>
-                            <img
-                            className="d-block w-100"
-                            src="/img/clavier-custom-1.jpg"
-                            alt="First slide"
-                            />
-                            <Carousel.Caption>
-                            <h3>First slide label</h3>
-                            </Carousel.Caption>
-                        </Carousel.Item>
+                        {
+                            bySales.map((bySales,key) => {
+                                return <Carousel.Item>
+                                    <img className="d-block w-100" src={bySales.images[0]} alt="First slide"/>
+                                    <Carousel.Caption>
+                                    <h3>{bySales.name}</h3>
+                                    </Carousel.Caption>
+                                </Carousel.Item>
+                            })
+                        }
                     </Carousel>
                 </Col>
             </div>

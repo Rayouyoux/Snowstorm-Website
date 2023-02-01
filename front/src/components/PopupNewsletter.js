@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Row } from 'react-bootstrap';
 import { Col } from 'react-bootstrap';
-import "./PopupNewsletter.css";
+import "./css/PopupNewsletter.css";
 
 function NewsletterSignup() {
     const [showA, setShowA] = useState(true);

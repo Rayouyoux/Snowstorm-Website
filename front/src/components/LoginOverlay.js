@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { useForm } from "react-hook-form";
 import { login, register as signup } from '../api/backend';
-import "./LoginOverlay.css"
+import "./css/LoginOverlay.css"
 
 function LoginOverlay({user, setUser}) {
     const [show, setShow] = useState(false);
