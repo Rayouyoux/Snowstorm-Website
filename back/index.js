@@ -37,7 +37,7 @@ const sessionUpdater = (req, res, next) => {
     if (req.session.user && req.session.user._id) {
         GetOne("users", req.session.user._id, result => {
             if (result) {
-                req.session.user = new objsTypes.user(result._id, result.email, undefined, result.first_name, result.last_name, result.permission_level)
+                req.session.user = new objsTypes.user(result._id, result.email, undefined, result.first_name, result.last_name, result.permission_level, result.newsletter, result.custom_save_id, result.favorite_id)
             } else {
                 delete req.session.user
             }
@@ -120,7 +120,6 @@ app.get("/products", (req, res, next) => {
             var objects = result.map(x => {
                 return new objsTypes.product(x._id, x.name, x.price, x.type, x.description, x.images, x.tags, x.quantity)
             })
-            console.log(objects)
             res.json(result);
         }
     }).catch(next);

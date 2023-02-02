@@ -7,6 +7,7 @@ import diagBlob1 from "./bg-img/diagBlob1.png";
 import { getKeyboards } from '../api/db';
 import Keyboard from "./keyboard";
 import "./css/Customize.css";
+import { CartChange } from "./Cart";
 
 function Customize(props) {
     const [ show , setShow ] = useState(0)
@@ -97,6 +98,9 @@ function Customize(props) {
             .catch(error => console.error("Erreur avec notre API :", error.message));
     }, []);
 
+    const _handleChange = ((event) => {
+        this.setState({ value: event.currentTarget.value }) // I tried before target.value, or nativeEvent.value
+    })
 
     return <div className="customize-page">
         {

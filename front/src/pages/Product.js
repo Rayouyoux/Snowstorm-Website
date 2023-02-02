@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import "./css/Product.css";
 import { useParams } from "react-router-dom";
 import { getProductsById } from "../api/db";
-import CartChange from './Cart';
+import {CartChange} from './Cart';
 
 function Product({ language, setLanguage }) {
     const [ favourites, setFavourites ] = useState([]);

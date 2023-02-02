@@ -67,7 +67,7 @@ function check(obj, struct) {
     var isValid = true
     msg = ''
     Object.entries(struct).forEach(([key, type]) => {
-        if (obj[key] !== undefined & obj[key].constructor !== type)
+        if (obj[key] != undefined & obj[key].constructor !== type)
         {
             isValid = false
             msg += `${key} is not the correct type. Should be ${type.name}. `
@@ -124,7 +124,7 @@ function component(_id=undefined, name="", price=0, description="", images=[], k
         throw new Error(msg);
 }
 
-function keyboard(_id=undefined, name="", price=0, description="", images=[], tags=[], specs={}, quantity=0, keyCount= 101) {
+function keyboard(_id=undefined, name="", price=0, description="", images=[], tags=[], specs={}, quantity=0, keyCount=101) {
     this._id = _id
     if (this._id == undefined) delete this._id
     else this._id = this._id.toString()

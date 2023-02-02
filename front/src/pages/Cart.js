@@ -1,4 +1,4 @@
-function CartChange(productId) {
+const CartChange = (productId) => {
     if (localStorage.getItem("cart") === null) {
         console.log('cart didnt exist');
         localStorage.setItem("cart", JSON.stringify([{ itemId: productId }]));
@@ -17,7 +17,7 @@ function CartChange(productId) {
     }
 }
 
-function Cart() {
+const Cart=() => {
     return <div className="cart-page">
         <h1>Your Cart</h1>
         <button onClick={() => CartChange("testtesttest")}>test icule</button>
@@ -25,4 +25,4 @@ function Cart() {
     </div>
 }
 
-export default Cart;
+export { CartChange, Cart };

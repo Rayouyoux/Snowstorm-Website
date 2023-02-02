@@ -7,7 +7,7 @@ import Container from 'react-bootstrap/Container';
 import{ getProducts } from'../api/db';
 import React,{useEffect,useState} from "react";
 import Search from "../components/search";
-import CartChange from "./Cart";
+import {CartChange} from "./Cart";
 
 
 function Listing(props) {
@@ -114,7 +114,7 @@ function Listing(props) {
                                                 <Button className="button-card-product" onClick={() => toggleFavourite(product._id)} >
                                                     <img draggable="false"  id="image" src={favourites.indexOf(product._id) > -1 ? './img/filled-heart-icon.png' : "./img/heart-icon.png"} alt="favorite-icon" />
                                                 </Button>
-                                                <Button className="button-card-product"  onClick={() => CartChange(product._id)}>
+                                                <Button className="button-card-product" onClick={() => CartChange(product._id)}>
                                                     <img draggable="false"  src="./img/cart_icon.png" alt="cart icon"/>
                                                 </Button>
                                                 <Button className="button-card-product">
@@ -154,7 +154,7 @@ function Listing(props) {
                                                 <Button className="button-card-product" onClick={() => toggleFavourite(product._id)} >
                                                     <img id="image" src={favourites.indexOf(product._id) > -1 ? './img/filled-heart-icon.png' : "./img/heart-icon.png"} alt="favorite-icon" draggable="false"  />
                                                 </Button>
-                                                <Button className="button-card-product">
+                                                <Button className="button-card-product" onClick={() => CartChange(product._id)}>
                                                     <img src="./img/cart_icon.png" alt="cart icon" draggable="false" />
                                                 </Button>
                                                 <Button className="button-card-product">
@@ -194,7 +194,7 @@ function Listing(props) {
                                                 <Button className="button-card-product" onClick={() => toggleFavourite(product._id)} >
                                                     <img id="image" src={favourites.indexOf(product._id) > -1 ? './img/filled-heart-icon.png' : "./img/heart-icon.png"} alt="favorite-icon" draggable="false" />
                                                 </Button>
-                                                <Button className="button-card-product">
+                                                <Button className="button-card-product" onClick={() => CartChange(product._id)}>
                                                     <img src="./img/cart_icon.png" alt="cart icon" draggable="false" />
                                                 </Button>
                                                 <Button className="button-card-product">

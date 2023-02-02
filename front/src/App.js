@@ -12,7 +12,7 @@ import Admin from "./pages/Admin";
 import Gallery from "./pages/Gallery";
 import Customize from "./pages/Customize";
 import User from "./pages/User";
-import Cart from './pages/Cart';
+import {Cart} from './pages/Cart';
 import { getProductsById } from './api/db';
 import {
   BrowserRouter as Router,
