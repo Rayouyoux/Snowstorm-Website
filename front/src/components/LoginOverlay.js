@@ -57,7 +57,6 @@ function LoginOverlay({user, setUser}) {
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label>Mot de Passe</Form.Label>
                             <Form.Control {...register("loginPassword", { required: true })} type="password" placeholder="Mot de Passe" />
-                            <Link className="mdp" to="/help" onClick={handleClose}>Mot de passe oublié</Link> 
                         </Form.Group>
                         <Row>
                             <Col xs={6}>

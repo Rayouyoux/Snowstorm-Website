@@ -7,6 +7,7 @@ import Container from 'react-bootstrap/Container';
 import{ getProducts } from'../api/db';
 import React,{useEffect,useState} from "react";
 import Search from "../components/search";
+import CartChange from "./Cart";
 
 
 function Listing(props) {
@@ -52,11 +53,7 @@ function Listing(props) {
     }
 
     /*
-    console.log(compare);
     const compareTool = product => {
-        console.log(compare);
-        console.log((compare == []));
-        console.log((compare.type != product.type));
         if ((compare == []) || (compare.type != product.type)) {
             compare.push(product);
         } else {
@@ -117,7 +114,7 @@ function Listing(props) {
                                                 <Button className="button-card-product" onClick={() => toggleFavourite(product._id)} >
                                                     <img draggable="false"  id="image" src={favourites.indexOf(product._id) > -1 ? './img/filled-heart-icon.png' : "./img/heart-icon.png"} alt="favorite-icon" />
                                                 </Button>
-                                                <Button className="button-card-product">
+                                                <Button className="button-card-product"  onClick={() => CartChange(product._id)}>
                                                     <img draggable="false"  src="./img/cart_icon.png" alt="cart icon"/>
                                                 </Button>
                                                 <Button className="button-card-product">
@@ -212,6 +209,16 @@ function Listing(props) {
                                 </Col>
                         ))
                         }
+                    </Row>
+                </div>
+                <div id="compare-tool">
+                    <h3>{["Compare tool", "Outil de comparateur"][language]}</h3>
+                    <Row>
+                        <Col md={6}>
+                            <p>swag</p>
+                        </Col>
+                        <Col md={6}>
+                        </Col>
                     </Row>
                 </div>
             </Container>

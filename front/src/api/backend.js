@@ -14,7 +14,7 @@ export const login = async (email, password) => {
 }
 
 export const logout = async () => {
-    return (await backAccess.post("/logout")).data
+    return (await backAccess("/logout")).data
 }
 
 export const register = async (email, password, first_name, last_name) => {
@@ -27,9 +27,21 @@ export const getUserInfo = async () => {
     return (await backAccess("/getUserInfo")).data
 }
 
-export const update = async (email, password) => {
+export const updatePassword = async (user_id, password) => {
     return (await backAccess("/update", {
-        email, password
+        user_id, password
+    })).data
+}
+
+export const update = async (email, password, first_name, last_name) => {
+    return (await backAccess.post("/update", {
+        email, password, first_name, last_name
+    })).data
+}
+
+export const deleteUser = async (user_id) => {
+    return (await backAccess("/users/delete", {
+        user_id
     })).data
 }
 

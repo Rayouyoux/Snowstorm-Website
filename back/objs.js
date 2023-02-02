@@ -33,7 +33,8 @@ const structs = {
         "images": Array,
         "tags": Array,
         "specs": Object,
-        "quantity": Number
+        "quantity": Number,
+        "keyCount": Number
     },
     "user_keyboard": {
         "name": String,
@@ -43,7 +44,8 @@ const structs = {
         "tags": Array,
         "user_id": String,
         "ranking": Number,
-        "components": Array
+        "components": Array,
+        "show": Number
     },
     "sale": {
         "time": Number,
@@ -122,7 +124,7 @@ function component(_id=undefined, name="", price=0, description="", images=[], k
         throw new Error(msg);
 }
 
-function keyboard(_id=undefined, name="", price=0, description="", images=[], tags=[], specs={}, quantity=0) {
+function keyboard(_id=undefined, name="", price=0, description="", images=[], tags=[], specs={}, quantity=0, keyCount= 101) {
     this._id = _id
     if (this._id == undefined) delete this._id
     else this._id = this._id.toString()
@@ -133,12 +135,13 @@ function keyboard(_id=undefined, name="", price=0, description="", images=[], ta
     this.tags = tags
     this.specs = specs
     this.quantity = quantity
+    this.keyCount = keyCount
     const [isValid, msg] = check(this, structs.keyboard)
     if (!isValid)
         throw new Error(msg);
 }
 
-function user_keyboard(_id=undefined, name="", price=0, description="", images=[], tags=[], user_id="", ranking = 0, components = []) {
+function user_keyboard(_id=undefined, name="", price=0, description="", images=[], tags=[], user_id="", ranking = 0, components = [], show=0) {
     this._id = _id
     if (this._id == undefined) delete this._id
     else this._id = this._id.toString()
@@ -150,6 +153,7 @@ function user_keyboard(_id=undefined, name="", price=0, description="", images=[
     this.user_id = user_id
     this.ranking = ranking
     this.components = components
+    this.show = show
     const [isValid, msg] = check(this, structs.user_keyboard)
     if (!isValid)
         throw new Error(msg);

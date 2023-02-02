@@ -1,25 +1,19 @@
 import { Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { backAccess } from "../api/backend";
 import React, { useState, useEffect } from 'react';
 import Carousel from "react-bootstrap/Carousel";
 import "./css/Home.css";
-import { getKeyboards, getMostSales } from '../api/db';
+import { getKeyboards} from '../api/db';
 import diagBlob1 from "./bg-img/diagBlob1.png";
 import triBg1 from "./bg-img/triBg1.png";
 
 
 function Home(props) {
     const { language, setLanguage } = props;
-    const [keyboards, setKeyboards] = useState([]);
     const [bySales, setBySales] = useState([]);
 
     useEffect(() => {
-        const keyboardsFetched = getKeyboards();
         const keyboardsByMostSalesFetched = getKeyboards("mostsales");
-        keyboardsFetched
-            .then(result => setKeyboards(result))
-            .catch(error => console.error("Erreur avec notre API :", error.message));
         keyboardsByMostSalesFetched
             .then(result => setBySales(result))
             .catch(error => console.error("Erreur avec notre API :", error.message));

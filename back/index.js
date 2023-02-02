@@ -143,7 +143,7 @@ app.get("/keyboards", (req, res, next) => {
             res.status(400).send("Error fetching keyboards!");
         } else {
             var objects = result.map(x => {
-                return new objsTypes.keyboard(x._id, x.name, x.price, x.description, x.images, x.tags, x.specs, x.quantity)
+                return new objsTypes.keyboard(x._id, x.name, x.price, x.description, x.images, x.tags, x.specs, x.quantity, x.keyCount)
             })
             res.json(result);
         }
@@ -151,12 +151,12 @@ app.get("/keyboards", (req, res, next) => {
 });
 app.get("/keyboards/:id", (req, res, next) => {
     GetOne("keyboards", req.params.id, x => {
-        res.json(new objsTypes.keyboard(x._id, x.name, x.price, x.description, x.images, x.tags, x.specs, x.quantity));
+        res.json(new objsTypes.keyboard(x._id, x.name, x.price, x.description, x.images, x.tags, x.specs, x.quantity, x.keyCount));
     }).catch(next);
 });
 app.get("/keyboards/last", (req, res, next) => {
     GetLast("keyboards", x => {
-        res.json(new objsTypes.keyboard(x._id, x.name, x.price, x.description, x.images, x.tags, x.specs, x.quantity));
+        res.json(new objsTypes.keyboard(x._id, x.name, x.price, x.description, x.images, x.tags, x.specs, x.quantity, x.keyCount));
     }).catch(next);
 });
 
@@ -177,7 +177,7 @@ app.get("/user_keyboards", (req, res, next) => {
             res.status(400).send("Error fetching keyboards!");
         } else {
             var objects = result.map(x => {
-                return new objsTypes.user_keyboard(x._id, x.name, x.price, x.description, x.images, x.tags, x.user_id, x.ranking, x.component)
+                return new objsTypes.user_keyboard(x._id, x.name, x.price, x.description, x.images, x.tags, x.user_id, x.ranking, x.component, x.show)
             })
             res.json(result);
         }
@@ -290,11 +290,13 @@ app.get("/sales/most-sales", (req, res, next) => {
             res.status(400).send("Error fetching components!");
         } else {
             const ret = result.map(obj => {
+                if (obj.keyboard_info[0])
+                    return
                 let x = obj.product_info[0] || obj.keyboard_info[0]
                 return {
                     type: obj._id.type,
                     count: obj.count,
-                    info:  obj.product_info[0] ? new objsTypes.product(x._id.o, x.name, x.price, x.type, x.description, x.images, x.tags, x.quantity) : new objsTypes.keyboard(x._id, x.name, x.price, x.description, x.images, x.tags, x.specs, x.quantity)
+                    info:  obj.product_info[0] ? new objsTypes.product(x._id.o, x.name, x.price, x.type, x.description, x.images, x.tags, x.quantity) : new objsTypes.keyboard(x._id, x.name, x.price, x.description, x.images, x.tags, x.specs, x.quantity, x.keyCount)
                 }
             })
 
@@ -338,9 +340,8 @@ app.post("/login", sessionUpdater, (req, res, next) => {
             }
         }).catch(next);
 })
-app.post("/logout", sessionUpdater, (req, res, next) => {
+app.get("/logout", sessionUpdater, (req, res, next) => {
     const dbConnect = dbo.getDb();
-    const body = req.body
 
     delete req.session.user
     res.json({ msg: "OK" })
@@ -351,11 +352,11 @@ app.get("/getUserInfo", sessionUpdater, (req, res, next) => {
 app.post("/update", sessionUpdater, (req, res, next) => {
     const dbConnect = dbo.getDb();
     const body = req.body
+    req.session.user
 
-    dbConnect.collection("users").update(
-        {email: body.email.toString()},
-        {password: hashPassword(body.password)}
-    )
+    dbConnect.collection("users").updateOne(
+        {id:body.id},
+        {$set:{email: body.email, password: body.password , first_name: body.first_name, last_name: body.last_name}})
 });
 
 //* NEWSLETTER *//
@@ -404,7 +405,7 @@ app.post("/keyboards/insert", [sessionUpdater, adminRestricted], (req, res, next
     const body = req.body
     delete body._id;
 
-    const obj = new objsTypes.keyboard(body._id, body.name, body.price, body.description, body.images, body.tags, body.specs, body.quantity)
+    const obj = new objsTypes.keyboard(body._id, body.name, body.price, body.description, body.images, body.tags, body.specs, body.quantity, body.keyCount)
 
     dbConnect
         .collection("keyboards")
@@ -421,7 +422,7 @@ app.post("/user_keyboards/insert", [sessionUpdater, adminRestricted], (req, res,
     const body = req.body
     delete body._id;
 
-    const obj = new objsTypes.user_keyboard(body._id, body.name, body.price, body.description, body.images, body.tags, body.user_id, body.ranking, body.component)
+    const obj = new objsTypes.user_keyboard(body._id, body.name, body.price, body.description, body.images, body.tags, body.user_id, body.ranking, body.component, body.show)
 
     dbConnect
         .collection("user_keyboards")
@@ -449,6 +450,35 @@ app.post("/components/insert", [sessionUpdater, adminRestricted], (req, res, nex
         }).catch(next);
 });
 
+// Users
+
+app.get("/users", [sessionUpdater, adminRestricted], (req, res, next) => {
+    SearchCollection("users", {}, (err, result) => {
+        if (err) {
+            res.status(400).send("Error fetching users!");
+        } else {
+            var objects = result.map(x => {
+                return new objsTypes.user(x._id, x.email, undefined, x.first_name, x.last_name, x.permission_level, x.newsletter, x.custom_save_id, x.favorite_id)
+            })
+            res.json(result);
+        }
+    }).catch(next);
+});
+
+app.delete("/users/delete", [sessionUpdater, adminRestricted], (req, res, next)=> {
+    const dbConnect = dbo.getDb();
+    const body = req.body
+
+    dbConnect.collection("users").deleteOne(
+        {_id: body._id}
+    ).then(result => {
+        if (result.acknowledged)
+            res.json({ msg: "OK" })
+    }).catch(next);
+})
+/*
+        _id=undefined, email="", password=undefined, first_name="", last_name="", permission_level=0, newsletter=0, custom_save_id=[], favorite_id=[]
+*/
 /* Sales
 app.post("/sales/insert", (req, res, next) => {
     const dbConnect = dbo.getDb();

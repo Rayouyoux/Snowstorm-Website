@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import "./css/Product.css";
 import { useParams } from "react-router-dom";
 import { getProductsById } from "../api/db";
+import CartChange from './Cart';
 
 function Product({ language, setLanguage }) {
     const [ favourites, setFavourites ] = useState([]);
@@ -75,7 +76,7 @@ function Product({ language, setLanguage }) {
                 outOfStock ? (
                     <Button disabled><p>Out Of Stock !</p></Button>
                 ) : (
-                    <Button>Add To Cart</Button>
+                    <Button onClick={() => CartChange(product._id)}>Add To Cart</Button>
                 )
             }
             <div className="socials">

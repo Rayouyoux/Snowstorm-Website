@@ -12,19 +12,19 @@
     animation: 2s fade-in-animation;
 }
 
-input.form-control, select.form-select, textarea.form-control{
+.support-page input.form-control, select.form-select, textarea.form-control{
     background-color: var(--black);
     color: lightgray;
     transition: .3s;
     border-color: var(--black);
 }
 
-input.form-control:hover, select.form-select:hover, textarea.form-control:hover{
+.support-page input.form-control:hover, select.form-select:hover, textarea.form-control:hover{
     background-color: var(--white);
     color: var(--black);
 }
 
-button.btn.btn-dark.btn-lg:hover{
+.support-page button.btn.btn-dark.btn-lg:hover{
     background-color: var(--white) !important;
     color: var(--black);
 }
