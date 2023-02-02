@@ -17,7 +17,7 @@ const port = 4444;
 
 app.use(cors({
     credentials: true,
-    origin: ["http://10.1.144.34:3000", "http://localhost:3000","http://10.1.171.14:3000"]
+    origin: ["http://10.1.144.34:3000", "http://localhost:3000","http://10.1.171.14:3000","http://192.168.1.106:3000"]
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

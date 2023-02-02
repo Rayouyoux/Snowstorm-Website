@@ -240,7 +240,7 @@ function Customize(props) {
                 </div>
             ) : <></>
         }
-    </div>          
+    </div>
 }
 
 

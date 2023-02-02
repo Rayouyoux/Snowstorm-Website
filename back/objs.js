@@ -67,7 +67,9 @@ function check(obj, struct) {
     var isValid = true
     msg = ''
     Object.entries(struct).forEach(([key, type]) => {
-        if (obj[key] != undefined & obj[key].constructor !== type)
+        if (obj[key] == undefined && obj[key] == null)
+            console.log(struct, key)
+        else if (obj[key].constructor !== type)
         {
             isValid = false
             msg += `${key} is not the correct type. Should be ${type.name}. `
@@ -76,24 +78,28 @@ function check(obj, struct) {
     return [isValid, msg]
 }
 
-function user(_id=undefined, email="", password=undefined, first_name="", last_name="", permission_level=0, newsletter=0, custom_save_id=[], favorite_id=[]) {
-    this._id = _id
-    if (this._id == undefined) delete this._id
-    else this._id = this._id.toString()
-    this.email = email
-    this.password = password
-    this.first_name = first_name
-    this.last_name = last_name
-    this.permission_level = permission_level
-    this.newsletter = newsletter
-    this.custom_save_id = custom_save_id
-    this.favorite_id = favorite_id
+function user(_id=undefined, email="", password=undefined, first_name="", last_name="", permission_level=0, newsletter=0, custom_save_id=[], favorite_id=[], dict=undefined) {
+    if (dict) {
+
+    } else {
+        this._id = _id
+        if (this._id == undefined) delete this._id
+        else this._id = this._id.toString()
+        this.email = email
+        this.password = password
+        this.first_name = first_name
+        this.last_name = last_name
+        this.permission_level = permission_level
+        this.newsletter = newsletter
+        this.custom_save_id = custom_save_id
+        this.favorite_id = favorite_id
+    }
     const [isValid, msg] = check(this, structs.user)
     if (!isValid)
         throw new Error(msg);
 }
 
-function product(_id=undefined, name="Hello world!", price=0, type="keyboard", description="Lorem Ipsum.", images=[], tags=[], quantity=0) {
+function product(_id=undefined, name="Hello world!", price=0, type="keyboard", description="Lorem Ipsum.", images=[], tags=[], quantity=0, dict=undefined) {
     this._id = _id
     if (this._id == undefined) delete this._id
     else this._id = this._id.toString()
@@ -109,7 +115,7 @@ function product(_id=undefined, name="Hello world!", price=0, type="keyboard", d
         throw new Error(msg);
 }
 
-function component(_id=undefined, name="", price=0, description="", images=[], keyboards=[], quantity=0) {
+function component(_id=undefined, name="", price=0, description="", images=[], keyboards=[], quantity=0, dict=undefined) {
     this._id = _id
     if (this._id == undefined) delete this._id
     else this._id = this._id.toString()
@@ -124,7 +130,7 @@ function component(_id=undefined, name="", price=0, description="", images=[], k
         throw new Error(msg);
 }
 
-function keyboard(_id=undefined, name="", price=0, description="", images=[], tags=[], specs={}, quantity=0, keyCount=101) {
+function keyboard(_id=undefined, name="", price=0, description="", images=[], tags=[], specs={}, quantity=0, keyCount=101, dict=undefined) {
     this._id = _id
     if (this._id == undefined) delete this._id
     else this._id = this._id.toString()
@@ -141,7 +147,7 @@ function keyboard(_id=undefined, name="", price=0, description="", images=[], ta
         throw new Error(msg);
 }
 
-function user_keyboard(_id=undefined, name="", price=0, description="", images=[], tags=[], user_id="", ranking = 0, components = [], show=0) {
+function user_keyboard(_id=undefined, name="", price=0, description="", images=[], tags=[], user_id="", ranking = 0, components = [], show=0, dict=undefined) {
     this._id = _id
     if (this._id == undefined) delete this._id
     else this._id = this._id.toString()
@@ -159,7 +165,7 @@ function user_keyboard(_id=undefined, name="", price=0, description="", images=[
         throw new Error(msg);
 }
 
-function sale(_id=undefined, time=0, user_id="", type="", sold_id="") {
+function sale(_id=undefined, time=0, user_id="", type="", sold_id="", dict=undefined) {
     this._id = _id
     if (this._id == undefined) delete this._id
     else this._id = this._id.toString()
@@ -173,7 +179,7 @@ function sale(_id=undefined, time=0, user_id="", type="", sold_id="") {
         throw new Error(msg);
 }
 
-function review(_id=undefined, time=0, user_id="", type="", product_id="", comment="", rating=0) {
+function review(_id=undefined, time=0, user_id="", type="", product_id="", comment="", rating=0, dict=undefined) {
     this._id = _id
     if (this._id == undefined) delete this._id
     else this._id = this._id.toString()
