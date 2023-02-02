@@ -355,8 +355,8 @@ app.post("/update", sessionUpdater, (req, res, next) => {
     dbConnect.collection("users").update(
         {email: body.email.toString()},
         {password: hashPassword(body.password)}
-        )
-}).catch(next);
+    )
+});
 
 //* NEWSLETTER *//
 app.post("/newsletterOn", sessionUpdater, (req, res, next) => {
@@ -366,8 +366,8 @@ app.post("/newsletterOn", sessionUpdater, (req, res, next) => {
     dbConnect.collection("users").update(
         {email: body.email.toString()},
         {newsletter: 1}
-        )
-}).catch(next);
+    )
+});
 
 app.post("/newsletterOff", sessionUpdater, (req, res, next) => {
     const dbConnect = dbo.getDb();
@@ -376,8 +376,8 @@ app.post("/newsletterOff", sessionUpdater, (req, res, next) => {
     dbConnect.collection("users").update(
         {email: body.email.toString()},
         {newsletter: 0}
-        )
-}).catch(next);
+    )
+});
 
 //* ADMIN *//
 
