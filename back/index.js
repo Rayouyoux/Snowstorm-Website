@@ -35,17 +35,18 @@ app.use(session({
 const sessionUpdater = (req, res, next) => {
     // Session updater
     if (req.session.user && req.session.user._id) {
-        GetOne("users", req.session.user._id, result => {
+        GetOne("users", req.session.user._id).then(result => {
             if (result) {
+                req.session.password = result.password
                 req.session.user = new objsTypes.user(result._id, result.email, undefined, result.first_name, result.last_name, result.permission_level, result.newsletter, result.custom_save_id, result.favorite_id)
             } else {
                 delete req.session.user
             }
             next()
-        })
+        }).catch(next)
     } else next();
 };
-
+// permet de limiter l'utilisation de certaine commande aux admin 
 const adminRestricted = (req, res, next) => {
     // Session updater
     if (req.session.user && req.session.user.permission_level && (req.session.user.permission_level > 200)) {
@@ -60,6 +61,7 @@ app.get("/", (req, res, next) => {
 //* FETCH *//
 
 // Generic search
+// permet de faire une recherche avec les conditions que l'on veut
 const SearchCollection = async (collection, query, callback) => {
     const dbConnect = dbo.getDb();
     const sort = query.sort || {}
@@ -77,7 +79,7 @@ const SearchCollection = async (collection, query, callback) => {
 
     return err, result
 }
-
+// pertmet d'obtenir une seul valeur souhaité d'un collection
 const GetOne = async (collection, _id, callback) => {
     const dbConnect = dbo.getDb();
 
@@ -92,7 +94,7 @@ const GetOne = async (collection, _id, callback) => {
 
     return result
 }
-
+// permet d'obtenir la derniere valeur rentré dans la collection
 const GetLast = async (collection, callback) => {
     const dbConnect = dbo.getDb();
 
@@ -111,7 +113,7 @@ const GetLast = async (collection, callback) => {
 }
 
 // Products
-
+// recupere toute les valeurs de la collection products
 app.get("/products", (req, res, next) => {
     SearchCollection("products", {}, (err, result) => {
         if (err) {
@@ -124,11 +126,13 @@ app.get("/products", (req, res, next) => {
         }
     }).catch(next);
 });
+// recupere la valeur correspondant a l'id demandé dans la collection products
 app.get("/products/:id", (req, res, next) => {
     GetOne("products", req.params.id, x => {
         res.json(new objsTypes.product(x._id, x.name, x.price, x.type, x.description, x.images, x.tags, x.quantity));
     }).catch(next);
 });
+// recupere la derniere valeur rentrée dans la collection products
 app.get("/products/last", (req, res, next) => {
     GetLast("products", x => {
         res.json(new objsTypes.product(x._id, x.name, x.price, x.type, x.description, x.images, x.tags, x.quantity));
@@ -136,6 +140,7 @@ app.get("/products/last", (req, res, next) => {
 });
 
 // Keyboards
+// recupere toute les valeurs de la collection keyboards
 app.get("/keyboards", (req, res, next) => {
     SearchCollection("keyboards", {}, (err, result) => {
         if (err) {
@@ -148,6 +153,7 @@ app.get("/keyboards", (req, res, next) => {
         }
     }).catch(next);
 });
+// recupere la valeur correspondant a l'id demandé dans la collection ks
 app.get("/keyboards/:id", (req, res, next) => {
     GetOne("keyboards", req.params.id, x => {
         res.json(new objsTypes.keyboard(x._id, x.name, x.price, x.description, x.images, x.tags, x.specs, x.quantity, x.keyCount));
@@ -318,6 +324,7 @@ app.post("/register", sessionUpdater, (req, res, next) => {
         .insertOne(obj)
         .then(result => {
             if (result.acknowledged) {
+                req.session.password = obj.password
                 req.session.user = new objsTypes.user(result.insertedId, body.email, undefined, body.first_name, body.last_name)
                 res.json({ msg: "OK", userInfo: req.session.user })
             }
@@ -332,7 +339,8 @@ app.post("/login", sessionUpdater, (req, res, next) => {
         .findOne({ email: body.email.toString(), password: hashPassword(body.password) })
         .then((result) => {
             if (result) {
-                req.session.user = new objsTypes.user(result._id, result.email, undefined, result.first_name, result.last_name, result.permission_level)
+                req.session.password = result.password
+                req.session.user = new objsTypes.user(result._id, result.email, undefined, result.first_name, result.last_name, result.permission_level, result.newsletter, result.custom_save_id, result.favorite_id)
                 res.json({ msg: "OK", userInfo: req.session.user })
             } else {
                 res.status(400).json({ msg: "Email or password incorrect!" })
@@ -351,11 +359,30 @@ app.get("/getUserInfo", sessionUpdater, (req, res, next) => {
 app.post("/update", sessionUpdater, (req, res, next) => {
     const dbConnect = dbo.getDb();
     const body = req.body
-    req.session.user
+    const currentUser = req.session.user
 
-    dbConnect.collection("users").updateOne(
-        {id:body.id},
-        {$set:{email: body.email, password: body.password , first_name: body.first_name, last_name: body.last_name}})
+    if (body.email == "") delete body.email
+    if (body.password == "") delete body.password
+    if (body.first_name == "") delete body.first_name
+    if (body.last_name == "") delete body.last_name
+
+    var newUser = new objsTypes.user(currentUser._id, body.email || currentUser.email, body.password ? hashPassword(body.password) : req.session.password, body.first_name || currentUser.first_name, body.last_name || currentUser.last_name, currentUser.permission_level, currentUser.newsletter, currentUser.custom_save_id, currentUser.favorite_id)
+    delete newUser._id
+    if (hashPassword(body.old_password) != req.session.password) {
+        res.status(400).json({ msg: "ERROR: Incorrect password!" })
+    } else 
+        dbConnect.collection("users").updateOne(
+            {id:body.id},
+            {$set:newUser})
+        .then(result => {
+            if (result.acknowledged) {
+                newUser._id = currentUser._id
+                req.session.password = newUser.password
+                delete newUser.password
+                req.session.user = newUser
+                res.json({ msg: "OK", userInfo: req.session.user })
+            }
+        })
 });
 
 //* NEWSLETTER *//
@@ -363,9 +390,9 @@ app.post("/newsletterOn", sessionUpdater, (req, res, next) => {
     const dbConnect = dbo.getDb();
     const body = req.body
 
-    dbConnect.collection("users").update(
+    dbConnect.collection("users").updateOne(
         {email: body.email.toString()},
-        {newsletter: 1}
+        {$set:{"newsletter": 1}}
     )
 });
 
@@ -373,9 +400,9 @@ app.post("/newsletterOff", sessionUpdater, (req, res, next) => {
     const dbConnect = dbo.getDb();
     const body = req.body
 
-    dbConnect.collection("users").update(
+    dbConnect.collection("users").updateOne(
         {email: body.email.toString()},
-        {newsletter: 0}
+        {$set:{"newsletter": 0}}
     )
 });
 
@@ -449,6 +476,21 @@ app.post("/components/insert", [sessionUpdater, adminRestricted], (req, res, nex
         }).catch(next);
 });
 
+// Sales
+
+app.get("/sales", (req, res, next) => {
+    SearchCollection("sales", {}, (err, result) => {
+        if (err) {
+            res.status(400).send("Error fetching sales!");
+        } else {
+            var objects = result.map(x => {
+                return new objsTypes.sale(x._id, x.time, x.user_id, x.type, x.sold_id)
+            })
+            res.json(result);
+        }
+    }).catch(next);
+});
+
 // Users
 
 app.get("/users", [sessionUpdater, adminRestricted], (req, res, next) => {
@@ -466,35 +508,15 @@ app.get("/users", [sessionUpdater, adminRestricted], (req, res, next) => {
 
 app.delete("/users/delete", [sessionUpdater, adminRestricted], (req, res, next)=> {
     const dbConnect = dbo.getDb();
-    const body = req.body
+    const body = req.body;
 
     dbConnect.collection("users").deleteOne(
-        {_id: body._id}
+        {_id: body.user_id}
     ).then(result => {
         if (result.acknowledged)
             res.json({ msg: "OK" })
     }).catch(next);
 })
-/*
-        _id=undefined, email="", password=undefined, first_name="", last_name="", permission_level=0, newsletter=0, custom_save_id=[], favorite_id=[]
-*/
-/* Sales
-app.post("/sales/insert", (req, res, next) => {
-    const dbConnect = dbo.getDb();
-    const body = req.body
-    delete body._id;
-    
-    const obj = new objsTypes.sale(body._id, body.time, body.user_id, body.type, body.sold_id)
-
-    dbConnect
-    .collection("sales")
-    .insertOne(obj)
-    .then(result => {
-        if (result.acknowledged)
-            res.json({msg: "OK", insertedId: result.insertedId.toString()})
-    })
-});
-*/
 
 //* STATIC CONTENT *//
 
@@ -514,7 +536,7 @@ app.post("/info", [sessionUpdater, adminRestricted], (req, res, next) => {
 //* CONNECTION & STARTUP *//
 
 app.use((err, req, res, next) => {
-    res.status(500).json({ msg: `Error: ${err.message}` })
+    res.status(500).json({ msg: `Error: ${err.message}`, stack: err.stack })
 })
 
 dbo.connectToServer().then(() =>
