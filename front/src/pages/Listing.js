@@ -66,6 +66,9 @@ function Listing(props) {
    /*onClick={() => compareTool(product)}*/
 
     return <div className="listing-page">
+        {
+            /*Page produit */
+        }
         <div className="top-of-page">
             <Row>
                 <Col xs={{ span:5, offset:2 }}>
@@ -79,15 +82,17 @@ function Listing(props) {
                 </Col>
                 <Col xs={12} md={4}>
                     <h2>{language == 0 ? listingText.english.h23 : listingText.francais.h23}</h2>
-                    <a href="#accessories"><img draggable="false" className="section-image" src="https://assets.hardwarezone.com/img/2022/06/board-paul-esch-laurent-8ssNFn4VPLg-unsplash.jpg"/></a>
+                    <a href="#accessories"><img draggable="false" className="section-image" src="https://cdn.shopify.com/s/files/1/0610/2967/9350/products/cable-clavier-custom-bleu-ciel_480x480.jpg?v=1645480629"/></a>
                 </Col>
                 <Col xs={12} md={4}>
                     <h2>{language == 0 ? listingText.english.h22 : listingText.francais.h22}</h2>
-                    <a href="#components"><img className="section-image" src="https://assets.hardwarezone.com/img/2022/06/board-paul-esch-laurent-8ssNFn4VPLg-unsplash.jpg"/></a>
+                    <a href="#components"><img className="section-image" src="https://cdn.shopify.com/s/files/1/0533/4515/7292/files/Keycaps_Custom_82f481a5-3970-41d5-b5a9-927de86e57fe_1100x.jpg?v=1644242351"/></a>
                 </Col>
             </Row>
         </div>
-
+        {
+            /*Ils sont divisés en 3 parties : clavier, accessoires, composants */
+        }
         <div className="products-part">
             <Container>
             <Search setSearch = {setSearch} />
@@ -121,7 +126,7 @@ function Listing(props) {
                                                     Compare
                                                 </Button>
                                                 <Button className="button-card-product">
-                                                    <Link to={"/"+product._id}>View More</Link>
+                                                    <Link to={"/product/"+product._id}>View More</Link>
                                                 </Button>
                                             </Card.Body>
                                         </Card>
@@ -161,7 +166,7 @@ function Listing(props) {
                                                     Compare
                                                 </Button>
                                                 <Button className="button-card-product">
-                                                    <Link to={"/"+product._id}>View More</Link>
+                                                    <Link to={"/product/"+product._id}>View More</Link>
                                                 </Button>
                                             </Card.Body>
                                         </Card>
@@ -201,7 +206,7 @@ function Listing(props) {
                                                     Compare
                                                 </Button>
                                                 <Button className="button-card-product">
-                                                    <Link to={"/"+product._id}>View More</Link>
+                                                    <Link to={"/product/"+product._id}>View More</Link>
                                                 </Button>
                                             </Card.Body>
                                         </Card>

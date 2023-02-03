@@ -35,6 +35,9 @@ function NavBar({ language, setLanguage, user, setUser } ) {
 
     return (
         <div className="navbar-component">
+        {
+            /*Navbar présente sur toutes les pages */
+        }
             <div className="nav-top-bar">
                 <Row>
                     <Col xs={1} className="icons">

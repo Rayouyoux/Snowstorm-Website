@@ -38,6 +38,9 @@ function Gallery(props) {
     },[]);
 
     return <div className="gallery-page">
+        {
+            /*Page de présentation de claviers customs faient par la communauté */
+        }
         <img src="/img/wave2.png" alt="Wave" draggable="false"/>
         <div className="titles">
             <Row>
@@ -66,6 +69,9 @@ function Gallery(props) {
                                         <Card.Text>{["Like Number : ","Nombre de Like : "][language]}{byLikes.ranking}</Card.Text>
                                         <Button className="button-card-product" onClick={() => toggleFavourite(byLikes._id)} ><img id="image" src={favourites.indexOf(byLikes._id) > -1 ? './img/filled-heart-icon.png' : "./img/heart-icon.png"} alt="" /></Button>
                                         <Button className="button-card-product"><img src="./img/cart_icon.png" alt=""/></Button>
+                                        {
+                                            /*Possibilité de partage sur les réseaux sociaux */
+                                        }
                                         <div className="socials">
                                             <a href="https://www.facebook.com/wasdkeyboards" target="_blank" ><img className="logo" src="/img/logo-facebook.png" alt="logo facebook"/></a>
                                             <a href="https://twitter.com/wasdkeyboards" target="_blank"><img className="logo" src="/img/logo-twitter.png" alt="logo twitter"/></a>

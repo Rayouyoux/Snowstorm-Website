@@ -14,6 +14,9 @@ function NewsletterSignup({ user, setUser,  language, setLanguage}) {
 
     return (
         <ToastContainer className="p-3" position='bottom-end' containerPosition='position-fixed'>
+        {
+            /*Pop-up d'inscription à la Newsletter */
+        }
             <Toast bg="secondary" show={showA} onClose={toggleShowA}>
                 <Toast.Header>
                     <strong className="me-auto">{["Subscribe to our newsletter !", "Abonnez-vous à notre Newsletter !"][language]}</strong>

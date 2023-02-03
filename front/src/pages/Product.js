@@ -31,10 +31,9 @@ function Product({ language, setLanguage }) {
         })
     }, [])
 
-    /*useLoaderData().then(prd => {
-        setProduct(prd)
-    })*/
-    // export 'useLoaderData' (imported as 'useLoaderData') was not found in 'react-router-dom' (possible exports: BrowserRouter, HashRouter, Link, MemoryRouter, NavLink, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter)
+    /*
+    */
+    
 
     const toggleFavourite = id => {
         var mod = favourites.slice()
@@ -47,14 +46,20 @@ function Product({ language, setLanguage }) {
     }
 
     return <div className="product-page">
+        {
+            /*Toutes les infos des produits allant du nom de celui-ci à sa description*/
+        }
         <Row>
             <div className="titles">
                 <Col xs={{ span:10 , offset:2 }}>
                     <h1>{product.name}</h1>
                 </Col>
+                <Col xs={{ span:10 , offset:2 }}>
                 <Button className="button-card-product" onClick={() => toggleFavourite(product._id)} >
-                    <img id="image" src={favourites.indexOf(product._id) > -1 ? './img/filled-heart-icon.png' : "./img/heart-icon.png"} alt="favorite-icon" />
+                    <img id="image" className="logo" src={favourites.indexOf(product._id) > -1 ? '/img/filled-heart-icon.png' : "/img/heart-icon.png"} alt="favorite-icon" />
                 </Button>
+                </Col>
+                
             </div>
             <div className="carousel">
                 <Col xs={{ span:8 , offset:2 }}>
@@ -69,9 +74,11 @@ function Product({ language, setLanguage }) {
                     </Carousel>
                 </Col>
             </div>
+            <Col xs={{ span:10 , offset:2 }}>
             <h2>Description</h2>
             <p>{product.description}</p>
             <p>Prix : {product.price}€</p>
+            
             {
                 outOfStock ? (
                     <Button disabled><p>Out Of Stock !</p></Button>
@@ -79,17 +86,22 @@ function Product({ language, setLanguage }) {
                     <Button onClick={() => CartChange(product._id)}>Add To Cart</Button>
                 )
             }
-            <div className="socials">
-                <h2>Share this product on social Media !</h2>
+            </Col>
+            
+            <h2 className="align-text">Share this product on social Media !</h2>
+                <div className="socials">
                 <a href="https://www.facebook.com/wasdkeyboards" target="_blank" ><img className="logo" src="/img/logo-facebook.png" alt="logo facebook"/></a>
                 <a href="https://ctt.ac/Cfarc" target="_blank"><img className="logo" src="/img/logo-twitter.png" alt="logo twitter"/></a>
                 <a href="https://www.instagram.com/wasdkeyboards" target="_blank"><img className="logo" src="/img/logo-instagram.png" alt="logo instagram"/></a>
-            </div>
+                </div>
+            {
+                /*Possibilité d'ajouter une review*/
+            }
             <div className="reviews">
-                <h2>Bought the product? Add a review !</h2>
+                <h2 className="align-text">Bought the product? Add a review !</h2>
                 <Form>
                     <Row>
-                        <Form.Label>Grade</Form.Label>
+                        <Form.Label className="align-text">Grade</Form.Label>
                         <Col xs={{ span:1 , offset:1 }}>1</Col>
                         <Col xs={1}>2</Col>
                         <Col xs={1}>3</Col>

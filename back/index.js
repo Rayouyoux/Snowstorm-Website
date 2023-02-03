@@ -159,6 +159,7 @@ app.get("/keyboards/:id", (req, res, next) => {
         res.json(new objsTypes.keyboard(x._id, x.name, x.price, x.description, x.images, x.tags, x.specs, x.quantity, x.keyCount));
     }).catch(next);
 });
+// recupere la derniere valeur rentrée dans la collection keyboards
 app.get("/keyboards/last", (req, res, next) => {
     GetLast("keyboards", x => {
         res.json(new objsTypes.keyboard(x._id, x.name, x.price, x.description, x.images, x.tags, x.specs, x.quantity, x.keyCount));
@@ -166,6 +167,7 @@ app.get("/keyboards/last", (req, res, next) => {
 });
 
 // User Keyboards
+// recupere toute les valeurs de la collection user-keyboards
 app.get("/user_keyboards", (req, res, next) => {
     var sort = {}
     switch (req.query.sort) {
@@ -190,6 +192,7 @@ app.get("/user_keyboards", (req, res, next) => {
 });
 
 // Components
+// recupere toute les valeurs de la collection components
 app.get("/components", (req, res, next) => {
     SearchCollection("components", {}, (err, result) => {
         if (err) {
@@ -202,6 +205,7 @@ app.get("/components", (req, res, next) => {
         }
     }).catch(next);
 });
+// recupere la valeur correspondant a l'id du clavier demandé dans la collection components
 app.get("/components/by-keyboard/:id", (req, res, next) => {
     const _id = req.params.id
 
@@ -217,11 +221,13 @@ app.get("/components/by-keyboard/:id", (req, res, next) => {
         }
     });
 });
+// recupere la valeur correspondant a l'id demandé dans la collection components
 app.get("/components/:id", (req, res, next) => {
     GetOne("components", req.params.id, x => {
         res.json(new objsTypes.component(x._id, x.name, x.price, x.description, x.images, x.keyboards, x.quantity));
     }).catch(next);
 });
+// recupere la derniere valeur rentrée dans la collection components
 app.get("/components/last", (req, res, next) => {
     GetLast("components", x => {
         res.json(new objsTypes.component(x._id, x.name, x.price, x.description, x.images, x.keyboards, x.quantity));
@@ -229,7 +235,7 @@ app.get("/components/last", (req, res, next) => {
 });
 
 // Reviews
-
+// recupere les valeurs lié a un type et l'id d'un produit dans la collection reviews
 app.get("/reviews/:type/:id", (req, res, next) => {
     const product_id = req.params.id
     const type = req.params.type
@@ -248,7 +254,7 @@ app.get("/reviews/:type/:id", (req, res, next) => {
 });
 
 // Sales
-
+// recuoere les valeurs correspondant au meilleur vente dans la collection sales
 app.get("/sales/most-sales", (req, res, next) => {
     const dbConnect = dbo.getDb();
 
@@ -313,6 +319,7 @@ app.get("/sales/most-sales", (req, res, next) => {
 //* USERS *//
 
 const hashPassword = password => crypto.createHash('sha256').update(salt + password).digest("hex")
+// gere l'entrer des user dans la collection user
 app.post("/register", sessionUpdater, (req, res, next) => {
     const dbConnect = dbo.getDb();
     const body = req.body
@@ -330,6 +337,7 @@ app.post("/register", sessionUpdater, (req, res, next) => {
             }
         }).catch(next);
 })
+// gere le login des user en surveillant que les information rentre match avec celle de la collection users
 app.post("/login", sessionUpdater, (req, res, next) => {
     const dbConnect = dbo.getDb();
     const body = req.body
@@ -347,15 +355,18 @@ app.post("/login", sessionUpdater, (req, res, next) => {
             }
         }).catch(next);
 })
+// gere le logout est supprimant la session user
 app.get("/logout", sessionUpdater, (req, res, next) => {
     const dbConnect = dbo.getDb();
 
     delete req.session.user
     res.json({ msg: "OK" })
 })
+// permet de recupere les info de la session user
 app.get("/getUserInfo", sessionUpdater, (req, res, next) => {
     res.json(req.session.user)
 })
+// permet de modifier les information dans la collection users de la session user 
 app.post("/update", sessionUpdater, (req, res, next) => {
     const dbConnect = dbo.getDb();
     const body = req.body
@@ -386,6 +397,7 @@ app.post("/update", sessionUpdater, (req, res, next) => {
 });
 
 //* NEWSLETTER *//
+// permet d'activer la newsletter pour un user 
 app.post("/newsletterOn", sessionUpdater, (req, res, next) => {
     const dbConnect = dbo.getDb();
     const body = req.body
@@ -395,7 +407,7 @@ app.post("/newsletterOn", sessionUpdater, (req, res, next) => {
         {$set:{"newsletter": 1}}
     )
 });
-
+// permet de désactiver la newsletter pour un user
 app.post("/newsletterOff", sessionUpdater, (req, res, next) => {
     const dbConnect = dbo.getDb();
     const body = req.body
@@ -407,7 +419,7 @@ app.post("/newsletterOff", sessionUpdater, (req, res, next) => {
 });
 
 //* ADMIN *//
-
+// permet d'insere des information dans la collection demandé
 // Products
 app.post("/products/insert", [sessionUpdater, adminRestricted], (req, res, next) => {
     const dbConnect = dbo.getDb();
@@ -477,7 +489,7 @@ app.post("/components/insert", [sessionUpdater, adminRestricted], (req, res, nex
 });
 
 // Sales
-
+// permet d'obtenir tout les valeurs de la collection sales
 app.get("/sales", (req, res, next) => {
     SearchCollection("sales", {}, (err, result) => {
         if (err) {
@@ -492,7 +504,7 @@ app.get("/sales", (req, res, next) => {
 });
 
 // Users
-
+// permet d'obter tout les valeurs de la collections users
 app.get("/users", [sessionUpdater, adminRestricted], (req, res, next) => {
     SearchCollection("users", {}, (err, result) => {
         if (err) {
@@ -505,7 +517,7 @@ app.get("/users", [sessionUpdater, adminRestricted], (req, res, next) => {
         }
     }).catch(next);
 });
-
+// permet de supprimer un user de la collections users grace a son _id
 app.delete("/users/delete", [sessionUpdater, adminRestricted], (req, res, next)=> {
     const dbConnect = dbo.getDb();
     const body = req.body;
@@ -519,11 +531,11 @@ app.delete("/users/delete", [sessionUpdater, adminRestricted], (req, res, next)=
 })
 
 //* STATIC CONTENT *//
-
+// permet d'envoyer le info.json vers le frontend
 app.get("/info", (req, res, next) => {
     res.json(JSON.parse(fs.readFileSync('./info.json', { encoding: "utf-8" })))
 });
-
+// permet de modifier le info.json a partir du frontend
 app.post("/info", [sessionUpdater, adminRestricted], (req, res, next) => {
     fs.writeFile('./info.json', JSON.stringify(req.body), { encoding: "utf-8" }, err => {
         if (err)

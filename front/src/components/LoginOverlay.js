@@ -39,6 +39,9 @@ function LoginOverlay({user, setUser}) {
 
     return (
         <>
+        {
+            /*Outil de connexion pour l'utilisateur et les administrateur */
+        }
             <img onClick={handleShow} src="/img/user_icon.png" className="user-icon" alt="User Icon" />
 
             {!whichForm ? <Modal show={show} onHide={handleClose} className="full-modal">

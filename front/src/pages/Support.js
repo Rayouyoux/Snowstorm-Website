@@ -6,9 +6,8 @@ import Col from 'react-bootstrap/Col';
 import countries from '../components/Countries';
 import "./css/Support.css"
 
-/*Mettre en place un formulaire de contact 
-(nom, pays, adresse, email, téléphone, sujet, description du pb)
-Faire valider un code de vérification pour envoyer le formulaire*/
+    /*Mettre en place un formulaire de contact 
+    (nom, pays, adresse, email, téléphone, sujet, description du pb)*/
 
 function Support(props) {
     const supportText = {

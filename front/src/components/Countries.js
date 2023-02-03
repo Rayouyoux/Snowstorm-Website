@@ -1,4 +1,6 @@
-
+{
+    /*Liste de pays pour la page contact */
+}
 const countries = [
     {
         "name": {

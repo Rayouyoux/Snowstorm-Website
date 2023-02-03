@@ -7,7 +7,6 @@ function FAQ({info, setInfo, language, user}) {
     window.a = info
     console.log(info)
     const { register, handleSubmit } = useForm();
-    const {baga,setBaga} = useState([]);
     const onSubmit = (data) => {
         var infoCopy = JSON.parse(JSON.stringify(info));
         infoCopy.faq.push({
@@ -19,6 +18,9 @@ function FAQ({info, setInfo, language, user}) {
     };
 
     return <div className="faq-page">
+        {
+            /*Page de Questions-Réponses */
+        }
         <h1 className="title">FAQ</h1>
         {
         (user && user.permission_level >= 200) ? <>
@@ -31,23 +33,21 @@ function FAQ({info, setInfo, language, user}) {
                 <button type="submit">{["Submit", "Valider"][language]}</button>
             </form>
         </> : <></>
-        }   
-
-            {
-                (info.faq || []).map((obj, index) => {
-                    return <div className="question-answer">
-                        <h2>{(user && user.permission_level >= 200) ? <button onClick={() => {
-                            var infoCopy = JSON.parse(JSON.stringify(info));
-                            infoCopy.faq.pop(index)
-                            setAdminInfo(infoCopy)
-                            setInfo(infoCopy)
-                        }}>X</button> : <></>}{obj.question[language]}</h2>
-                        <p>{obj.answer[language]}</p>
-                        
-                    </div>
-                })
-            }
-        </div>
+        }
+        {
+            (info.faq || []).map((obj, index) => {
+                return <div className="question-answer">
+                    <h2>{(user && user.permission_level >= 200) ? <button onClick={() => {
+                        var infoCopy = JSON.parse(JSON.stringify(info));
+                        infoCopy.faq.pop(index)
+                        setAdminInfo(infoCopy)
+                        setInfo(infoCopy)
+                    }}>X</button> : <></>}{obj.question[language]}</h2>
+                    <p>{obj.answer[language]}</p>
+                </div>
+            })
+        }
+    </div>
 }
 
 export default FAQ;

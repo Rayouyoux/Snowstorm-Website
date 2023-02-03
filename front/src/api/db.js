@@ -61,6 +61,11 @@ export const getMostSales = async () => {
     return response.data
 }
 
+export const getSales = async () => {
+    const response = await backAccess('/sales')
+    return response.data
+}
+
 // Users //
 
 export const getUsers = async () => {

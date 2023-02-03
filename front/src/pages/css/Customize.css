@@ -11,12 +11,13 @@
     display: inline-flex !important;
 }
 
-.customize-page h1, 
+.customize-page h1,
 .customize-page h2 {
     color: var(--light-blue);
     text-align: center;
     font-weight: bold;
     padding-bottom: 2em;
+    padding-top: 2em;
 }
 
 .customize-page .card-margin{
@@ -52,16 +53,28 @@
     margin: 10px;
 }
 
-.customize-page #keyboard-display{
+.customize-page .keyboard-display{
     margin-bottom: 5%;
 }
 
-.customize-page select.form-select{
-    background-color: var(--white) !important;
-    color: var(--black) !important;
+.customize-page .keyboard-display button{
+    padding: 2%;
+    font-family: 'Bebas Neue', cursive !important;
+    font-size: 1vw;
 }
 
-.customize-page select.form-select:hover{
-    background-color: var(--black) !important;
-    color: var(--white) !important;
+.customize-page .fourth-slide .select-buttons{
+    color: var(--black);
+    background-color: var(--white);
+    border: none;
+    margin: 1%
+}
+
+.customize-page .fourth-slide .select-buttons:hover{
+    color: var(--white);
+    background-color: var(--blue);
+}
+
+.customize-page .fourth-slide .cmd-key-selector img{
+    width: 50px;
 }

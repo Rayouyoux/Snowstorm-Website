@@ -4,7 +4,11 @@ import "./css/search.css"
 function Search(props) {
 
     return (
+        
         <>
+        {
+            /*Outil de recherche utiliser sur la page listing */
+        }
         <Row>
             <Col xs={{ span: 10, offset: 1}}>
                 <Form.Group controlId="search">

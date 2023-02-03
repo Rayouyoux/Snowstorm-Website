@@ -20,6 +20,9 @@ function Home(props) {
     }, []);
 
     return <div className="home-page">
+        {
+            /*Page de présentation du site  */
+        }
         <Row>
             <img src="/img/layeredWaves1.png" draggable="false" />
             <div className="titles">

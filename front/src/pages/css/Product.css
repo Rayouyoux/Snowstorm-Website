@@ -1,3 +1,7 @@
+.product-page{
+    background-color: var(--light-blue);
+}
+
 .product-page .carousel {
     margin-top: 4%;
     margin-bottom: 3%;
@@ -11,6 +15,12 @@
     width: 4.2em;
     margin: 3%;
 }
+.product-page .align-text{
+    text-align: center;
+}
+.product-page .button-card-product .logo{
+    width: 2em;
+}
 
 .product-page .technical-sheet div.col-2.offset-1,
 .product-page .technical-sheet div.col-7{
@@ -23,3 +33,13 @@
     margin: 0;
     padding: 20px;
 }
+
+.product-page .socials{
+    display: flex;
+    justify-content: center;
+}
+.product-page .socials .logo{
+    margin-right: 2em;
+}
+
+

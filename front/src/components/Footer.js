@@ -6,6 +6,9 @@ import { Row, Col, Container } from "react-bootstrap";
 
 function Footer(props) {
     return<footer>
+      {
+        /* Footer présent sur toutes les pages */
+      }
       <img className="img" src="./img/Logo_LightBlue.png" alt="Logo Snowstorm Blue"/>
       <Container className="container-footer"> 
         <Row>

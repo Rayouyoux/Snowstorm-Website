@@ -8,28 +8,26 @@ import { getKeyboards } from '../api/db';
 import Keyboard from "./keyboard";
 import "./css/Customize.css";
 import { CartChange } from "./Cart";
+import { useForm } from "react-hook-form";
 
 function Customize(props) {
     const [ show , setShow ] = useState(0)
+    const [ showB , setShowB] = useState(0)
+    const [ showC , setShowC] = useState(0)
     const [ keyboards , setKeyboards] = useState([])
     const [ editKeys , setEditKeys ] = useState(true)
     const [ selectedColor , setSelectedColor ] = useState("Black")
     const [ keyboard , setKeyboard] = useState({})
     const [ keyColors, setKeyColors ] = useState([])
-    const [ cmdKey, setCmdKey ] = useState("Linux")
-    const [ font, setFont ] = useState("Charis")
-    
-    const commandKeys = {
-        "Windows" : "./img/windows-logo.png",
-        "Linux" : "./img/linux-icon.png",
-        "MacOS" : "./img/macos-cmd-logo.png"
-    }
-
+    const [ cmdKey, setCmdKey ] = useState("")
+    const [ font, setFont ] = useState("")
+    const [ message, setMessage] = useState("")
     const [ finishedProduct, setFinishedProduct ] = useState({
         "keyboard": "",
         "colors": [],
         "cmdkey" : "",
-        "font" : "Arial"
+        "font" : "",
+        "message" : ""
     })
 
     useEffect(() => {
@@ -49,15 +47,22 @@ function Customize(props) {
             "keyboard": keyboard._id,
             "colors": keyColors,
             "cmdkey" : cmdKey,
-            "font" : font
+            "font" : font,
+            "message" : message
         })
         console.log(finishedProduct);
-    }, [keyboard, keyColors, cmdKey, font])
+    }, [keyboard, keyColors, cmdKey, font, message])
 
     const setKey = (index, info) => {
         var keyColorsCopy = JSON.parse(JSON.stringify(keyColors));
         keyColorsCopy[index] = info
         setKeyColors(keyColorsCopy)
+    }
+
+    const commandKeys = {
+        "Windows" : "./img/windows-logo.png",
+        "Linux" : "./img/linux-icon.png",
+        "MacOS" : "./img/macos-cmd-logo.png"
     }
 
     const colors = {
@@ -83,12 +88,12 @@ function Customize(props) {
             "Silver" : "#C0C0C0",
             "Gray" : "#808080"
         }
-    
-    const fontsSelect = {
-        "Charis" :"font-family: 'Charis SIL', serif;",
-        "Open Sans" : "font-family: 'Open Sans', sans-serif;",
-        "Oswald" : "font-family: 'Oswald', sans-serif;",
-        "Itim" : "font-family: 'Itim', cursive;"
+
+    const fonts = {
+        "Charis" : "'Charis SIL', serif;",
+        "Open Sans" : "'Open Sans', sans-serif;",
+        "Oswald" : "'Oswald', sans-serif;",
+        "Itim" : "'Itim', cursive;"
         }
 
     useEffect(() => {
@@ -98,11 +103,10 @@ function Customize(props) {
             .catch(error => console.error("Erreur avec notre API :", error.message));
     }, []);
 
-    const _handleChange = ((event) => {
-        this.setState({ value: event.currentTarget.value }) // I tried before target.value, or nativeEvent.value
-    })
-
     return <div className="customize-page">
+        {
+            /*Page de customisation de clavier pour l'utilisateur avec 3 étapes de modifications : le choix de la puce, le choix des couleurs des touches et le choix de la police sur le clavier */
+        }
         {
             show == 0 ? (
                 <div className="first-slide">
@@ -135,7 +139,7 @@ function Customize(props) {
                                                 <p>Price : {keyboard.price}€</p>
                                             </Card.Text>
                                             <Button onClick={() => {
-                                                setShow(2); 
+                                                setShow(2);
                                                 setKeyboard(keyboard);
                                                 }} className="button-card-product">Select</Button>
                                         </Card.Body>
@@ -162,37 +166,40 @@ function Customize(props) {
         }
         {
             show == 2 ? (
-                <div className="third-slide">
-                    <h1>Couleurs</h1>
-                    <Keyboard />
-                    <div className="edit-type-selector">
-                        <Button onClick={() => setEditKeys(true)}>Keys</Button>
-                        <Button onClick={() => setEditKeys(false)}>Text</Button>
-                        <p style={{color : "white"}}>{editKeys}</p>
-                    </div>
-                    <div className="colors-selector">
-                        {
-                            Object.entries(colors).map(([key, color]) =>{
-                                return <Button onClick={() => setSelectedColor(key)} style={{ backgroundColor : color, borderColor : color}}>a</Button>
-                            })
-                        }
-                        <p style={{color : "white"}}>{selectedColor}</p>
-                    </div>
-                    <div id="keyboard-display">
-                        {
-                            keyColors.map((key, index) => {
-                                return <button style={{
-                                    "background-color": key.key, 
-                                    "color": key.text
-                                }} onClick={() => {
-                                    setKey(index, {
-                                        "key": editKeys ? colors[selectedColor] : key.key,
-                                        "text": !editKeys ? colors[selectedColor] : key.text
-                                    }) 
-                                }}>{index}</button>
-                            })
-                        }
-                    </div>
+                <Row>
+                    <Col xs={{ span:9, offset:1}}>
+                        <div className="third-slide">
+                            <h1>Couleurs</h1>
+                            <div className="edit-type-selector">
+                                <Button onClick={() => setEditKeys(true)}>Keys</Button>
+                                <Button onClick={() => setEditKeys(false)}>Text</Button>
+                                <p style={{color : "white"}}>{editKeys}</p>
+                            </div>
+                            <div className="colors-selector">
+                                {
+                                    Object.entries(colors).map(([key, color]) =>{
+                                        return <Button onClick={() => setSelectedColor(key)} style={{ backgroundColor : color, borderColor : color}}></Button>
+                                    })
+                                }
+                                <p style={{color : "white"}}>{selectedColor}</p>
+                            </div>
+                            <div className="keyboard-display">
+                                {
+                                    keyColors.map((key, index) => {
+                                        return <button style={{
+                                            "background-color": key.key,
+                                            "color": key.text
+                                        }} onClick={() => {
+                                            setKey(index, {
+                                                "key": editKeys ? colors[selectedColor] : key.key,
+                                                "text": !editKeys ? colors[selectedColor] : key.text
+                                            })
+                                        }}>{index}</button>
+                                    })
+                                }
+                            </div>
+                        </div>
+                    </Col>
                     <Row className="links">
                         <Col xs={3}>
                             <Link onClick={() => setShow(1)} className="button-design" style={{backgroundImage: `url(${diagBlob1})`}}>Previous</Link>
@@ -201,37 +208,49 @@ function Customize(props) {
                             <Link onClick={() => setShow(3)} className="button-design" style={{backgroundImage: `url(${diagBlob1})`}}>Next</Link>
                         </Col>
                     </Row>
-                </div>
+                </Row>
             ) : <></>
         }
         {
             show == 3 ? (
-                <div className="fourth-slide">
+                <div className="fourth-slide" style={{textAlign: "center"}}>
                     <h1>Finalisation</h1>
                     <h2>Font</h2>
-                    <Row>
-                        <Col xs={{ span:8 , offset:2 }}>
-                            <Form.Select aria-label="Default select example" id="font-selector">
-                                {
-                                    Object.entries(fontsSelect).map(([fontSelected, key]) => {
-                                        return <option value={fontSelected}>{fontSelected}</option>
-                                    })
-                                }
-                            </Form.Select>
-                        </Col>
-                    </Row>
+                    {
+                        showB == 0 ? (
+                                <div className="font-selector">
+                                        {
+                                            Object.entries(fonts).map(([font, key]) => {
+                                                return <Button onClick={() => setFont(font)} className="select-buttons">{font}</Button>
+                                            })
+                                        }
+                                        <Button onClick={() => setShowB(1)}>Valider</Button>
+                                </div>
+                        ) : (
+                            <div>
+                                <h3>{finishedProduct.font}</h3>
+                                <Button onClick={() => setShowB(0)}>Retour</Button>
+                            </div>
+                        )
+                    }
                     <h2>Command Key</h2>
-                    <Row>
-                        <Col xs={{ span:8 , offset:2 }}>
-                            <Form.Select aria-label="Default select example" id="cmd-key-selector" style={{ marginBottom : "5%"}}>
+                    {
+                        showC == 0 ? (
+                            <div className="cmd-key-selector">
                                 {
-                                    Object.entries(commandKeys).map(([index, key]) => {
-                                        return <option value={index}>{index}</option>
+                                    Object.entries(commandKeys).map(([commandKey, key]) => {
+                                        return <Button onClick={() => setCmdKey(commandKey)} className="select-buttons"><img src={key} alt={commandKey+" logo"}/></Button>
                                     })
                                 }
-                            </Form.Select>
-                        </Col>
-                    </Row>
+                                <Button onClick={() => setShowC(1)}>Valider</Button>
+                            </div>
+                        ) : (
+                            <div>
+                                <h3>{finishedProduct.cmdkey}</h3>
+                                <Button onClick={() => setShowC(0)}>Retour</Button>
+                            </div>
+                        )
+                    }
                     <Row className="links">
                         <Col xs={3}>
                             <Link onClick={() => setShow(2)} className="button-design" style={{backgroundImage: `url(${diagBlob1})`}}>Previous</Link>
@@ -242,6 +261,5 @@ function Customize(props) {
         }
     </div>
 }
-
 
 export default Customize;

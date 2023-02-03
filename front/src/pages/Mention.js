@@ -1,6 +1,9 @@
 import { Container } from "react-bootstrap";
 
 function Mentions() {
+    {
+        /*Mentions légales obligatoire dans un site */
+    }
     return <Container>
         <h1>Snowstorm</h1>
         <h2>Mentions légales</h2>
