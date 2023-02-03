@@ -153,7 +153,7 @@ app.get("/keyboards", (req, res, next) => {
         }
     }).catch(next);
 });
-// recupere la valeur correspondant a l'id demandé dans la collection ks
+// recupere la valeur correspondant a l'id demandé dans la collection keyboards
 app.get("/keyboards/:id", (req, res, next) => {
     GetOne("keyboards", req.params.id, x => {
         res.json(new objsTypes.keyboard(x._id, x.name, x.price, x.description, x.images, x.tags, x.specs, x.quantity, x.keyCount));
